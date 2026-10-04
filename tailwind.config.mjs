@@ -21,8 +21,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Roboto', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
-        serif: ['"Roboto Slab"', 'Georgia', 'Cambria', 'serif'],
+        sans: ['"DM Sans"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        serif: ['"Manrope"', 'system-ui', 'sans-serif'],
       },
       maxWidth: {
         site: '1320px',
