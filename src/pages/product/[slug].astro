@@ -1,0 +1,306 @@
+---
+import { withBase } from '../../lib/paths';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { products } from '../../data/products';
+import { siteConfig } from '../../data/siteConfig';
+import type { Product } from '../../types';
+
+export function getStaticPaths() {
+  return products.map((prod) => ({
+    params: { slug: prod.slug },
+    props: { product: prod },
+  }));
+}
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+const hasImages = product.media && product.media.length > 0;
+const primaryImage = hasImages ? product.media[0] : null;
+const cleanDescription = product.descriptionText
+  .replace(/^#+\s*/, '')
+  .split(/\s+###\s+|\s+Category:|\s+Tags:/)[0]
+  .trim();
+const description = cleanDescription.length > 520
+  ? `${cleanDescription.slice(0, cleanDescription.lastIndexOf(' ', 520))}…`
+  : cleanDescription;
+const displayFeatures = product.features.filter((feature) => feature.length < 180 && !feature.includes('###'));
+
+// Find 3-4 related products in the same category
+let related = products.filter(
+  (p) => p.categorySlug === product.categorySlug && p.slug !== product.slug
+);
+// If not enough in category, supplement with same section
+if (related.length < 4) {
+  const supplement = products.filter(
+    (p) =>
+      p.section === product.section &&
+      p.slug !== product.slug &&
+      !related.some((r) => r.slug === p.slug)
+  );
+  related = [...related, ...supplement];
+}
+const relatedProducts = related.slice(0, 4);
+
+// Prefill Telegram enquiry message
+const telegramText = encodeURIComponent(
+  `Hello Universal Electronics, I would like to ask about ${product.title}.`
+);
+const telegramLink = `${siteConfig.telegramUrl}?text=${telegramText}`;
+
+// Email enquiry
+const emailSubject = encodeURIComponent(`Product Inquiry: ${product.title}`);
+const emailBody = encodeURIComponent(
+  `Hello Universal Electronics,\n\nI would like to ask about ${product.title}. Please contact me with details.\n`
+);
+const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${emailBody}`;
+---
+
+<Layout
+  title={`${product.title} | Universal Electronics`}
+  description={`Catalog details and product enquiry for ${product.title} at Universal Electronics, Addis Ababa.`}
+  ogImage={primaryImage || undefined}
+>
+  <div class="max-w-site mx-auto px-4 sm:px-6 py-6 sm:py-8">
+    <Breadcrumb
+      items={[
+        { label: 'Product Catalog', href: '/shop/' },
+        {
+          label: product.categoryName,
+          href: `/category/${product.categorySlug}/`,
+        },
+        { label: product.title },
+      ]}
+    />
+
+    <!-- Main Product Detail Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mt-4 mb-16">
+      <!-- Media Gallery Column (5 cols on LG) -->
+      <div class="lg:col-span-5 space-y-4">
+        <div class="bg-brand-offwhite rounded-2xl border border-brand-border p-6 aspect-square flex items-center justify-center overflow-hidden">
+          {
+            hasImages && primaryImage ? (
+              <img
+                src={withBase(primaryImage)}
+                alt={product.title}
+                class="w-full h-full object-contain max-h-[380px]"
+                loading="eager"
+              />
+            ) : (
+              <div class="text-center p-8">
+                <svg
+                  class="w-16 h-16 text-slate-300 mx-auto mb-3"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+                <h4 class="text-sm font-semibold text-slate-600">
+                  Image unavailable
+                </h4>
+                <p class="text-xs text-slate-400 mt-1 max-w-xs mx-auto">
+                  Please ask us for a current product photo.
+                </p>
+              </div>
+            )
+          }
+        </div>
+
+        <!-- Additional gallery images if any -->
+        {
+          product.media && product.media.length > 1 && (
+            <div class="flex gap-2 overflow-x-auto pb-2">
+              {product.media.map((img, i) => (
+                <div class="w-20 h-20 shrink-0 bg-brand-offwhite rounded-lg border border-brand-border p-2 flex items-center justify-center">
+                  <img
+                    src={withBase(img)}
+                    alt={`${product.title} view ${i + 1}`}
+                    class="w-full h-full object-contain"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
+          )
+        }
+
+      </div>
+
+      <!-- Product Information Column (7 cols on LG) -->
+      <div class="lg:col-span-7 flex flex-col">
+        <!-- Badges -->
+        <div class="flex flex-wrap items-center gap-2 mb-3">
+          <a
+            href={withBase(`/category/${product.categorySlug}/`)}
+            class="px-2.5 py-1 rounded text-xs font-semibold bg-brand-pale text-brand-navy border border-blue-200 hover:bg-blue-100 transition-colors"
+          >
+            {product.categoryName}
+          </a>
+          <span class="px-2.5 py-1 rounded text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+            Brand: {product.primaryBrand}
+          </span>
+          <span class="text-xs text-slate-400 capitalize">
+            • {product.section} Division
+          </span>
+        </div>
+
+        <!-- Title -->
+        <h1 class="font-serif text-2xl sm:text-3xl font-bold text-brand-navy mb-4 leading-snug">
+          {product.title}
+        </h1>
+
+        <!-- Overview Summary -->
+        <div class="text-sm sm:text-base text-slate-700 leading-relaxed mb-6 bg-white">
+          <p>{description || `Explore ${product.title} and ask us for current details.`}</p>
+        </div>
+
+        <!-- Direct Contact / Enquiry Card -->
+        <div class="bg-brand-offwhite p-5 sm:p-6 rounded-xl border border-brand-border mb-8 shadow-sm">
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-navy mb-2 flex items-center gap-2">
+            <span>Direct Product Enquiry</span>
+          </h2>
+          <p class="text-xs text-slate-600 mb-4">
+            Ask about availability, specifications, or a quotation.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-3">
+            <!-- Telegram Action Button -->
+            <a
+              href={telegramLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-brand-telegram text-white font-semibold text-sm hover:bg-brand-telegramHover shadow-sm transition-colors"
+            >
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.37.74-.56 2.92-1.27 4.86-2.11 5.83-2.52 2.77-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24-.01.44z"/>
+              </svg>
+              <span>Ask on Telegram</span>
+            </a>
+
+            <a
+              href={`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(`Hello Universal Electronics, I would like to ask about ${product.title}.`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-brand-whatsapp text-white font-semibold text-sm hover:bg-brand-whatsappHover shadow-sm transition-colors"
+            >
+              <span>Ask on WhatsApp</span>
+            </a>
+
+            <!-- Email Action Button -->
+            <a
+              href={emailLink}
+              class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white border border-brand-border text-brand-dark hover:bg-slate-50 font-semibold text-sm transition-colors"
+            >
+              <svg class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <span>Email Inquiry</span>
+            </a>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-500">
+            <span>Direct Phone Call:</span>
+            <div class="flex gap-3">
+              <a href={`tel:${siteConfig.phones[0].replace(/\s+/g, '')}`} class="font-medium text-brand-blue hover:underline">
+                {siteConfig.phones[0]}
+              </a>
+              <span>•</span>
+              <a href={`tel:${siteConfig.phones[1].replace(/\s+/g, '')}`} class="font-medium text-brand-blue hover:underline">
+                {siteConfig.phones[1]}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Features List -->
+        {
+          displayFeatures.length > 0 && (
+            <div class="mb-8">
+              <h2 class="font-serif text-lg font-bold text-brand-navy mb-3">
+                Key Features
+              </h2>
+              <ul class="space-y-2 bg-slate-50/70 p-4 rounded-xl border border-slate-200/80">
+                {displayFeatures.map((feat) => (
+                  <li class="flex items-start gap-2.5 text-sm text-slate-700">
+                    <span class="text-brand-blue mt-0.5 shrink-0 font-bold">•</span>
+                    <span>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+
+        <!-- Technical Specifications Table -->
+        {
+          product.specifications && product.specifications.length > 0 && (
+            <div class="mb-8">
+              <h2 class="font-serif text-lg font-bold text-brand-navy mb-3">
+                Catalog Specifications
+              </h2>
+              <div class="overflow-hidden rounded-xl border border-brand-border">
+                <table class="w-full text-left text-xs sm:text-sm">
+                  <thead class="bg-brand-pale/60 text-brand-navy uppercase text-[11px] font-semibold border-b border-brand-border">
+                    <tr>
+                      <th class="py-3 px-4 w-1/3">Specification</th>
+                      <th class="py-3 px-4">Parameter / Details</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100">
+                    {product.specifications.map((spec, idx) => (
+                      <tr class={idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}>
+                        <td class="py-2.5 px-4 font-medium text-slate-800">
+                          {spec.label}
+                        </td>
+                        <td class="py-2.5 px-4 text-slate-600">
+                          {spec.value}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p class="mt-3 text-xs text-slate-500">Specifications come from the previous catalog. Please confirm the exact model details with us before ordering.</p>
+            </div>
+          )
+        }
+      </div>
+    </div>
+
+    <!-- Related Products Section -->
+    {
+      relatedProducts.length > 0 && (
+        <section class="pt-12 border-t border-slate-200">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="font-serif text-xl sm:text-2xl font-bold text-brand-navy">
+              Related {product.categoryName}
+            </h2>
+            <a
+              href={withBase(`/category/${product.categorySlug}/`)}
+              class="text-xs font-semibold text-brand-blue hover:text-brand-blueHover"
+            >
+              View all in {product.categoryName} →
+            </a>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {relatedProducts.map((p) => (
+              <ProductCard product={p} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+</Layout>

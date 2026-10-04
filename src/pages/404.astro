@@ -1,0 +1,50 @@
+---
+import { withBase } from '../lib/paths';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Page Not Found | Universal Electronics"
+  description="The page you were looking for could not be found. Browse the Universal Electronics product catalog or return to the home page."
+>
+  <div class="max-w-site mx-auto px-4 sm:px-6 py-20 text-center">
+    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-brand-pale text-brand-navy flex items-center justify-center text-2xl font-bold">
+      404
+    </div>
+    <h1 class="font-serif text-3xl sm:text-4xl font-bold text-brand-navy mb-3">
+      Page Not Found
+    </h1>
+    <p class="text-slate-600 max-w-md mx-auto mb-8 text-sm sm:text-base">
+      We couldn't find the page or product you were looking for. The route may have changed during our site modernization.
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a
+        href={withBase('/')}
+        class="w-full sm:w-auto px-6 py-3 rounded-lg bg-brand-navy text-white text-sm font-semibold hover:bg-brand-navyDark transition-colors shadow-sm"
+      >
+        Return to Home Page
+      </a>
+
+      <a
+        href={withBase('/shop/')}
+        class="w-full sm:w-auto px-6 py-3 rounded-lg bg-brand-blue text-white text-sm font-semibold hover:bg-brand-blueHover transition-colors shadow-sm"
+      >
+        Search 59 Products in Catalog
+      </a>
+    </div>
+
+    <div class="mt-12 pt-8 border-t border-slate-200 max-w-lg mx-auto text-xs text-brand-muted">
+      <p>Looking for a specific category?</p>
+      <div class="flex flex-wrap justify-center gap-2 mt-2">
+        <a href={withBase('/shop/solar/')} class="text-brand-blue hover:underline">Solar Solutions</a>
+        <span>•</span>
+        <a href={withBase('/shop/sound/')} class="text-brand-blue hover:underline">Sound Equipment</a>
+        <span>•</span>
+        <a href={withBase('/projects/')} class="text-brand-blue hover:underline">Projects</a>
+        <span>•</span>
+        <a href={withBase('/contact/')} class="text-brand-blue hover:underline">Contact Desk</a>
+      </div>
+    </div>
+  </div>
+</Layout>

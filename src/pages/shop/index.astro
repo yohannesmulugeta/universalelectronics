@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CatalogFilter from '../../components/CatalogFilter';
+import { products } from '../../data/products';
+import { categories, brands } from '../../data/taxonomy';
+import { siteConfig } from '../../data/siteConfig';
+---
+
+<Layout
+  title="Product Catalog | Universal Electronics"
+  description="Browse all 59 published solar energy and professional sound products from Universal Electronics in Addis Ababa. Filter by category and brand."
+>
+  <div class="max-w-site mx-auto px-4 sm:px-6 py-6 sm:py-8">
+    <Breadcrumb items={[{ label: 'Product Catalog' }]} />
+
+    <div class="mb-8">
+      <h1 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-brand-navy mb-3">
+        Universal Electronics Product Catalog
+      </h1>
+      <p class="text-sm sm:text-base text-slate-600 max-w-3xl leading-relaxed">
+        Explore solar equipment and sound systems from our catalog. Open a product for details, then contact us directly for availability and a quotation.
+      </p>
+    </div>
+
+    <!-- Interactive React Island for Catalog Filtering and Search -->
+    <CatalogFilter
+      client:load
+      products={products}
+      categories={categories}
+      brands={brands}
+      telegramUrl={siteConfig.telegramUrl}
+    />
+  </div>
+</Layout>

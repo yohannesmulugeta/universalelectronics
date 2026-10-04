@@ -1,0 +1,38 @@
+---
+import { withBase } from '../lib/paths';
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { projects } from '../data/projects';
+---
+
+<Layout title="Project Archive | Universal Electronics"
+  description="A selection of project photographs preserved from the previous Universal Electronics website.">
+  <div class="max-w-site mx-auto px-4 sm:px-6 py-6 sm:py-8">
+    <Breadcrumb items={[{ label: 'Projects' }]} />
+    <section class="max-w-3xl py-10 lg:py-16" data-reveal>
+      <p class="section-eyebrow mb-5">From our archive</p>
+      <h1 class="font-serif text-4xl sm:text-5xl text-brand-navy leading-tight">Project photographs</h1>
+      <p class="mt-6 text-lg leading-relaxed text-slate-600">
+        These images were preserved from the previous Universal Electronics website. Contact us if you would like to discuss a particular installation or request project details.
+      </p>
+    </section>
+    <section class="grid md:grid-cols-2 gap-6 mb-20" aria-label="Project photograph archive">
+      {projects.map((project, index) => (
+        <figure class="group overflow-hidden bg-brand-offwhite">
+          <div class="aspect-[4/3] overflow-hidden">
+            <img src={withBase(project.image)} alt={`Project archive photograph ${index + 1}`}
+              class="w-full h-full object-cover image-zoom" loading="lazy" width="800" height="600" />
+          </div>
+          <figcaption class="p-5 text-sm text-brand-navy font-medium">
+            Project archive / {String(index + 1).padStart(2, '0')}
+          </figcaption>
+        </figure>
+      ))}
+    </section>
+    <section class="border-t border-slate-200 py-12 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+      <div><h2 class="font-serif text-2xl text-brand-navy">Discuss a project with us</h2>
+        <p class="text-slate-600 mt-2">Tell us what you are planning and which equipment you need.</p></div>
+      <a href={withBase('/contact/')} class="button-primary">Contact Universal Electronics <span aria-hidden="true">↗</span></a>
+    </section>
+  </div>
+</Layout>
