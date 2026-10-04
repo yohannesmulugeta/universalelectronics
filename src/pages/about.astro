@@ -7,23 +7,23 @@ import { siteConfig } from '../data/siteConfig';
 
 <Layout title="About Universal Electronics"
   description="Learn about Universal Electronics, a solar and sound equipment business based in Addis Ababa, Ethiopia.">
-  <div class="max-w-site mx-auto px-4 sm:px-6 py-6 sm:py-8">
+  <div class="max-w-site mx-auto px-5 sm:px-8 py-6 sm:py-8">
     <Breadcrumb items={[{ label: 'About Us' }]} />
-    <section class="grid lg:grid-cols-[1.15fr_.85fr] gap-10 lg:gap-16 items-center py-12 lg:py-20">
+    <section class="grid lg:grid-cols-[1.05fr_.95fr] gap-10 lg:gap-16 items-center py-14 lg:py-24">
       <div data-reveal>
         <p class="section-eyebrow mb-5">About Universal Electronics</p>
-        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl leading-tight text-brand-navy">Equipment for power and sound.</h1>
+        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight text-brand-navy">Equipment for power and sound.</h1>
         <p class="mt-7 max-w-2xl text-lg leading-relaxed text-slate-600">
           Based in Addis Ababa, Universal Electronics brings together solar energy equipment and professional sound products. Our catalog covers products for homes, businesses and project work.
         </p>
-        <div class="flex flex-wrap gap-3 mt-9">
+        <div class="flex flex-wrap gap-5 mt-9">
           <a href={withBase('/shop/')} class="button-primary">Browse products <span aria-hidden="true">↗</span></a>
-          <a href={withBase('/contact/')} class="button-secondary">Contact us</a>
+          <a href={withBase('/contact/')} class="text-link">Contact us <span aria-hidden="true">↗</span></a>
         </div>
       </div>
-      <div class="bg-[#eef4fa] p-8 lg:p-12" data-reveal>
-        <img src={withBase('/assets/projects/4395-hero2-e1759613225895.png')} alt="Solar equipment shown in the Universal Electronics archive"
-          class="w-full h-auto object-contain" width="600" height="480" loading="lazy" />
+      <div class="bg-brand-offwhite aspect-[4/3] overflow-hidden" data-reveal>
+        <img src={withBase('/assets/projects/4853-1.png')} alt="Solar panel installation photograph from the Universal Electronics archive"
+          class="w-full h-full object-cover" width="506" height="333" loading="lazy" />
       </div>
     </section>
 

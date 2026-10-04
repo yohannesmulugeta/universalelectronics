@@ -13,14 +13,11 @@ export const siteConfig: SiteConfig = {
   // Provisional number chosen from the recovered Contact page by the owner.
   whatsappNumber: '251911102251',
   navLinks: [
-    { label: 'Home', href: '/' },
-    { label: 'Shop', href: '/shop/' },
     { label: 'Solar', href: '/shop/solar/' },
     { label: 'Sound', href: '/shop/sound/' },
+    { label: 'All products', href: '/shop/' },
     { label: 'Projects', href: '/projects/' },
-    { label: 'Recognition', href: '/recognition/' },
     { label: 'About', href: '/about/' },
-    { label: 'Contact', href: '/contact/' },
   ],
   solarCategories: [
     { name: 'Inverters', slug: 'inverters' },

@@ -3,8 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import CatalogFilter from '../../components/CatalogFilter';
 import { products } from '../../data/products';
-import { categories, brands } from '../../data/taxonomy';
-import { siteConfig } from '../../data/siteConfig';
+import { categories } from '../../data/taxonomy';
 ---
 
 <Layout
@@ -14,13 +13,10 @@ import { siteConfig } from '../../data/siteConfig';
   <div class="max-w-site mx-auto px-4 sm:px-6 py-6 sm:py-8">
     <Breadcrumb items={[{ label: 'Product Catalog' }]} />
 
-    <div class="mb-8">
-      <h1 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-brand-navy mb-3">
-        Universal Electronics Product Catalog
-      </h1>
-      <p class="text-sm sm:text-base text-slate-600 max-w-3xl leading-relaxed">
-        Explore solar equipment and sound systems from our catalog. Open a product for details, then contact us directly for availability and a quotation.
-      </p>
+    <div class="mb-12 py-10 sm:py-16">
+      <p class="section-eyebrow mb-5">Universal Electronics / Catalog</p>
+      <h1 class="max-w-3xl font-serif text-4xl font-semibold leading-tight text-brand-navy sm:text-5xl lg:text-6xl">Explore the collection.</h1>
+      <p class="mt-5 max-w-2xl text-base leading-8 text-brand-muted">Find solar equipment and professional sound products. Open a product to ask about current details and availability.</p>
     </div>
 
     <!-- Interactive React Island for Catalog Filtering and Search -->
@@ -28,8 +24,6 @@ import { siteConfig } from '../../data/siteConfig';
       client:load
       products={products}
       categories={categories}
-      brands={brands}
-      telegramUrl={siteConfig.telegramUrl}
     />
   </div>
 </Layout>

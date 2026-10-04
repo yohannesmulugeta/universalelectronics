@@ -4,176 +4,46 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import { siteConfig } from '../data/siteConfig';
 ---
 
-<Layout
-  title="Contact Us | Universal Electronics"
-  description="Contact Universal Electronics in Addis Ababa, Ethiopia. Address: Tefera Business Center, Habte Giyorgis. Direct Telegram enquiry, telephone, and email."
->
-  <div class="max-w-site mx-auto px-4 sm:px-6 py-6 sm:py-8">
+<Layout title="Contact Us | Universal Electronics"
+  description="Contact Universal Electronics in Addis Ababa about solar energy and professional sound products.">
+  <div class="max-w-site mx-auto px-5 py-6 sm:px-8">
     <Breadcrumb items={[{ label: 'Contact Us' }]} />
-
-    <!-- Page Header -->
-    <div class="mb-12 max-w-3xl">
-      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-pale text-brand-navy border border-blue-200 text-xs font-semibold mb-3">
-        <span>—</span>
-        <span>Addis Ababa Commercial Office</span>
+    <section class="grid gap-10 border-b border-brand-border py-14 lg:grid-cols-[1.4fr_1fr] lg:py-24" data-reveal>
+      <div>
+        <p class="section-eyebrow mb-6">Contact / Universal Electronics</p>
+        <h1 class="max-w-3xl font-serif text-4xl font-semibold leading-tight text-brand-navy sm:text-5xl lg:text-6xl">Let's find what you need.</h1>
       </div>
-      <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-navy mb-4">
-        Contact Universal Electronics
-      </h1>
-      <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
-        Tell us what you are looking for. Call, email, or message us about products and quotations.
-      </p>
-    </div>
+      <p class="max-w-md self-end text-base leading-8 text-brand-muted">Tell us which product or project you have in mind. Ask about current specifications, availability and quotations through the contact channel that suits you.</p>
+    </section>
 
-    <!-- Direct Contact Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-      <!-- Telegram Card -->
-      <div class="bg-white p-6 rounded-2xl border-2 border-brand-telegram/30 hover:border-brand-telegram shadow-sm transition-all flex flex-col justify-between">
-        <div>
-          <div class="w-12 h-12 rounded-xl bg-sky-50 text-brand-telegram flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.37.74-.56 2.92-1.27 4.86-2.11 5.83-2.52 2.77-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24-.01.44z"/>
-            </svg>
-          </div>
-          <h2 class="font-serif text-lg font-bold text-brand-navy mb-1">
-            Telegram Direct Enquiry
-          </h2>
-          <p class="text-xs text-slate-500 mb-4">
-            Message us about a product or your requirements.
-          </p>
-          <p class="text-xs font-mono text-brand-telegram bg-sky-50 px-3 py-1.5 rounded-lg border border-sky-100 mb-4 inline-block">
-            @{siteConfig.telegramUsername}
-          </p>
-        </div>
-
-        <a
-          href={siteConfig.telegramUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-brand-telegram text-white text-xs font-semibold hover:bg-brand-telegramHover transition-colors shadow-sm"
-        >
-          <span>Open Telegram Chat</span>
-          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
-        </a>
+    <section class="grid gap-8 py-14 md:grid-cols-3 lg:py-20" aria-label="Contact channels">
+      <div class="border-t border-brand-navy pt-6">
+        <p class="section-eyebrow mb-5">01 / Message</p>
+        <h2 class="font-serif text-2xl font-semibold">Telegram</h2>
+        <p class="mt-4 min-h-14 text-sm leading-7 text-brand-muted">Send a product name or describe your requirement.</p>
+        <a class="text-link mt-6" href={siteConfig.telegramUrl} target="_blank" rel="noopener noreferrer">Open Telegram <span aria-hidden="true">↗</span></a>
       </div>
-
-      <!-- Phone Support Card -->
-      <div class="bg-white p-6 rounded-2xl border border-brand-border shadow-sm flex flex-col justify-between">
-        <div>
-          <div class="w-12 h-12 rounded-xl bg-brand-pale text-brand-navy flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-brand-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-            </svg>
-          </div>
-          <h2 class="font-serif text-lg font-bold text-brand-navy mb-1">
-            Telephone Inquiries
-          </h2>
-          <p class="text-xs text-slate-500 mb-4">
-            Call our Addis Ababa commercial line or mobile direct contact.
-          </p>
-          <div class="space-y-2 mb-4">
-            <div class="text-xs">
-              <span class="text-slate-400 block">Mobile:</span>
-              <a href={`tel:${siteConfig.phones[0].replace(/\s+/g, '')}`} class="font-semibold text-brand-navy hover:text-brand-blue text-sm">
-                {siteConfig.phones[0]}
-              </a>
-            </div>
-            <div class="text-xs">
-              <span class="text-slate-400 block">Office Landline:</span>
-              <a href={`tel:${siteConfig.phones[1].replace(/\s+/g, '')}`} class="font-semibold text-brand-navy hover:text-brand-blue text-sm">
-                {siteConfig.phones[1]}
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <a
-          href={`tel:${siteConfig.phones[0].replace(/\s+/g, '')}`}
-          class="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-brand-navy text-white text-xs font-semibold hover:bg-brand-navyDark transition-colors shadow-sm"
-        >
-          <span>Call Primary Number</span>
-        </a>
+      <div class="border-t border-brand-navy pt-6">
+        <p class="section-eyebrow mb-5">02 / Call</p>
+        <h2 class="font-serif text-2xl font-semibold">Phone</h2>
+        <p class="mt-4 min-h-14 text-sm leading-7 text-brand-muted">Speak directly about equipment or a quotation.</p>
+        <a class="text-link mt-6" href={`tel:${siteConfig.phones[0].replace(/\s+/g, '')}`}>{siteConfig.phones[0]} <span aria-hidden="true">↗</span></a>
       </div>
-
-      <!-- Email Card -->
-      <div class="bg-white p-6 rounded-2xl border border-brand-border shadow-sm flex flex-col justify-between">
-        <div>
-          <div class="w-12 h-12 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center mb-4">
-            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-          </div>
-          <h2 class="font-serif text-lg font-bold text-brand-navy mb-1">
-            Official Email
-          </h2>
-          <p class="text-xs text-slate-500 mb-4">
-            Send product questions or quotation requests in writing.
-          </p>
-          <p class="text-xs font-mono text-slate-700 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200 mb-4 break-all">
-            {siteConfig.email}
-          </p>
-        </div>
-
-        <a
-          href={`mailto:${siteConfig.email}`}
-          class="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-white border border-brand-border text-brand-navy text-xs font-semibold hover:bg-slate-50 transition-colors shadow-sm"
-        >
-          <span>Compose Email</span>
-        </a>
+      <div class="border-t border-brand-navy pt-6">
+        <p class="section-eyebrow mb-5">03 / Write</p>
+        <h2 class="font-serif text-2xl font-semibold">Email</h2>
+        <p class="mt-4 min-h-14 text-sm leading-7 text-brand-muted">Share details or request information in writing.</p>
+        <a class="text-link mt-6 break-all" href={`mailto:${siteConfig.email}`}>{siteConfig.email} <span aria-hidden="true">↗</span></a>
       </div>
-    </div>
+    </section>
 
-    <!-- Office Address & Status Notice -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
-      <!-- Office Location Card (7 cols) -->
-      <div class="lg:col-span-7 bg-brand-offwhite p-6 sm:p-8 rounded-2xl border border-brand-border space-y-4">
-        <h2 class="font-serif text-xl font-bold text-brand-navy">
-          Physical Office & Distribution Address
-        </h2>
-        <div class="space-y-3 text-sm text-slate-700">
-          <div class="flex items-start gap-3">
-            <span class="text-brand-blue" aria-hidden="true">—</span>
-            <div>
-              <strong class="text-slate-900 block">Universal Electronics</strong>
-              <span>{siteConfig.address}</span>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="text-brand-blue" aria-hidden="true">—</span>
-            <div>
-              <strong class="text-slate-900 block">City & Country</strong>
-              <span>{siteConfig.city}, {siteConfig.country}</span>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="text-brand-blue" aria-hidden="true">—</span>
-            <div>
-              <strong class="text-slate-900 block">Deliveries & Logistics</strong>
-              <span>Contact us to discuss collection or delivery arrangements.</span>
-            </div>
-          </div>
-        </div>
+    <section class="mb-24 grid gap-8 bg-brand-offwhite px-8 py-12 sm:px-12 lg:grid-cols-2 lg:px-16 lg:py-16">
+      <div><p class="section-eyebrow mb-5">Visit us</p><h2 class="font-serif text-3xl font-semibold">Find us in Addis Ababa.</h2></div>
+      <div class="text-sm leading-7 text-brand-muted">
+        <p>{siteConfig.address}<br />{siteConfig.city}, {siteConfig.country}</p>
+        <p class="mt-4">Office line: <a class="font-semibold text-brand-navy hover:underline" href={`tel:${siteConfig.phones[1].replace(/\s+/g, '')}`}>{siteConfig.phones[1]}</a></p>
+        <p class="mt-4">Prefer WhatsApp? <a class="font-semibold text-brand-navy hover:underline" href={`https://wa.me/${siteConfig.whatsappNumber}`} target="_blank" rel="noopener noreferrer">Start a message ↗</a></p>
       </div>
-
-      <!-- WhatsApp contact -->
-      <div class="lg:col-span-5 bg-white p-6 sm:p-8 rounded-2xl border border-brand-border flex flex-col justify-between">
-        <div>
-          <div class="flex items-center gap-2 mb-3">
-            <h3 class="font-serif text-lg font-bold text-slate-800">
-              WhatsApp
-            </h3>
-          </div>
-          <p class="text-sm text-slate-600 leading-relaxed mb-4">
-            Start a conversation using our mobile contact number, {siteConfig.phones[0]}.
-          </p>
-        </div>
-        <a href={`https://wa.me/${siteConfig.whatsappNumber}`} target="_blank" rel="noopener noreferrer"
-          class="inline-flex items-center justify-center px-4 py-3 rounded-lg bg-brand-blue text-white text-sm font-semibold hover:bg-brand-blueHover transition-colors">
-          Open WhatsApp
-        </a>
-      </div>
-    </div>
+    </section>
   </div>
 </Layout>

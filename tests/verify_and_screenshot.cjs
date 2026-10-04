@@ -49,12 +49,18 @@ const rawProducts = JSON.parse(
     console.log('--- Testing Home Page (Mobile) ---');
     await page.setViewportSize({ width: 375, height: 667 });
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, '02_mobile_home.png'), fullPage: false });
+    if (await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)) {
+      throw new Error('Home page has horizontal overflow at mobile width');
+    }
 
     // Test mobile menu click
     const toggleBtn = page.locator('#mobile-menu-toggle');
     if (await toggleBtn.isVisible()) {
       await toggleBtn.click();
       await page.waitForTimeout(300);
+      if (await toggleBtn.getAttribute('aria-expanded') !== 'true' || !(await page.locator('#mobile-menu').isVisible())) {
+        throw new Error('Mobile navigation did not open');
+      }
       await page.screenshot({ path: path.join(SCREENSHOT_DIR, '03_mobile_menu_open.png'), fullPage: false });
     }
 
@@ -75,6 +81,12 @@ const rawProducts = JSON.parse(
       if (wrongLinks.length) throw new Error(`Unprefixed Pages links/assets: ${wrongLinks.slice(0, 5).join(', ')}`);
     }
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, '04_desktop_shop_initial.png') });
+    await page.setViewportSize({ width: 375, height: 667 });
+    if (await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)) {
+      throw new Error('Catalog page has horizontal overflow at mobile width');
+    }
+    await page.screenshot({ path: path.join(SCREENSHOT_DIR, '04_mobile_shop_initial.png') });
+    await page.setViewportSize({ width: 1280, height: 800 });
 
     // Test Search input
     const searchInput = page.locator('#catalog-search');
@@ -83,7 +95,7 @@ const rawProducts = JSON.parse(
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, '05_desktop_shop_search_must.png') });
 
     // Test Reset
-    const resetBtn = page.getByText('Reset All Filters');
+    const resetBtn = page.getByRole('button', { name: 'Clear filters' });
     if (await resetBtn.isVisible()) {
       await resetBtn.click();
       await page.waitForTimeout(300);
@@ -93,6 +105,9 @@ const rawProducts = JSON.parse(
     const catSelect = page.locator('#catalog-category');
     await catSelect.selectOption('solar-batteries');
     await page.waitForTimeout(400);
+    if (await page.locator('.product-card').count() === 0) {
+      throw new Error('Battery filter returned no product cards');
+    }
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, '06_desktop_shop_batteries_filter.png') });
 
     // 4. Shop Solar Overview
@@ -120,6 +135,12 @@ const rawProducts = JSON.parse(
     const pWithImg = 'must-pv2900-hp-solar-inverter-1-6kw-off-grid-pure-sine-wave-inverter';
     await page.goto(`${BASE_URL}/product/${pWithImg}/`, { waitUntil: 'networkidle' });
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, '11_desktop_product_with_image.png'), fullPage: true });
+    await page.setViewportSize({ width: 375, height: 667 });
+    if (await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)) {
+      throw new Error('Product page has horizontal overflow at mobile width');
+    }
+    await page.screenshot({ path: path.join(SCREENSHOT_DIR, '11_mobile_product_with_image.png') });
+    await page.setViewportSize({ width: 1280, height: 800 });
 
     // 9. Product WITHOUT Image (one of the 3 items)
     console.log('--- Testing Product without Image ---');

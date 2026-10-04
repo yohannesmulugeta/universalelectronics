@@ -3,114 +3,108 @@ import { withBase } from '../lib/paths';
 import Layout from '../layouts/Layout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import { products } from '../data/products';
-import { siteConfig } from '../data/siteConfig';
+import type { Product } from '../types';
 
-const featuredProducts = products.filter((p) => [
+const featuredSlugs = [
   'must-pv2900-hp-solar-inverter-1-6kw-off-grid-pure-sine-wave-inverter',
-  'lfeli-48200t48v-200ah',
   'ja-solar-605w-n-type-bifacial-panel',
   'grundfos-sqf-5-70-n-solar-borehole-pump-built-in-mppt-ac-dc-hybrid-power',
-  'sun-king-home-120',
   'jbl-srx725-prx725-dual-15″-two-way-pa-speaker',
   'ssa-250dp',
   'yamaha-v10sg-natural-acoustic-violin',
-].includes(p.slug)).slice(0, 8);
-const solarCount = products.filter((p) => p.section === 'solar').length;
-const soundCount = products.filter((p) => p.section === 'sound').length;
+];
+const featuredProducts = featuredSlugs.map((slug) => products.find((product) => product.slug === slug)).filter((product): product is Product => Boolean(product));
 ---
 
 <Layout title="Universal Electronics | Solar and Sound Equipment in Ethiopia"
-  description="Explore solar and sound equipment from Universal Electronics in Addis Ababa. Browse products and contact us directly for enquiries.">
-  <section class="home-hero overflow-hidden">
-    <div class="max-w-site mx-auto px-4 sm:px-6 grid lg:grid-cols-[1.04fr_.96fr] min-h-[570px]">
-      <div class="flex flex-col justify-center py-20 lg:py-24 relative z-10" data-reveal>
-        <p class="section-eyebrow mb-6">Universal Electronics · Addis Ababa</p>
-        <h1 class="font-serif text-[clamp(2.8rem,5.5vw,5.5rem)] leading-[1.04] tracking-tight text-brand-navy max-w-[700px]">
-          Power for every day.<br /><span class="text-brand-blue">Sound for every space.</span>
-        </h1>
-        <p class="mt-7 text-lg text-slate-600 leading-relaxed max-w-xl">
-          Find solar equipment and professional sound systems in one place. Browse the catalog, then speak with us about the right product for your needs.
-        </p>
-        <div class="flex flex-wrap gap-3 mt-9">
-          <a href={withBase('/shop/')} class="button-primary">Explore products <span aria-hidden="true">↗</span></a>
-          <a href={withBase('/contact/')} class="button-secondary">Contact us</a>
-        </div>
-        <div class="flex gap-7 mt-14 pt-5 border-t border-slate-200 text-sm text-brand-navy">
-          <a href={withBase('/shop/solar/')} class="text-link">Solar equipment <span aria-hidden="true">↗</span></a>
-          <a href={withBase('/shop/sound/')} class="text-link">Sound equipment <span aria-hidden="true">↗</span></a>
-        </div>
+  description="Explore solar energy equipment and professional sound products from Universal Electronics in Addis Ababa.">
+  <section class="grid min-h-[620px] lg:grid-cols-[47%_53%]" aria-labelledby="home-heading">
+    <div class="flex flex-col justify-center px-6 py-20 sm:px-10 lg:px-[max(3rem,calc((100vw-1320px)/2))] lg:py-28" data-reveal>
+      <p class="section-eyebrow mb-8">Universal Electronics / Addis Ababa</p>
+      <h1 id="home-heading" class="max-w-[650px] font-serif text-[clamp(3rem,5.2vw,5.6rem)] font-semibold leading-[1.06] text-brand-navy">
+        Power and sound, <span class="text-brand-blue">considered together.</span>
+      </h1>
+      <p class="mt-7 max-w-[520px] text-base leading-8 text-brand-muted sm:text-lg">
+        Explore solar equipment and professional sound products, then speak with us about the right option for your needs.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center gap-5">
+        <a href={withBase('/shop/')} class="button-primary">Explore the collection <span aria-hidden="true">↗</span></a>
+        <a href={withBase('/contact/')} class="text-link">Talk to us <span aria-hidden="true">↗</span></a>
       </div>
-      <div class="relative flex items-center justify-center pb-12 lg:pb-0" data-reveal>
-        <div class="hero-image-field absolute inset-0 lg:-right-[100vw]"></div>
-        <img src={withBase('/assets/projects/4395-hero2-e1759613225895.png')}
-          alt="Solar products from the Universal Electronics catalog"
-          class="relative w-full max-w-[630px] max-h-[520px] object-contain drop-shadow-xl"
-          width="630" height="520" loading="eager" />
-      </div>
+      <p class="mt-16 border-t border-brand-border pt-5 text-xs font-medium uppercase tracking-[.16em] text-brand-muted">Solar energy <span class="mx-3 text-brand-blue">/</span> Professional sound</p>
+    </div>
+    <div class="home-hero-photo relative min-h-[420px] overflow-hidden lg:min-h-[620px]" data-reveal>
+      <img src={withBase('/assets/projects/4647-project-scaled.jpg')}
+        alt="Solar powered water project photograph from the Universal Electronics archive"
+        width="2560" height="1707" loading="eager" />
+      <span class="absolute bottom-5 right-5 bg-[#faf9f6]/95 px-4 py-3 text-[11px] font-semibold uppercase tracking-[.15em] text-brand-navy sm:bottom-8 sm:right-8">From our project archive</span>
     </div>
   </section>
 
-  <section class="py-20 lg:py-28" aria-labelledby="explore-heading">
-    <div class="max-w-site mx-auto px-4 sm:px-6">
-      <div class="max-w-2xl mb-12" data-reveal>
-        <p class="section-eyebrow mb-4">Explore the catalog</p>
-        <h2 id="explore-heading" class="section-heading">Two specialties. One place to start.</h2>
-        <p class="mt-4 text-slate-600 leading-relaxed">Choose a category to see the products listed in our catalog.</p>
+  <section class="max-w-site mx-auto px-5 py-24 sm:px-8 lg:py-32" aria-labelledby="disciplines-heading">
+    <div class="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end" data-reveal>
+      <div>
+        <p class="section-eyebrow mb-5">Explore our range</p>
+        <h2 id="disciplines-heading" class="section-heading max-w-2xl">Two worlds of possibility.</h2>
       </div>
-      <div class="grid md:grid-cols-2 gap-5">
-        <a href={withBase('/shop/solar/')} class="category-feature group bg-[#eef4fa]" data-reveal>
-          <span class="section-eyebrow">01 / Solar</span>
-          <div><h3 class="font-serif text-3xl sm:text-4xl text-brand-navy">Solar energy</h3>
-            <p class="text-slate-600 mt-3 max-w-md">Panels, inverters, batteries, pumps and portable lighting.</p></div>
-          <span class="category-feature-bottom"><span>{solarCount} products</span><span aria-hidden="true" class="category-arrow">↗</span></span>
-        </a>
-        <a href={withBase('/shop/sound/')} class="category-feature group bg-[#eef0f7]" data-reveal>
-          <span class="section-eyebrow">02 / Sound</span>
-          <div><h3 class="font-serif text-3xl sm:text-4xl text-brand-navy">Professional sound</h3>
-            <p class="text-slate-600 mt-3 max-w-md">Speakers, amplifiers, microphones, mixers and instruments.</p></div>
-          <span class="category-feature-bottom"><span>{soundCount} products</span><span aria-hidden="true" class="category-arrow">↗</span></span>
-        </a>
-      </div>
+      <p class="max-w-sm text-sm leading-7 text-brand-muted">Start with a category, explore the catalog, and contact us for current availability.</p>
+    </div>
+    <div class="grid gap-6 lg:grid-cols-2">
+      <a href={withBase('/shop/solar/')} class="group block" data-reveal>
+        <div class="editorial-image aspect-[1.15] overflow-hidden bg-[#d4d9d0]">
+          <img src={withBase('/assets/projects/4650-project-2-1.png')} alt="Solar panel array from the Universal Electronics project archive" width="1080" height="1080" loading="lazy" />
+        </div>
+        <div class="flex items-start justify-between gap-4 border-b border-brand-border py-6">
+          <div><p class="section-eyebrow mb-2">01 / Solar</p><h3 class="font-serif text-2xl font-semibold sm:text-3xl">Energy for what comes next.</h3>
+            <p class="mt-3 text-sm text-brand-muted">Panels, inverters, batteries, water pumps and portable lighting.</p></div>
+          <span class="text-2xl transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden="true">↗</span>
+        </div>
+      </a>
+      <a href={withBase('/shop/sound/')} class="group block" data-reveal>
+        <div class="flex aspect-[1.15] items-center justify-center overflow-hidden bg-[#d9d8d2]">
+          <img src={withBase('/assets/products/speakers/4980-01._JBL_EON715_3-4_Extreme_vert_medium.png')}
+            alt="Professional speaker from the Universal Electronics sound catalog" class="h-[82%] w-[82%] object-contain transition-transform duration-500 group-hover:scale-105" width="600" height="800" loading="lazy" />
+        </div>
+        <div class="flex items-start justify-between gap-4 border-b border-brand-border py-6">
+          <div><p class="section-eyebrow mb-2">02 / Sound</p><h3 class="font-serif text-2xl font-semibold sm:text-3xl">Sound with presence.</h3>
+            <p class="mt-3 text-sm text-brand-muted">Speakers, amplifiers, microphones, mixers and instruments.</p></div>
+          <span class="text-2xl transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden="true">↗</span>
+        </div>
+      </a>
     </div>
   </section>
 
-  <section class="bg-brand-offwhite py-20 lg:py-24" aria-labelledby="featured-heading">
-    <div class="max-w-site mx-auto px-4 sm:px-6">
-      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10" data-reveal>
-        <div><p class="section-eyebrow mb-4">From the catalog</p><h2 id="featured-heading" class="section-heading">Explore the range</h2></div>
-        <a href={withBase('/shop/')} class="text-link shrink-0">View all products <span aria-hidden="true">↗</span></a>
+  <section class="bg-white py-24 lg:py-32" aria-labelledby="featured-heading">
+    <div class="max-w-site mx-auto px-5 sm:px-8">
+      <div class="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end" data-reveal>
+        <div><p class="section-eyebrow mb-5">Selected from the catalog</p><h2 id="featured-heading" class="section-heading">Discover the equipment.</h2></div>
+        <a href={withBase('/shop/')} class="text-link">See all products <span aria-hidden="true">↗</span></a>
       </div>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
         {featuredProducts.map((product) => <ProductCard product={product} />)}
       </div>
     </div>
   </section>
 
-  <section class="max-w-site mx-auto px-4 sm:px-6 py-20 lg:py-28 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-    <div data-reveal>
-      <p class="section-eyebrow mb-4">Beyond the catalog</p>
-      <h2 class="section-heading">See the work behind the products.</h2>
-      <p class="text-slate-600 leading-relaxed mt-5 max-w-xl">Browse the project and recognition records preserved from our previous website.</p>
-      <div class="flex gap-6 mt-8">
-        <a href={withBase('/projects/')} class="text-link">Projects <span aria-hidden="true">↗</span></a>
-        <a href={withBase('/recognition/')} class="text-link">Recognition <span aria-hidden="true">↗</span></a>
-      </div>
+  <section class="max-w-site mx-auto grid gap-0 px-5 py-24 sm:px-8 lg:grid-cols-2 lg:py-32" aria-labelledby="projects-heading">
+    <div class="flex flex-col justify-center bg-brand-navy px-8 py-16 text-white sm:px-12 lg:px-16" data-reveal>
+      <p class="text-[11px] font-bold uppercase tracking-[.22em] text-[#b3c9c9]">Beyond the catalog</p>
+      <h2 id="projects-heading" class="mt-6 max-w-lg font-serif text-3xl font-semibold leading-tight text-white sm:text-4xl lg:text-5xl">Explore the work behind the equipment.</h2>
+      <p class="mt-6 max-w-md text-sm leading-7 text-[#c4cecb]">See photographs and recognition documents preserved from the previous Universal Electronics website.</p>
+      <div class="mt-9 flex flex-wrap gap-7"><a href={withBase('/projects/')} class="text-link text-white hover:text-[#c4cecb]">View projects ↗</a>
+        <a href={withBase('/recognition/')} class="text-link text-white hover:text-[#c4cecb]">Recognition ↗</a></div>
     </div>
-    <div class="overflow-hidden bg-[#eef4fa] aspect-[4/3]" data-reveal>
-      <img src={withBase('/assets/projects/4650-project-2-1.png')} alt="Solar array photograph from the Universal Electronics archive"
-        class="w-full h-full object-cover image-zoom" width="800" height="600" loading="lazy" />
+    <div class="editorial-image min-h-[360px] overflow-hidden lg:min-h-[560px]" data-reveal>
+      <img src={withBase('/assets/projects/4853-1.png')} alt="Solar panel installation photograph from the Universal Electronics archive" width="506" height="333" loading="lazy" />
     </div>
   </section>
 
-  <section class="bg-brand-navy text-white py-16 lg:py-20">
-    <div class="max-w-site mx-auto px-4 sm:px-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8" data-reveal>
-      <div><p class="text-sky-300 text-xs uppercase tracking-[.18em] font-semibold mb-4">Have a product in mind?</p>
-        <h2 class="font-serif text-3xl sm:text-4xl text-white">Let's talk about what you need.</h2>
-        <p class="text-slate-300 mt-4">Send us the product name or tell us about your project.</p></div>
-      <div class="flex flex-wrap gap-3">
-        <a href={`https://wa.me/${siteConfig.whatsappNumber}`} target="_blank" rel="noopener noreferrer" class="button-light">WhatsApp <span aria-hidden="true">↗</span></a>
-        <a href={siteConfig.telegramUrl} target="_blank" rel="noopener noreferrer" class="button-outline-light">Telegram <span aria-hidden="true">↗</span></a>
-      </div>
+  <section class="border-t border-brand-border py-24 text-center lg:py-32" aria-labelledby="contact-heading">
+    <div class="max-w-site mx-auto px-5 sm:px-8" data-reveal>
+      <p class="section-eyebrow mb-6">Start a conversation</p>
+      <h2 id="contact-heading" class="mx-auto max-w-3xl font-serif text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">Tell us what you are looking for.</h2>
+      <p class="mx-auto mt-6 max-w-xl leading-7 text-brand-muted">Ask about a product, availability or a project requirement. We will help you find the right contact route.</p>
+      <a href={withBase('/contact/')} class="button-primary mt-9">Contact Universal Electronics <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Layout>

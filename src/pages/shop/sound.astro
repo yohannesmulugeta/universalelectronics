@@ -14,7 +14,7 @@ const soundProducts = products.filter((p) => p.section === 'sound');
   title="Professional Sound Systems | Universal Electronics"
   description="Discover 20 professional sound products: PA speakers, amplifiers, microphones, keyboards, and audio mixers in Addis Ababa, Ethiopia."
 >
-  <div class="max-w-site mx-auto px-4 sm:px-6 py-6 sm:py-8">
+  <div class="max-w-site mx-auto px-5 sm:px-8 py-6 sm:py-8">
     <Breadcrumb
       items={[
         { label: 'Product Catalog', href: '/shop/' },
@@ -23,24 +23,24 @@ const soundProducts = products.filter((p) => p.section === 'sound');
     />
 
     <!-- Header Section -->
-    <div class="mb-10">
-      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 text-sky-800 border border-sky-200 text-xs font-semibold mb-3">
+    <div class="mb-16 pt-10 sm:pt-16">
+      <div class="section-eyebrow mb-5">
         <span>Sound equipment · {soundProducts.length} products</span>
       </div>
-      <h1 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-brand-navy mb-3">
+      <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-semibold text-brand-navy mb-5">
         Professional Sound Systems
       </h1>
-      <p class="text-sm sm:text-base text-slate-600 max-w-3xl leading-relaxed">
+      <p class="text-base text-brand-muted max-w-2xl leading-8">
         Explore speakers, amplifiers, microphones, mixers and instruments. Open a product to see catalog details and ask us about availability.
       </p>
 
       <!-- Category Navigation Tiles -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-6">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-12">
         {
           soundCategories.map((cat) => (
             <a
               href={withBase(`/category/${cat.slug}/`)}
-              class="group flex flex-col p-4 rounded-xl border border-brand-border bg-brand-offwhite hover:bg-white hover:border-brand-blue hover:shadow-sm transition-all"
+              class="group flex flex-col p-5 border-t border-brand-navy bg-brand-offwhite hover:bg-white transition-colors"
             >
               <span class="font-semibold text-brand-navy group-hover:text-brand-blue text-sm">
                 {cat.name}
@@ -78,7 +78,7 @@ const soundProducts = products.filter((p) => p.section === 'sound');
                 </a>
               </div>
 
-              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
                 {items.map((product) => (
                   <ProductCard product={product} />
                 ))}

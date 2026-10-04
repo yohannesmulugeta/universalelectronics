@@ -26,8 +26,8 @@ const cleanDescription = product.descriptionText
   .replace(/^#+\s*/, '')
   .split(/\s+###\s+|\s+Category:|\s+Tags:/)[0]
   .trim();
-const description = cleanDescription.length > 520
-  ? `${cleanDescription.slice(0, cleanDescription.lastIndexOf(' ', 520))}…`
+const description = cleanDescription.length > 340
+  ? `${cleanDescription.slice(0, cleanDescription.lastIndexOf(' ', 340))}…`
   : cleanDescription;
 const displayFeatures = product.features.filter((feature) => feature.length < 180 && !feature.includes('###'));
 
@@ -66,7 +66,7 @@ const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${ema
   description={`Catalog details and product enquiry for ${product.title} at Universal Electronics, Addis Ababa.`}
   ogImage={primaryImage || undefined}
 >
-  <div class="max-w-site mx-auto px-4 sm:px-6 py-6 sm:py-8">
+  <div class="max-w-site mx-auto px-5 sm:px-8 py-6 sm:py-8">
     <Breadcrumb
       items={[
         { label: 'Product Catalog', href: '/shop/' },
@@ -79,16 +79,16 @@ const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${ema
     />
 
     <!-- Main Product Detail Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mt-4 mb-16">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mt-8 mb-20">
       <!-- Media Gallery Column (5 cols on LG) -->
-      <div class="lg:col-span-5 space-y-4">
-        <div class="bg-brand-offwhite rounded-2xl border border-brand-border p-6 aspect-square flex items-center justify-center overflow-hidden">
+      <div class="lg:col-span-6 space-y-4">
+        <div class="bg-[#efefeb] p-8 sm:p-12 aspect-square flex items-center justify-center overflow-hidden">
           {
             hasImages && primaryImage ? (
               <img
                 src={withBase(primaryImage)}
                 alt={product.title}
-                class="w-full h-full object-contain max-h-[380px]"
+                class="w-full h-full object-contain max-h-[520px]"
                 loading="eager"
               />
             ) : (
@@ -122,7 +122,7 @@ const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${ema
           product.media && product.media.length > 1 && (
             <div class="flex gap-2 overflow-x-auto pb-2">
               {product.media.map((img, i) => (
-                <div class="w-20 h-20 shrink-0 bg-brand-offwhite rounded-lg border border-brand-border p-2 flex items-center justify-center">
+                <div class="w-20 h-20 shrink-0 bg-brand-offwhite border border-brand-border p-2 flex items-center justify-center">
                   <img
                     src={withBase(img)}
                     alt={`${product.title} view ${i + 1}`}
@@ -138,49 +138,44 @@ const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${ema
       </div>
 
       <!-- Product Information Column (7 cols on LG) -->
-      <div class="lg:col-span-7 flex flex-col">
+      <div class="lg:col-span-6 flex flex-col lg:py-5">
         <!-- Badges -->
-        <div class="flex flex-wrap items-center gap-2 mb-3">
+        <div class="flex flex-wrap items-center gap-3 mb-6 text-xs font-semibold uppercase tracking-[.12em] text-brand-muted">
           <a
             href={withBase(`/category/${product.categorySlug}/`)}
-            class="px-2.5 py-1 rounded text-xs font-semibold bg-brand-pale text-brand-navy border border-blue-200 hover:bg-blue-100 transition-colors"
+            class="text-brand-blue hover:underline"
           >
             {product.categoryName}
           </a>
-          <span class="px-2.5 py-1 rounded text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
-            Brand: {product.primaryBrand}
-          </span>
-          <span class="text-xs text-slate-400 capitalize">
-            • {product.section} Division
-          </span>
+          <span aria-hidden="true">/</span><span>{product.primaryBrand}</span>
         </div>
 
         <!-- Title -->
-        <h1 class="font-serif text-2xl sm:text-3xl font-bold text-brand-navy mb-4 leading-snug">
+        <h1 class="font-serif text-3xl sm:text-4xl xl:text-5xl font-semibold text-brand-navy mb-6 leading-[1.12]">
           {product.title}
         </h1>
 
         <!-- Overview Summary -->
-        <div class="text-sm sm:text-base text-slate-700 leading-relaxed mb-6 bg-white">
+        <div class="text-base text-brand-muted leading-8 mb-8">
           <p>{description || `Explore ${product.title} and ask us for current details.`}</p>
         </div>
 
         <!-- Direct Contact / Enquiry Card -->
-        <div class="bg-brand-offwhite p-5 sm:p-6 rounded-xl border border-brand-border mb-8 shadow-sm">
-          <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-navy mb-2 flex items-center gap-2">
-            <span>Direct Product Enquiry</span>
+        <div class="border-t border-b border-brand-border py-7 mb-9">
+          <h2 class="text-sm font-semibold uppercase tracking-[.16em] text-brand-navy mb-2">
+            <span>Ask about this product</span>
           </h2>
-          <p class="text-xs text-slate-600 mb-4">
-            Ask about availability, specifications, or a quotation.
+          <p class="text-sm text-brand-muted mb-5">
+            Contact us for current availability and details.
           </p>
 
-          <div class="flex flex-col sm:flex-row gap-3">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3">
             <!-- Telegram Action Button -->
             <a
               href={telegramLink}
               target="_blank"
               rel="noopener noreferrer"
-              class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-brand-telegram text-white font-semibold text-sm hover:bg-brand-telegramHover shadow-sm transition-colors"
+              class="button-primary"
             >
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.37.74-.56 2.92-1.27 4.86-2.11 5.83-2.52 2.77-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24-.01.44z"/>
@@ -192,7 +187,7 @@ const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${ema
               href={`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(`Hello Universal Electronics, I would like to ask about ${product.title}.`)}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-brand-whatsapp text-white font-semibold text-sm hover:bg-brand-whatsappHover shadow-sm transition-colors"
+              class="button-secondary"
             >
               <span>Ask on WhatsApp</span>
             </a>
@@ -200,7 +195,7 @@ const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${ema
             <!-- Email Action Button -->
             <a
               href={emailLink}
-              class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-white border border-brand-border text-brand-dark hover:bg-slate-50 font-semibold text-sm transition-colors"
+              class="text-link justify-center sm:ml-2"
             >
               <svg class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -209,13 +204,13 @@ const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${ema
             </a>
           </div>
 
-          <div class="mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-500">
+          <div class="mt-6 flex flex-wrap items-center gap-3 text-xs text-brand-muted">
             <span>Direct Phone Call:</span>
-            <div class="flex gap-3">
+            <div class="flex flex-wrap gap-3">
               <a href={`tel:${siteConfig.phones[0].replace(/\s+/g, '')}`} class="font-medium text-brand-blue hover:underline">
                 {siteConfig.phones[0]}
               </a>
-              <span>•</span>
+              <span aria-hidden="true">/</span>
               <a href={`tel:${siteConfig.phones[1].replace(/\s+/g, '')}`} class="font-medium text-brand-blue hover:underline">
                 {siteConfig.phones[1]}
               </a>
@@ -294,7 +289,7 @@ const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${ema
             </a>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {relatedProducts.map((p) => (
               <ProductCard product={p} />
             ))}
