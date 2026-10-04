@@ -5,15 +5,15 @@ export default {
     extend: {
       colors: {
         brand: {
-          navy: '#202b2c',
-          navyDark: '#11191a',
-          blue: '#22536a',
-          blueHover: '#153b4c',
-          pale: '#e9eeec',
-          offwhite: '#f5f4f0',
-          dark: '#202b2c',
-          muted: '#536061',
-          border: '#dedfd9',
+          navy: '#012483',
+          navyDark: '#00195e',
+          blue: '#005EE9',
+          blueHover: '#004ec2',
+          pale: '#EAF2FF',
+          offwhite: '#F7F9FC',
+          dark: '#172033',
+          muted: '#475569',
+          border: '#DCE4EE',
           whatsapp: '#25D366',
           whatsappHover: '#1ebe57',
           telegram: '#229ED9',
@@ -21,8 +21,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['"DM Sans"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
-        serif: ['"Manrope"', 'system-ui', 'sans-serif'],
+        sans: ['Roboto', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        serif: ['"Roboto Slab"', 'Georgia', 'Cambria', 'serif'],
       },
       maxWidth: {
         site: '1320px',

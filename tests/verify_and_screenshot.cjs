@@ -108,6 +108,7 @@ const rawProducts = JSON.parse(
     // 2. Home Mobile & Menu Toggle
     console.log('--- Testing Home Page (Mobile) ---');
     await page.setViewportSize({ width: 375, height: 667 });
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, '02_mobile_home.png'), fullPage: false });
     if (await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)) {
       throw new Error('Home page has horizontal overflow at mobile width');
