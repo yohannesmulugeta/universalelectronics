@@ -67,7 +67,6 @@
   gap: 6px;
   overflow-x: auto;
   padding: 0 8px 4px;
-  scroll-snap-type: x mandatory;
   scrollbar-width: none;
   overscroll-behavior-inline: contain;
 }
@@ -79,7 +78,6 @@
   min-width: 0;
   min-height: 480px;
   background: #f7f7f5;
-  scroll-snap-align: start;
 }
 .featured-carousel-image {
   display: flex;

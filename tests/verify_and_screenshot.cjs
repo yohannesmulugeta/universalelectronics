@@ -48,12 +48,28 @@ const rawProducts = JSON.parse(
     console.log('--- Testing Featured Product Carousel ---');
     const carousel = page.locator('[data-featured-carousel]');
     const carouselTrack = carousel.locator('.featured-carousel-track');
-    if (await carousel.locator('.featured-carousel-card').count() !== 8) {
+    const originalCards = carousel.locator('.featured-carousel-card:not([aria-hidden])');
+    if (await originalCards.count() !== 8) {
       throw new Error('Featured product carousel should contain eight catalog products');
     }
-    if (await carousel.locator('.featured-carousel-card img').count() !== 8) {
+    if (await originalCards.locator('img').count() !== 8) {
       throw new Error('Featured product carousel contains a product without an image');
     }
+    if (await carousel.locator('.featured-carousel-card[aria-hidden="true"]').count() < 8) {
+      throw new Error('Featured product carousel is missing its seamless loop');
+    }
+    await carousel.scrollIntoViewIfNeeded();
+    const motionStart = await carouselTrack.evaluate((element) => element.scrollLeft);
+    await page.waitForFunction((initial) =>
+      document.querySelector('.featured-carousel-track')?.scrollLeft > initial + 12,
+      motionStart
+    );
+    const loopWidth = await carouselTrack.evaluate((element) => {
+      const cards = element.querySelectorAll('.featured-carousel-card:not([aria-hidden])');
+      return (cards[1].offsetLeft - cards[0].offsetLeft) * cards.length;
+    });
+    await carouselTrack.evaluate((element, width) => { element.scrollLeft = width - 10; }, loopWidth);
+    await page.waitForFunction(() => document.querySelector('.featured-carousel-track')?.scrollLeft < 100);
     await carousel.screenshot({ path: path.join(SCREENSHOT_DIR, '01_desktop_featured_carousel.png') });
     const playButton = carousel.locator('[data-carousel-play]');
     if (await playButton.getAttribute('aria-label') !== 'Pause automatic scrolling') {
@@ -63,6 +79,18 @@ const rawProducts = JSON.parse(
     if (await playButton.getAttribute('aria-label') !== 'Resume automatic scrolling') {
       throw new Error('Featured product carousel did not pause');
     }
+    const pausedScroll = await carouselTrack.evaluate((element) => element.scrollLeft);
+    await page.waitForTimeout(350);
+    if (Math.abs((await carouselTrack.evaluate((element) => element.scrollLeft)) - pausedScroll) > 2) {
+      throw new Error('Featured product carousel kept moving after pause');
+    }
+    await playButton.click();
+    const resumedScroll = await carouselTrack.evaluate((element) => element.scrollLeft);
+    await page.waitForFunction((initial) =>
+      document.querySelector('.featured-carousel-track')?.scrollLeft > initial + 12,
+      resumedScroll
+    );
+    await playButton.click();
     const initialScroll = await carouselTrack.evaluate((element) => element.scrollLeft);
     await carousel.getByRole('button', { name: 'Next products' }).click();
     await page.waitForFunction((initial) =>
@@ -100,6 +128,21 @@ const rawProducts = JSON.parse(
 
     // Reset viewport to desktop
     await page.setViewportSize({ width: 1280, height: 800 });
+
+    const reducedContext = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' });
+    const reducedPage = await reducedContext.newPage();
+    await reducedPage.goto(`${BASE_URL}/`, { waitUntil: 'networkidle' });
+    const reducedCarousel = reducedPage.locator('[data-featured-carousel]');
+    await reducedCarousel.scrollIntoViewIfNeeded();
+    if (await reducedCarousel.locator('[data-carousel-play]').getAttribute('aria-label') !== 'Resume automatic scrolling') {
+      throw new Error('Featured product carousel did not respect reduced-motion preference');
+    }
+    const reducedStart = await reducedCarousel.locator('.featured-carousel-track').evaluate((element) => element.scrollLeft);
+    await reducedPage.waitForTimeout(450);
+    if (Math.abs((await reducedCarousel.locator('.featured-carousel-track').evaluate((element) => element.scrollLeft)) - reducedStart) > 2) {
+      throw new Error('Featured product carousel moved automatically with reduced motion enabled');
+    }
+    await reducedContext.close();
 
     // 3. Shop Catalog & Filter Island
     console.log('--- Testing Shop Catalog & React Filter Island ---');

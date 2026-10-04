@@ -57,53 +57,105 @@ const { items } = Astro.props;
 
   if (root && track && progress && prev && next && play && pauseIcon && playIcon) {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const cards = [...track.querySelectorAll<HTMLElement>('.featured-carousel-card')];
     let playing = !reduceMotion;
-    let hovering = false;
     let focused = false;
-    let timer: number | undefined;
+    let interacting = false;
+    let manualBusy = false;
+    let visible = false;
+    let loopWidth = 0;
+    let frame: number | undefined;
+    let lastFrame = 0;
+    let manualTimer: number | undefined;
 
-    const maxScroll = () => Math.max(0, track.scrollWidth - track.clientWidth);
-    const cardStep = () => {
-      const cards = track.querySelectorAll<HTMLElement>('.featured-carousel-card');
-      return cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : track.clientWidth;
-    };
+    const cardStep = () => cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : track.clientWidth;
+    const canAnimate = () => playing && visible && !focused && !interacting && !manualBusy && !document.hidden && loopWidth > 0;
     const updateProgress = () => {
-      const fraction = Math.min(1, track.clientWidth / track.scrollWidth);
+      const fraction = loopWidth ? Math.min(0.26, Math.max(0.12, track.clientWidth / loopWidth)) : 0.26;
+      const position = loopWidth ? (track.scrollLeft % loopWidth) / loopWidth : 0;
       progress.style.width = `${fraction * 100}%`;
-      progress.style.left = `${(maxScroll() ? track.scrollLeft / maxScroll() : 0) * (1 - fraction) * 100}%`;
+      progress.style.left = `${position * (1 - fraction) * 100}%`;
+    };
+    const animate = (time: number) => {
+      if (!canAnimate()) { frame = undefined; lastFrame = 0; return; }
+      if (lastFrame) {
+        track.scrollLeft += Math.min(time - lastFrame, 64) * 0.045;
+        if (track.scrollLeft >= loopWidth) track.scrollLeft %= loopWidth;
+      }
+      lastFrame = time;
+      updateProgress();
+      frame = window.requestAnimationFrame(animate);
+    };
+    const syncAnimation = () => {
+      if (canAnimate() && frame === undefined) {
+        lastFrame = 0;
+        frame = window.requestAnimationFrame(animate);
+      } else if (!canAnimate() && frame !== undefined) {
+        window.cancelAnimationFrame(frame);
+        frame = undefined;
+        lastFrame = 0;
+      }
+    };
+    const refreshLayout = () => {
+      loopWidth = cards.length * cardStep();
+      while (loopWidth > 0 && track.scrollWidth - track.clientWidth <= loopWidth && cards.length) {
+        cards.forEach((card) => {
+          const clone = card.cloneNode(true) as HTMLElement;
+          clone.setAttribute('aria-hidden', 'true');
+          clone.setAttribute('inert', '');
+          clone.querySelectorAll('a').forEach((link) => { link.tabIndex = -1; });
+          track.appendChild(clone);
+        });
+      }
+      if (loopWidth && track.scrollLeft >= loopWidth) track.scrollLeft %= loopWidth;
+      updateProgress();
+      syncAnimation();
     };
     const move = (direction: 1 | -1) => {
-      const limit = maxScroll();
-      const destination = track.scrollLeft + direction * cardStep();
-      const left = destination > limit + 1 ? 0 : destination < -1 ? limit : Math.min(limit, Math.max(0, destination));
-      track.scrollTo({ left, behavior: reduceMotion ? 'auto' : 'smooth' });
+      manualBusy = true;
+      syncAnimation();
+      let start = track.scrollLeft;
+      if (start >= loopWidth) start %= loopWidth;
+      if (direction === -1 && start < cardStep()) start += loopWidth;
+      track.scrollLeft = start;
+      track.scrollTo({ left: start + direction * cardStep(), behavior: reduceMotion ? 'instant' : 'smooth' });
+      window.clearTimeout(manualTimer);
+      manualTimer = window.setTimeout(() => { manualBusy = false; syncAnimation(); }, 700);
     };
     const syncPlayButton = () => {
       play.setAttribute('aria-label', playing ? 'Pause automatic scrolling' : 'Resume automatic scrolling');
       pauseIcon.classList.toggle('hidden', !playing);
       playIcon.classList.toggle('hidden', playing);
     };
-    const resetTimer = () => {
-      window.clearInterval(timer);
-      if (playing && !hovering && !focused && !document.hidden && maxScroll() > 0) {
-        timer = window.setInterval(() => move(1), 5000);
-      }
-    };
 
-    prev.addEventListener('click', () => { move(-1); resetTimer(); });
-    next.addEventListener('click', () => { move(1); resetTimer(); });
-    play.addEventListener('click', () => { playing = !playing; syncPlayButton(); resetTimer(); });
-    root.addEventListener('mouseenter', () => { hovering = true; resetTimer(); });
-    root.addEventListener('mouseleave', () => { hovering = false; resetTimer(); });
-    root.addEventListener('focusin', () => { focused = true; resetTimer(); });
-    root.addEventListener('focusout', (event) => {
-      if (!root.contains(event.relatedTarget as Node | null)) { focused = false; resetTimer(); }
+    prev.addEventListener('click', () => move(-1));
+    next.addEventListener('click', () => move(1));
+    play.addEventListener('click', () => {
+      playing = !playing;
+      if (playing) focused = false;
+      syncPlayButton();
+      syncAnimation();
     });
+    root.addEventListener('focusin', () => { focused = true; syncAnimation(); });
+    root.addEventListener('focusout', (event) => {
+      if (!root.contains(event.relatedTarget as Node | null)) { focused = false; syncAnimation(); }
+    });
+    track.addEventListener('pointerdown', () => { interacting = true; syncAnimation(); });
+    const endInteraction = () => {
+      if (!interacting) return;
+      interacting = false;
+      manualBusy = true;
+      window.clearTimeout(manualTimer);
+      manualTimer = window.setTimeout(() => { manualBusy = false; syncAnimation(); }, 700);
+    };
+    window.addEventListener('pointerup', endInteraction);
+    window.addEventListener('pointercancel', endInteraction);
     track.addEventListener('scroll', updateProgress, { passive: true });
-    window.addEventListener('resize', () => { updateProgress(); resetTimer(); });
-    document.addEventListener('visibilitychange', resetTimer);
+    window.addEventListener('resize', refreshLayout);
+    document.addEventListener('visibilitychange', syncAnimation);
+    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; syncAnimation(); }, { threshold: 0.1 });
+    observer.observe(root);
     syncPlayButton();
-    updateProgress();
-    resetTimer();
+    refreshLayout();
   }
 </script>
