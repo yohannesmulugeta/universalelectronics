@@ -152,8 +152,16 @@ const rawProducts = JSON.parse(
 
     // 14. 404 Page
     console.log('--- Testing 404 Page ---');
-    await page.goto(`${BASE_URL}/404/`, { waitUntil: 'networkidle' });
-    await page.screenshot({ path: path.join(SCREENSHOT_DIR, '18_desktop_404.png') });
+    const notFoundPage = await context.newPage();
+    const notFoundResponse = await notFoundPage.goto(`${BASE_URL}/404/`, { waitUntil: 'networkidle' });
+    if (!notFoundResponse || ![200, 404].includes(notFoundResponse.status())) {
+      throw new Error(`Unexpected 404 page status: ${notFoundResponse?.status()}`);
+    }
+    if (!(await notFoundPage.getByRole('heading', { name: 'Page Not Found' }).isVisible())) {
+      throw new Error('Custom 404 page is missing');
+    }
+    await notFoundPage.screenshot({ path: path.join(SCREENSHOT_DIR, '18_desktop_404.png') });
+    await notFoundPage.close();
 
     // 15. Verify all 59 product routes return HTTP 200
     console.log('--- Verifying all 59 Product Routes Return HTTP 200 ---');
