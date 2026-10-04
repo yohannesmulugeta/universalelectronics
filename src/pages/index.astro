@@ -1,16 +1,18 @@
 ---
 import { withBase } from '../lib/paths';
 import Layout from '../layouts/Layout.astro';
-import ProductCard from '../components/ProductCard.astro';
+import FeaturedCarousel from '../components/FeaturedCarousel.astro';
 import { products } from '../data/products';
 import type { Product } from '../types';
 
 const featuredSlugs = [
   'must-pv2900-hp-solar-inverter-1-6kw-off-grid-pure-sine-wave-inverter',
+  'jbl-eon715',
   'ja-solar-605w-n-type-bifacial-panel',
-  'grundfos-sqf-5-70-n-solar-borehole-pump-built-in-mppt-ac-dc-hybrid-power',
-  'jbl-srx725-prx725-dual-15″-two-way-pa-speaker',
   'ssa-250dp',
+  'sun-king-home-120',
+  'jbl-srx725-prx725-dual-15″-two-way-pa-speaker',
+  'grundfos-sqf-5-70-n-solar-borehole-pump-built-in-mppt-ac-dc-hybrid-power',
   'yamaha-v10sg-natural-acoustic-violin',
 ];
 const featuredProducts = featuredSlugs.map((slug) => products.find((product) => product.slug === slug)).filter((product): product is Product => Boolean(product));
@@ -74,17 +76,7 @@ const featuredProducts = featuredSlugs.map((slug) => products.find((product) => 
     </div>
   </section>
 
-  <section class="bg-white py-24 lg:py-32" aria-labelledby="featured-heading">
-    <div class="max-w-site mx-auto px-5 sm:px-8">
-      <div class="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end" data-reveal>
-        <div><p class="section-eyebrow mb-5">Selected from the catalog</p><h2 id="featured-heading" class="section-heading">Discover the equipment.</h2></div>
-        <a href={withBase('/shop/')} class="text-link">See all products <span aria-hidden="true">↗</span></a>
-      </div>
-      <div class="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-        {featuredProducts.map((product) => <ProductCard product={product} />)}
-      </div>
-    </div>
-  </section>
+  <FeaturedCarousel items={featuredProducts} />
 
   <section class="max-w-site mx-auto grid gap-0 px-5 py-24 sm:px-8 lg:grid-cols-2 lg:py-32" aria-labelledby="projects-heading">
     <div class="flex flex-col justify-center bg-brand-navy px-8 py-16 text-white sm:px-12 lg:px-16" data-reveal>

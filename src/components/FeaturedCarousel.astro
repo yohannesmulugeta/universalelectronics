@@ -1,0 +1,109 @@
+---
+import { withBase } from '../lib/paths';
+import type { Product } from '../types';
+
+interface Props { items: Product[]; }
+const { items } = Astro.props;
+---
+
+<section class="featured-carousel bg-white py-20 lg:py-28" aria-labelledby="featured-heading" data-featured-carousel>
+  <div class="max-w-site mx-auto px-5 text-center sm:px-8">
+    <p class="section-eyebrow mb-4">Selected from the catalog</p>
+    <h2 id="featured-heading" class="font-serif text-2xl font-semibold text-brand-navy sm:text-3xl">Explore selected products</h2>
+  </div>
+
+  <div id="featured-carousel-track" class="featured-carousel-track mt-10" tabindex="0" role="region" aria-label="Selected product carousel">
+    {items.map((product) => (
+      <article class="featured-carousel-card">
+        <a href={withBase(`/product/${product.slug}/`)} class="featured-carousel-image" aria-label={`View ${product.title}`}>
+          {product.media?.[0] ? (
+            <img src={withBase(product.media[0])} alt="" width="360" height="360" loading="lazy" />
+          ) : (
+            <span class="text-sm text-brand-muted">Product image unavailable</span>
+          )}
+        </a>
+        <div class="featured-carousel-copy">
+          <p class="text-[11px] font-semibold uppercase tracking-[.13em] text-brand-muted">{product.primaryBrand}</p>
+          <h3 class="mt-2 font-serif text-sm font-semibold leading-snug text-brand-navy sm:text-base">
+            <a href={withBase(`/product/${product.slug}/`)}>{product.title}</a>
+          </h3>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="max-w-site mx-auto flex items-center justify-between gap-5 px-5 pt-7 sm:px-8">
+    <a href={withBase('/shop/')} class="text-link">View all products <span aria-hidden="true">↗</span></a>
+    <div class="flex items-center gap-4 sm:gap-6">
+      <div class="featured-carousel-progress hidden sm:block" aria-hidden="true"><span data-carousel-progress></span></div>
+      <button type="button" data-carousel-prev class="featured-carousel-control" aria-label="Previous products" aria-controls="featured-carousel-track">←</button>
+      <button type="button" data-carousel-next class="featured-carousel-control" aria-label="Next products" aria-controls="featured-carousel-track">→</button>
+      <button type="button" data-carousel-play class="featured-carousel-control" aria-label="Pause automatic scrolling" aria-controls="featured-carousel-track">
+        <span data-pause-icon aria-hidden="true">Ⅱ</span><span data-play-icon class="hidden" aria-hidden="true">▶</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-featured-carousel]');
+  const track = root?.querySelector<HTMLElement>('.featured-carousel-track');
+  const progress = root?.querySelector<HTMLElement>('[data-carousel-progress]');
+  const prev = root?.querySelector<HTMLButtonElement>('[data-carousel-prev]');
+  const next = root?.querySelector<HTMLButtonElement>('[data-carousel-next]');
+  const play = root?.querySelector<HTMLButtonElement>('[data-carousel-play]');
+  const pauseIcon = root?.querySelector<HTMLElement>('[data-pause-icon]');
+  const playIcon = root?.querySelector<HTMLElement>('[data-play-icon]');
+
+  if (root && track && progress && prev && next && play && pauseIcon && playIcon) {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let playing = !reduceMotion;
+    let hovering = false;
+    let focused = false;
+    let timer: number | undefined;
+
+    const maxScroll = () => Math.max(0, track.scrollWidth - track.clientWidth);
+    const cardStep = () => {
+      const cards = track.querySelectorAll<HTMLElement>('.featured-carousel-card');
+      return cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : track.clientWidth;
+    };
+    const updateProgress = () => {
+      const fraction = Math.min(1, track.clientWidth / track.scrollWidth);
+      progress.style.width = `${fraction * 100}%`;
+      progress.style.left = `${(maxScroll() ? track.scrollLeft / maxScroll() : 0) * (1 - fraction) * 100}%`;
+    };
+    const move = (direction: 1 | -1) => {
+      const limit = maxScroll();
+      const destination = track.scrollLeft + direction * cardStep();
+      const left = destination > limit + 1 ? 0 : destination < -1 ? limit : Math.min(limit, Math.max(0, destination));
+      track.scrollTo({ left, behavior: reduceMotion ? 'auto' : 'smooth' });
+    };
+    const syncPlayButton = () => {
+      play.setAttribute('aria-label', playing ? 'Pause automatic scrolling' : 'Resume automatic scrolling');
+      pauseIcon.classList.toggle('hidden', !playing);
+      playIcon.classList.toggle('hidden', playing);
+    };
+    const resetTimer = () => {
+      window.clearInterval(timer);
+      if (playing && !hovering && !focused && !document.hidden && maxScroll() > 0) {
+        timer = window.setInterval(() => move(1), 5000);
+      }
+    };
+
+    prev.addEventListener('click', () => { move(-1); resetTimer(); });
+    next.addEventListener('click', () => { move(1); resetTimer(); });
+    play.addEventListener('click', () => { playing = !playing; syncPlayButton(); resetTimer(); });
+    root.addEventListener('mouseenter', () => { hovering = true; resetTimer(); });
+    root.addEventListener('mouseleave', () => { hovering = false; resetTimer(); });
+    root.addEventListener('focusin', () => { focused = true; resetTimer(); });
+    root.addEventListener('focusout', (event) => {
+      if (!root.contains(event.relatedTarget as Node | null)) { focused = false; resetTimer(); }
+    });
+    track.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', () => { updateProgress(); resetTimer(); });
+    document.addEventListener('visibilitychange', resetTimer);
+    syncPlayButton();
+    updateProgress();
+    resetTimer();
+  }
+</script>

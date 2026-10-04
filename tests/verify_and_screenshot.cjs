@@ -45,6 +45,38 @@ const rawProducts = JSON.parse(
     console.log('Home title:', homeTitle);
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, '01_desktop_home.png'), fullPage: true });
 
+    console.log('--- Testing Featured Product Carousel ---');
+    const carousel = page.locator('[data-featured-carousel]');
+    const carouselTrack = carousel.locator('.featured-carousel-track');
+    if (await carousel.locator('.featured-carousel-card').count() !== 8) {
+      throw new Error('Featured product carousel should contain eight catalog products');
+    }
+    if (await carousel.locator('.featured-carousel-card img').count() !== 8) {
+      throw new Error('Featured product carousel contains a product without an image');
+    }
+    await carousel.screenshot({ path: path.join(SCREENSHOT_DIR, '01_desktop_featured_carousel.png') });
+    const playButton = carousel.locator('[data-carousel-play]');
+    if (await playButton.getAttribute('aria-label') !== 'Pause automatic scrolling') {
+      throw new Error('Featured product carousel autoplay control is missing');
+    }
+    await playButton.click();
+    if (await playButton.getAttribute('aria-label') !== 'Resume automatic scrolling') {
+      throw new Error('Featured product carousel did not pause');
+    }
+    const initialScroll = await carouselTrack.evaluate((element) => element.scrollLeft);
+    await carousel.getByRole('button', { name: 'Next products' }).click();
+    await page.waitForFunction((initial) =>
+      document.querySelector('.featured-carousel-track')?.scrollLeft > initial + 20,
+      initialScroll
+    );
+    await page.waitForTimeout(500);
+    const nextScroll = await carouselTrack.evaluate((element) => element.scrollLeft);
+    await carousel.getByRole('button', { name: 'Previous products' }).click();
+    await page.waitForFunction((previous) =>
+      document.querySelector('.featured-carousel-track')?.scrollLeft < previous - 20,
+      nextScroll
+    );
+
     // 2. Home Mobile & Menu Toggle
     console.log('--- Testing Home Page (Mobile) ---');
     await page.setViewportSize({ width: 375, height: 667 });
@@ -52,6 +84,8 @@ const rawProducts = JSON.parse(
     if (await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)) {
       throw new Error('Home page has horizontal overflow at mobile width');
     }
+    await carouselTrack.evaluate((element) => element.scrollTo({ left: 0, behavior: 'instant' }));
+    await carousel.screenshot({ path: path.join(SCREENSHOT_DIR, '02_mobile_featured_carousel.png') });
 
     // Test mobile menu click
     const toggleBtn = page.locator('#mobile-menu-toggle');
