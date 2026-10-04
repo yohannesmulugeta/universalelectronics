@@ -11,6 +11,7 @@ export default function CatalogFilter({ products, categories }: Props) {
   const [brand, setBrand] = useState('all');
   const [section, setSection] = useState<Section>('all');
   const [sort, setSort] = useState<'asc' | 'desc'>('asc');
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -19,6 +20,7 @@ export default function CatalogFilter({ products, categories }: Props) {
     setCategory(params.get('category') || 'all');
     setBrand(params.get('brand') || 'all');
     if (initialSection === 'solar' || initialSection === 'sound') setSection(initialSection);
+    if (params.has('category') || params.has('brand')) setFiltersOpen(true);
   }, []);
 
   function updateUrl(nextSearch: string, nextCategory: string, nextBrand: string, nextSection: Section) {
@@ -41,6 +43,7 @@ export default function CatalogFilter({ products, categories }: Props) {
 
   function clearFilters() {
     setSearch(''); setCategory('all'); setBrand('all'); setSection('all'); setSort('asc');
+    setFiltersOpen(false);
     window.history.replaceState({}, '', window.location.pathname);
   }
 
@@ -56,7 +59,7 @@ export default function CatalogFilter({ products, categories }: Props) {
   const hasFilters = Boolean(search.trim()) || category !== 'all' || brand !== 'all' || section !== 'all';
 
   return <div>
-    <div className="border-y border-brand-border py-7">
+    <div className="border-y border-brand-border py-5 sm:py-6">
       <div className="flex flex-wrap items-center gap-3" role="group" aria-label="Product type">
         {([['all', 'All products'], ['solar', 'Solar'], ['sound', 'Sound']] as const).map(([value, label]) => <button
           key={value} type="button" aria-pressed={section === value} onClick={() => changeSection(value)}
@@ -64,10 +67,14 @@ export default function CatalogFilter({ products, categories }: Props) {
           {label}
         </button>)}
       </div>
-      <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div><label htmlFor="catalog-search" className="mb-2 block text-xs font-semibold text-brand-navy">Search products</label>
           <input id="catalog-search" type="search" value={search} placeholder="Product, model or keyword" className="catalog-field"
             onChange={(event) => { setSearch(event.target.value); updateUrl(event.target.value, category, brand, section); }} /></div>
+        <button type="button" className="button-secondary min-h-12 justify-between sm:hidden" aria-expanded={filtersOpen} aria-controls="catalog-more-filters" onClick={() => setFiltersOpen(!filtersOpen)}>
+          Filter and sort <span aria-hidden="true">{filtersOpen ? '−' : '+'}</span>
+        </button>
+        <div id="catalog-more-filters" className={`${filtersOpen ? 'grid' : 'hidden'} gap-4 sm:contents`}>
         <div><label htmlFor="catalog-category" className="mb-2 block text-xs font-semibold text-brand-navy">Category</label>
           <select id="catalog-category" value={category} className="catalog-field" onChange={(event) => { setCategory(event.target.value); updateUrl(search, event.target.value, brand, section); }}>
             <option value="all">All categories</option>{availableCategories.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}
@@ -80,14 +87,15 @@ export default function CatalogFilter({ products, categories }: Props) {
           <select id="catalog-sort" value={sort} className="catalog-field" onChange={(event) => setSort(event.target.value as 'asc' | 'desc')}>
             <option value="asc">Name: A to Z</option><option value="desc">Name: Z to A</option>
           </select></div>
+        </div>
       </div>
-      <div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-sm text-brand-muted" aria-live="polite">
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 text-sm text-brand-muted" aria-live="polite">
         <p>Showing <strong className="text-brand-navy">{filtered.length}</strong> of {products.length} products</p>
-        {hasFilters && <button type="button" onClick={clearFilters} className="font-semibold text-brand-blue underline underline-offset-4 hover:text-brand-navy">Clear filters</button>}
+        {hasFilters && <button type="button" onClick={clearFilters} className="inline-flex min-h-11 items-center font-semibold text-brand-blue underline underline-offset-4 hover:text-brand-navy">Clear filters</button>}
       </div>
     </div>
 
-    {filtered.length ? <div className="grid gap-x-6 gap-y-12 py-12 sm:grid-cols-2 lg:grid-cols-3">
+    {filtered.length ? <div className="grid gap-x-6 gap-y-12 py-8 sm:grid-cols-2 sm:py-10 lg:grid-cols-3">
       {filtered.map((item) => <article key={item.id} className="product-card group">
         <a href={withBase(`/product/${item.slug}/`)} className="product-card-image" aria-label={`View ${item.title}`}>
           {item.media?.[0] ? <img src={withBase(item.media[0])} alt="" loading="lazy" width="520" height="560" />

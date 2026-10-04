@@ -36,10 +36,15 @@ const { items } = Astro.props;
     <a href={withBase('/shop/')} class="text-link">View all products <span aria-hidden="true">↗</span></a>
     <div class="flex items-center gap-4 sm:gap-6">
       <div class="featured-carousel-progress hidden sm:block" aria-hidden="true"><span data-carousel-progress></span></div>
-      <button type="button" data-carousel-prev class="featured-carousel-control" aria-label="Previous products" aria-controls="featured-carousel-track">←</button>
-      <button type="button" data-carousel-next class="featured-carousel-control" aria-label="Next products" aria-controls="featured-carousel-track">→</button>
+      <button type="button" data-carousel-prev class="featured-carousel-control" aria-label="Previous products" aria-controls="featured-carousel-track">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 5-7 7 7 7M7 12h13" /></svg>
+      </button>
+      <button type="button" data-carousel-next class="featured-carousel-control" aria-label="Next products" aria-controls="featured-carousel-track">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 5 7 7-7 7M17 12H4" /></svg>
+      </button>
       <button type="button" data-carousel-play class="featured-carousel-control" aria-label="Pause automatic scrolling" aria-controls="featured-carousel-track">
-        <span data-pause-icon aria-hidden="true">Ⅱ</span><span data-play-icon class="hidden" aria-hidden="true">▶</span>
+        <svg data-pause-icon viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="3" height="14" rx=".5" /><rect x="15" y="5" width="3" height="14" rx=".5" /></svg>
+        <svg data-play-icon class="hidden" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.8a1 1 0 0 1 1.5-.86l9 6.2a1 1 0 0 1 0 1.72l-9 6.2A1 1 0 0 1 8 18.2V5.8Z" /></svg>
       </button>
     </div>
   </div>
@@ -60,6 +65,7 @@ const { items } = Astro.props;
     const cards = [...track.querySelectorAll<HTMLElement>('.featured-carousel-card')];
     let playing = !reduceMotion;
     let focused = false;
+    let hovered = false;
     let interacting = false;
     let manualBusy = false;
     let visible = false;
@@ -69,7 +75,7 @@ const { items } = Astro.props;
     let manualTimer: number | undefined;
 
     const cardStep = () => cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : track.clientWidth;
-    const canAnimate = () => playing && visible && !focused && !interacting && !manualBusy && !document.hidden && loopWidth > 0;
+    const canAnimate = () => playing && visible && !focused && !hovered && !interacting && !manualBusy && !document.hidden && loopWidth > 0;
     const updateProgress = () => {
       const fraction = loopWidth ? Math.min(0.26, Math.max(0.12, track.clientWidth / loopWidth)) : 0.26;
       const position = loopWidth ? (track.scrollLeft % loopWidth) / loopWidth : 0;
@@ -141,6 +147,8 @@ const { items } = Astro.props;
       if (!root.contains(event.relatedTarget as Node | null)) { focused = false; syncAnimation(); }
     });
     track.addEventListener('pointerdown', () => { interacting = true; syncAnimation(); });
+    track.addEventListener('pointerenter', () => { hovered = true; syncAnimation(); });
+    track.addEventListener('pointerleave', () => { hovered = false; syncAnimation(); });
     const endInteraction = () => {
       if (!interacting) return;
       interacting = false;

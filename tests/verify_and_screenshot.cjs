@@ -64,6 +64,13 @@ const rawProducts = JSON.parse(
       document.querySelector('.featured-carousel-track')?.scrollLeft > initial + 12,
       motionStart
     );
+    await carouselTrack.hover();
+    const hoverStart = await carouselTrack.evaluate((element) => element.scrollLeft);
+    await page.waitForTimeout(300);
+    if (Math.abs((await carouselTrack.evaluate((element) => element.scrollLeft)) - hoverStart) > 2) {
+      throw new Error('Featured product carousel did not pause on hover');
+    }
+    await page.mouse.move(0, 0);
     const loopWidth = await carouselTrack.evaluate((element) => {
       const cards = element.querySelectorAll('.featured-carousel-card:not([aria-hidden])');
       return (cards[1].offsetLeft - cards[0].offsetLeft) * cards.length;
@@ -114,6 +121,8 @@ const rawProducts = JSON.parse(
       throw new Error('Home page has horizontal overflow at mobile width');
     }
     await carouselTrack.evaluate((element) => element.scrollTo({ left: 0, behavior: 'instant' }));
+    await carousel.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(250);
     await carousel.screenshot({ path: path.join(SCREENSHOT_DIR, '02_mobile_featured_carousel.png') });
 
     // Test mobile menu click
@@ -164,6 +173,28 @@ const rawProducts = JSON.parse(
       throw new Error('Catalog page has horizontal overflow at mobile width');
     }
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, '04_mobile_shop_initial.png') });
+    const mobileFilters = page.getByRole('button', { name: 'Filter and sort' });
+    if (await mobileFilters.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('Mobile catalog filters should start collapsed');
+    }
+    await mobileFilters.click();
+    if (await mobileFilters.getAttribute('aria-expanded') !== 'true' || !(await page.locator('#catalog-category').isVisible())) {
+      throw new Error('Mobile catalog filters did not open');
+    }
+    await page.locator('#catalog-category').selectOption('solar-batteries');
+    if (!page.url().includes('category=solar-batteries')) {
+      throw new Error('Mobile category filter did not update the URL');
+    }
+    await page.getByRole('button', { name: 'Clear filters' }).click();
+    if (await mobileFilters.getAttribute('aria-expanded') !== 'false' || page.url().includes('category=')) {
+      throw new Error('Mobile catalog filters did not reset');
+    }
+    for (const width of [768, 1024, 1440]) {
+      await page.setViewportSize({ width, height: 800 });
+      if (await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)) {
+        throw new Error(`Catalog page has horizontal overflow at ${width}px`);
+      }
+    }
     await page.setViewportSize({ width: 1280, height: 800 });
 
     // Test Search input
