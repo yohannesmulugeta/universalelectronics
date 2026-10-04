@@ -14,11 +14,10 @@ export const siteConfig: SiteConfig = {
   whatsappNumber: '251911102251',
   navLinks: [
     { label: 'Home', href: '/' },
-    { label: 'Shop', href: '/shop/' },
     { label: 'Solar', href: '/shop/solar/' },
     { label: 'Sound', href: '/shop/sound/' },
+    { label: 'Products', href: '/shop/' },
     { label: 'Projects', href: '/projects/' },
-    { label: 'Recognition', href: '/recognition/' },
     { label: 'About', href: '/about/' },
     { label: 'Contact', href: '/contact/' },
   ],
