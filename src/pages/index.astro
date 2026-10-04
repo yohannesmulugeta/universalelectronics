@@ -1,115 +1,310 @@
 ---
 import { withBase } from '../lib/paths';
 import Layout from '../layouts/Layout.astro';
-import ProductCard from '../components/ProductCard.astro';
 import { products } from '../data/products';
+import { projects } from '../data/projects';
 import { siteConfig } from '../data/siteConfig';
 
-const featuredProducts = products.filter((p) => [
+const featuredSlugs = [
   'must-pv2900-hp-solar-inverter-1-6kw-off-grid-pure-sine-wave-inverter',
   'lfeli-48200t48v-200ah',
   'ja-solar-605w-n-type-bifacial-panel',
-  'grundfos-sqf-5-70-n-solar-borehole-pump-built-in-mppt-ac-dc-hybrid-power',
-  'sun-king-home-120',
   'jbl-srx725-prx725-dual-15″-two-way-pa-speaker',
   'ssa-250dp',
-  'yamaha-v10sg-natural-acoustic-violin',
-].includes(p.slug)).slice(0, 8);
-const solarCount = products.filter((p) => p.section === 'solar').length;
-const soundCount = products.filter((p) => p.section === 'sound').length;
+];
+
+const featuredProducts = featuredSlugs
+  .map((slug) => products.find((product) => product.slug === slug))
+  .filter((product): product is (typeof products)[number] => Boolean(product));
+
+const solarCount = products.filter((product) => product.section === 'solar').length;
+const soundCount = products.filter((product) => product.section === 'sound').length;
+
+const solutionGroups = [
+  {
+    number: '01',
+    label: 'Backup power',
+    description: 'Explore inverter options for dependable solar power systems.',
+    href: '/category/inverters/',
+  },
+  {
+    number: '02',
+    label: 'Energy storage',
+    description: 'Browse battery options for solar and backup applications.',
+    href: '/category/solar-batteries/',
+  },
+  {
+    number: '03',
+    label: 'Solar water pumping',
+    description: 'Find solar pump equipment for water-moving applications.',
+    href: '/category/solar-water-pumps/',
+  },
+  {
+    number: '04',
+    label: 'PA & venue sound',
+    description: 'Explore speakers for events, venues and installed sound.',
+    href: '/category/speakers/',
+  },
+  {
+    number: '05',
+    label: 'Voice & conference',
+    description: 'Browse microphones for speech, meetings and live use.',
+    href: '/category/microphones/',
+  },
+  {
+    number: '06',
+    label: 'Mixing & amplification',
+    description: 'Build out the signal chain with mixers and amplifiers.',
+    href: '/shop/sound/',
+  },
+];
 ---
 
-<Layout title="Universal Electronics | Solar and Sound Equipment in Ethiopia"
-  description="Explore solar and sound equipment from Universal Electronics in Addis Ababa. Browse products and contact us directly for enquiries.">
-  <section class="home-hero overflow-hidden">
-    <div class="max-w-site mx-auto px-4 sm:px-6 grid lg:grid-cols-[1.04fr_.96fr] min-h-[570px]">
-      <div class="flex flex-col justify-center py-20 lg:py-24 relative z-10" data-reveal>
-        <p class="section-eyebrow mb-6">Universal Electronics · Addis Ababa</p>
-        <h1 class="font-serif text-[clamp(2.8rem,5.5vw,5.5rem)] leading-[1.04] tracking-tight text-brand-navy max-w-[700px]">
-          Power for every day.<br /><span class="text-brand-blue">Sound for every space.</span>
+<Layout
+  title="Universal Electronics | Solar & Professional Sound in Ethiopia"
+  description="Explore solar equipment and professional sound systems from Universal Electronics in Addis Ababa. Browse products, project photographs and direct enquiry options."
+>
+  <section class="ue-hero" aria-labelledby="home-hero-title">
+    <div class="ue-hero-solar" aria-hidden="true">
+      <img
+        src={withBase('/assets/projects/4650-project-2-1.png')}
+        alt=""
+        width="1400"
+        height="980"
+        loading="eager"
+      />
+    </div>
+    <div class="ue-hero-sound" aria-hidden="true">
+      <div class="ue-sound-glow"></div>
+      <img
+        src={withBase('/assets/products/speakers/4982-photo_2025-09-07_08-14-27.jpg')}
+        alt=""
+        width="900"
+        height="900"
+        loading="eager"
+      />
+      <span class="ue-sound-label">Professional sound</span>
+    </div>
+
+    <div class="max-w-site mx-auto px-4 sm:px-6 relative z-10 min-h-[680px] lg:min-h-[760px] flex items-center">
+      <div class="max-w-[760px] py-24 lg:py-32" data-reveal>
+        <p class="ue-hero-kicker">Universal Electronics · Addis Ababa</p>
+        <h1 id="home-hero-title" class="ue-hero-title">
+          Power what matters.<br />
+          <span>Amplify every moment.</span>
         </h1>
-        <p class="mt-7 text-lg text-slate-600 leading-relaxed max-w-xl">
-          Find solar equipment and professional sound systems in one place. Browse the catalog, then speak with us about the right product for your needs.
+        <p class="ue-hero-copy">
+          Solar equipment and professional sound systems, brought together in one focused catalog for homes, businesses and project work.
         </p>
         <div class="flex flex-wrap gap-3 mt-9">
-          <a href={withBase('/shop/')} class="button-primary">Explore products <span aria-hidden="true">↗</span></a>
-          <a href={withBase('/contact/')} class="button-secondary">Contact us</a>
+          <a href={withBase('/shop/solar/')} class="ue-button-light">
+            Explore solar <span aria-hidden="true">↗</span>
+          </a>
+          <a href={withBase('/shop/sound/')} class="ue-button-ghost">
+            Explore sound <span aria-hidden="true">↗</span>
+          </a>
+          <a href={withBase('/contact/')} class="ue-button-link">
+            Request a solution
+          </a>
         </div>
-        <div class="flex gap-7 mt-14 pt-5 border-t border-slate-200 text-sm text-brand-navy">
-          <a href={withBase('/shop/solar/')} class="text-link">Solar equipment <span aria-hidden="true">↗</span></a>
-          <a href={withBase('/shop/sound/')} class="text-link">Sound equipment <span aria-hidden="true">↗</span></a>
+        <div class="ue-hero-meta">
+          <div><strong>{solarCount}</strong><span>solar products</span></div>
+          <div><strong>{soundCount}</strong><span>sound products</span></div>
+          <div><strong>{projects.length}</strong><span>project photographs</span></div>
         </div>
-      </div>
-      <div class="relative flex items-center justify-center pb-12 lg:pb-0" data-reveal>
-        <div class="hero-image-field absolute inset-0 lg:-right-[100vw]"></div>
-        <img src={withBase('/assets/projects/4395-hero2-e1759613225895.png')}
-          alt="Solar products from the Universal Electronics catalog"
-          class="relative w-full max-w-[630px] max-h-[520px] object-contain drop-shadow-xl"
-          width="630" height="520" loading="eager" />
       </div>
     </div>
   </section>
 
-  <section class="py-20 lg:py-28" aria-labelledby="explore-heading">
+  <section class="py-20 lg:py-28 bg-white" aria-labelledby="specialties-title">
     <div class="max-w-site mx-auto px-4 sm:px-6">
-      <div class="max-w-2xl mb-12" data-reveal>
-        <p class="section-eyebrow mb-4">Explore the catalog</p>
-        <h2 id="explore-heading" class="section-heading">Two specialties. One place to start.</h2>
-        <p class="mt-4 text-slate-600 leading-relaxed">Choose a category to see the products listed in our catalog.</p>
+      <div class="max-w-3xl mb-12 lg:mb-16" data-reveal>
+        <p class="section-eyebrow mb-4">Two specialties. One team.</p>
+        <h2 id="specialties-title" class="ue-section-title">
+          Start with the system you need.
+        </h2>
+        <p class="ue-section-copy">
+          Go straight to solar or sound, then narrow the catalog by product category.
+        </p>
       </div>
-      <div class="grid md:grid-cols-2 gap-5">
-        <a href={withBase('/shop/solar/')} class="category-feature group bg-[#eef4fa]" data-reveal>
-          <span class="section-eyebrow">01 / Solar</span>
-          <div><h3 class="font-serif text-3xl sm:text-4xl text-brand-navy">Solar energy</h3>
-            <p class="text-slate-600 mt-3 max-w-md">Panels, inverters, batteries, pumps and portable lighting.</p></div>
-          <span class="category-feature-bottom"><span>{solarCount} products</span><span aria-hidden="true" class="category-arrow">↗</span></span>
+
+      <div class="grid lg:grid-cols-2 gap-5 lg:gap-7">
+        <a href={withBase('/shop/solar/')} class="ue-specialty-card ue-specialty-solar group" data-reveal>
+          <div class="relative z-10">
+            <span class="ue-card-index">01 / Solar</span>
+            <h3>Solar energy</h3>
+            <p>Panels, inverters, batteries, water pumps and portable lighting.</p>
+          </div>
+          <img
+            src={withBase('/assets/products/solar-panels/4707-ja_solar_605w_jam72d40_lb.webp')}
+            alt="JA Solar panel from the Universal Electronics catalog"
+            width="720"
+            height="720"
+            loading="lazy"
+          />
+          <div class="ue-card-footer relative z-10">
+            <span>{solarCount} catalog products</span>
+            <span aria-hidden="true" class="ue-card-arrow">↗</span>
+          </div>
         </a>
-        <a href={withBase('/shop/sound/')} class="category-feature group bg-[#eef0f7]" data-reveal>
-          <span class="section-eyebrow">02 / Sound</span>
-          <div><h3 class="font-serif text-3xl sm:text-4xl text-brand-navy">Professional sound</h3>
-            <p class="text-slate-600 mt-3 max-w-md">Speakers, amplifiers, microphones, mixers and instruments.</p></div>
-          <span class="category-feature-bottom"><span>{soundCount} products</span><span aria-hidden="true" class="category-arrow">↗</span></span>
+
+        <a href={withBase('/shop/sound/')} class="ue-specialty-card ue-specialty-sound group" data-reveal>
+          <div class="relative z-10">
+            <span class="ue-card-index">02 / Sound</span>
+            <h3>Professional sound</h3>
+            <p>Speakers, amplifiers, microphones, mixers and instruments.</p>
+          </div>
+          <img
+            src={withBase('/assets/products/speakers/4982-photo_2025-09-07_08-14-27.jpg')}
+            alt="JBL speaker from the Universal Electronics catalog"
+            width="720"
+            height="720"
+            loading="lazy"
+          />
+          <div class="ue-card-footer relative z-10">
+            <span>{soundCount} catalog products</span>
+            <span aria-hidden="true" class="ue-card-arrow">↗</span>
+          </div>
         </a>
       </div>
     </div>
   </section>
 
-  <section class="bg-brand-offwhite py-20 lg:py-24" aria-labelledby="featured-heading">
+  <section class="py-20 lg:py-28 bg-[#f4f5f7]" aria-labelledby="solutions-title">
     <div class="max-w-site mx-auto px-4 sm:px-6">
-      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10" data-reveal>
-        <div><p class="section-eyebrow mb-4">From the catalog</p><h2 id="featured-heading" class="section-heading">Explore the range</h2></div>
+      <div class="grid lg:grid-cols-[.8fr_1.2fr] gap-12 lg:gap-20 items-start">
+        <div class="lg:sticky lg:top-32" data-reveal>
+          <p class="section-eyebrow mb-4">Shop by application</p>
+          <h2 id="solutions-title" class="ue-section-title">Find the right starting point.</h2>
+          <p class="ue-section-copy max-w-lg">
+            Instead of scrolling through everything, begin with the part of the system you are building.
+          </p>
+          <a href={withBase('/shop/')} class="text-link mt-7">Browse the full catalog <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <div class="border-t border-slate-300">
+          {solutionGroups.map((solution) => (
+            <a href={withBase(solution.href)} class="ue-solution-row group" data-reveal>
+              <span class="ue-solution-number">{solution.number}</span>
+              <div>
+                <h3>{solution.label}</h3>
+                <p>{solution.description}</p>
+              </div>
+              <span class="ue-solution-arrow" aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 lg:py-28 bg-white" aria-labelledby="featured-title">
+    <div class="max-w-site mx-auto px-4 sm:px-6">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12" data-reveal>
+        <div class="max-w-2xl">
+          <p class="section-eyebrow mb-4">Selected equipment</p>
+          <h2 id="featured-title" class="ue-section-title">A closer look at the catalog.</h2>
+        </div>
         <a href={withBase('/shop/')} class="text-link shrink-0">View all products <span aria-hidden="true">↗</span></a>
       </div>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {featuredProducts.map((product) => <ProductCard product={product} />)}
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-5 border-y border-slate-200">
+        {featuredProducts.map((product) => (
+          <a href={withBase(`/product/${product.slug}/`)} class="ue-product-tile group">
+            <div class="ue-product-image">
+              {product.media?.[0] && (
+                <img
+                  src={withBase(product.media[0])}
+                  alt={product.title}
+                  width="500"
+                  height="500"
+                  loading="lazy"
+                />
+              )}
+            </div>
+            <div class="pt-5">
+              <span class="ue-product-brand">{product.primaryBrand}</span>
+              <h3>{product.title}</h3>
+              <span class="ue-product-link">View product <span aria-hidden="true">↗</span></span>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
-  <section class="max-w-site mx-auto px-4 sm:px-6 py-20 lg:py-28 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-    <div data-reveal>
-      <p class="section-eyebrow mb-4">Beyond the catalog</p>
-      <h2 class="section-heading">See the work behind the products.</h2>
-      <p class="text-slate-600 leading-relaxed mt-5 max-w-xl">Browse the project and recognition records preserved from our previous website.</p>
-      <div class="flex gap-6 mt-8">
-        <a href={withBase('/projects/')} class="text-link">Projects <span aria-hidden="true">↗</span></a>
-        <a href={withBase('/recognition/')} class="text-link">Recognition <span aria-hidden="true">↗</span></a>
+  <section class="ue-project-stage" aria-labelledby="projects-title">
+    <div class="max-w-site mx-auto px-4 sm:px-6 py-20 lg:py-28">
+      <div class="grid lg:grid-cols-[.82fr_1.18fr] gap-12 lg:gap-20 items-center">
+        <div data-reveal>
+          <p class="ue-dark-eyebrow">Project archive</p>
+          <h2 id="projects-title" class="ue-dark-title">See the work behind the equipment.</h2>
+          <p class="ue-dark-copy">
+            Browse photographs preserved from previous Universal Electronics projects, then contact the team if you want details about a particular installation.
+          </p>
+          <div class="flex flex-wrap gap-5 mt-8">
+            <a href={withBase('/projects/')} class="ue-dark-link">View projects <span aria-hidden="true">↗</span></a>
+            <a href={withBase('/recognition/')} class="ue-dark-link">Recognition <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+
+        <div class="ue-project-grid" data-reveal>
+          {projects.slice(0, 3).map((project, index) => (
+            <figure class={index === 0 ? 'ue-project-main' : 'ue-project-small'}>
+              <img
+                src={withBase(project.image)}
+                alt={`Universal Electronics project archive photograph ${index + 1}`}
+                width="900"
+                height="700"
+                loading="lazy"
+              />
+            </figure>
+          ))}
+        </div>
       </div>
-    </div>
-    <div class="overflow-hidden bg-[#eef4fa] aspect-[4/3]" data-reveal>
-      <img src={withBase('/assets/projects/4650-project-2-1.png')} alt="Solar array photograph from the Universal Electronics archive"
-        class="w-full h-full object-cover image-zoom" width="800" height="600" loading="lazy" />
     </div>
   </section>
 
-  <section class="bg-brand-navy text-white py-16 lg:py-20">
-    <div class="max-w-site mx-auto px-4 sm:px-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8" data-reveal>
-      <div><p class="text-sky-300 text-xs uppercase tracking-[.18em] font-semibold mb-4">Have a product in mind?</p>
-        <h2 class="font-serif text-3xl sm:text-4xl text-white">Let's talk about what you need.</h2>
-        <p class="text-slate-300 mt-4">Send us the product name or tell us about your project.</p></div>
-      <div class="flex flex-wrap gap-3">
-        <a href={`https://wa.me/${siteConfig.whatsappNumber}`} target="_blank" rel="noopener noreferrer" class="button-light">WhatsApp <span aria-hidden="true">↗</span></a>
-        <a href={siteConfig.telegramUrl} target="_blank" rel="noopener noreferrer" class="button-outline-light">Telegram <span aria-hidden="true">↗</span></a>
+  <section class="py-20 lg:py-24 bg-white" aria-labelledby="process-title">
+    <div class="max-w-site mx-auto px-4 sm:px-6">
+      <div class="max-w-2xl mb-12" data-reveal>
+        <p class="section-eyebrow mb-4">Simple enquiry path</p>
+        <h2 id="process-title" class="ue-section-title">From product search to direct conversation.</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-px bg-slate-200 border border-slate-200">
+        <div class="ue-process-card" data-reveal>
+          <span>01</span>
+          <h3>Explore</h3>
+          <p>Browse solar or sound equipment by category and product.</p>
+        </div>
+        <div class="ue-process-card" data-reveal>
+          <span>02</span>
+          <h3>Shortlist</h3>
+          <p>Open the product page and review the available catalog details.</p>
+        </div>
+        <div class="ue-process-card" data-reveal>
+          <span>03</span>
+          <h3>Enquire</h3>
+          <p>Send the product name or your project requirements directly to Universal Electronics.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ue-final-cta">
+    <div class="max-w-site mx-auto px-4 sm:px-6 py-16 lg:py-20 grid lg:grid-cols-[1fr_auto] gap-8 lg:items-center">
+      <div data-reveal>
+        <p class="ue-dark-eyebrow">Planning a solar or sound system?</p>
+        <h2 class="ue-final-title">Tell us what you need.</h2>
+        <p class="ue-dark-copy max-w-2xl">
+          Send us a product name, a shortlist, or a simple description of the system you are planning.
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-3 lg:justify-end" data-reveal>
+        <a href={withBase('/contact/')} class="ue-button-light">Contact Universal <span aria-hidden="true">↗</span></a>
+        <a href={`https://wa.me/${siteConfig.whatsappNumber}`} target="_blank" rel="noopener noreferrer" class="ue-button-ghost">
+          WhatsApp <span aria-hidden="true">↗</span>
+        </a>
       </div>
     </div>
   </section>
