@@ -22,6 +22,12 @@ The site is a local rebuild from the recovered WordPress and SQL backup. The ori
 - **Brand relationships:** Do not use “authorized distributor” or exclusivity language until current agreements are confirmed.
 - **Founding year, warranty, delivery:** Confirm these with the business before adding them to the site.
 
+## Brand strip
+
+- The strip lists brands attached to catalog products; it does not claim a partnership. The older logos came from the recovered site. Their white image backgrounds are visually blended into the pale strip, so keep that styling if the strip color changes.
+- New logo files were sourced from the brand sites or branded services: [Sun King](https://sunkingcreditportal.com/static/img/SUNKING_FRAUD_APP.png), [Leoch](https://www.leoch.com/Public/Uploads/uploadfile/images/20260831/leochbatterylogo1-190.png), [MUST](https://www.mustpower.com/wp-content/uploads/2023/02/must0.5.png), [Trina Solar](https://www.trinasolar.com/en-glb/wp-content/themes/Child-EN/images/header/TrinasolarLogo_EN_PNG.png), [LONGi](https://www.longi.com/en/), [JBL Professional](https://d3nw26meo6dlp6.cloudfront.net/brands/by_harman_logos/6_1487694705/JBL_Pro_PMS172_RGB_large.png), and [Rockville](https://rockvilleaudio.com/cdn/shop/files/logo-rocklille.png?v=1755579269&width=600). Confirm commercial use of third-party logos before publication.
+- **Trusound:** The catalog has a product photo and name, but no logo file. Several unrelated brands use the same name online, so the strip uses text until the product's authentic logo is supplied.
+
 ## Release
 
 Run `npm.cmd run check` and `npm.cmd run build` in `site/`, review the pages at mobile and desktop widths, then test the final public routes and enquiry links after deployment. Local and live builds cannot verify external WhatsApp or Telegram account ownership.

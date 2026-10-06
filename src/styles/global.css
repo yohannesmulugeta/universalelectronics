@@ -63,6 +63,34 @@
 .image-zoom:hover { transform: scale(1.035); }
 .catalog-field { @apply w-full min-h-12 rounded-none border border-brand-border bg-white px-4 py-3 text-sm text-brand-dark outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue; }
 
+.brand-marquee-window { overflow: hidden; }
+.brand-marquee-track { display: flex; width: max-content; mix-blend-mode: multiply; animation: brand-marquee-scroll 48s linear infinite; }
+.brand-marquee-window:hover .brand-marquee-track { animation-play-state: paused; }
+.brand-marquee-group { display: flex; flex: none; align-items: center; gap: 2rem; margin: 0; padding: 0 2rem 0 0; list-style: none; }
+.brand-marquee-item { display: flex; flex: none; align-items: center; justify-content: center; width: 176px; min-height: 72px; }
+.brand-marquee-logo { display: block; width: auto; max-width: 150px; height: auto; max-height: 58px; object-fit: contain; transform: scale(var(--brand-logo-scale, 1)); transform-origin: center; }
+.brand-marquee-logo--sun-solar-energy { --brand-logo-scale: 1.65; }
+.brand-marquee-logo--retar { --brand-logo-scale: 1.8; }
+.brand-marquee-logo--grundfos { --brand-logo-scale: 1.6; }
+.brand-marquee-logo--ja { --brand-logo-scale: 1.35; }
+.brand-marquee-logo--sumking { --brand-logo-scale: 1.75; }
+.brand-marquee-logo--solarmax { --brand-logo-scale: 1.75; }
+.brand-marquee-logo--yamaha { --brand-logo-scale: 1.2; }
+.brand-marquee-logo--ahuja { --brand-logo-scale: 1.2; }
+.brand-marquee-name { color: var(--color-primary-navy); font-size: 1rem; font-weight: 700; line-height: 1.2; text-align: center; }
+@keyframes brand-marquee-scroll { to { transform: translateX(-50%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-marquee-window { overflow: visible; }
+  .brand-marquee-track { width: auto; animation: none; }
+  .brand-marquee-group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; width: 100%; padding: 0 1rem; }
+  .brand-marquee-item { width: auto; }
+  .brand-marquee-group[aria-hidden="true"] { display: none; }
+}
+@media (min-width: 640px) and (prefers-reduced-motion: reduce) {
+  .brand-marquee-group { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
 .featured-carousel-track {
   display: flex;
   gap: 6px;

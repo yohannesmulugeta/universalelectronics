@@ -77,7 +77,8 @@ export const brands: Brand[] = [
   {
     "name": "Sun King",
     "slug": "sun-king",
-    "description": "Global leader in solar lanterns and home energy kits, providing affordable off-grid lighting and power solutions for households."
+    "description": "Global leader in solar lanterns and home energy kits, providing affordable off-grid lighting and power solutions for households.",
+    "logoUrl": "/assets/brand/sun-king.png"
   },
   {
     "name": "Sun Solar Energy",
@@ -88,7 +89,8 @@ export const brands: Brand[] = [
   {
     "name": "Leoch Battery",
     "slug": "leoch-battery",
-    "description": "A trusted manufacturer of lead-acid and lithium batteries, known worldwide for reliability and long lifespan in solar and backup systems."
+    "description": "A trusted manufacturer of lead-acid and lithium batteries, known worldwide for reliability and long lifespan in solar and backup systems.",
+    "logoUrl": "/assets/brand/leoch-battery.png"
   },
   {
     "name": "Universal Electronics",
@@ -104,12 +106,14 @@ export const brands: Brand[] = [
   {
     "name": "Must Power",
     "slug": "must-power",
-    "description": "Manufacturer of solar inverters, hybrid systems, and batteries. Widely used for residential, commercial, and off-grid solar projects. website www.mustpower.com"
+    "description": "Manufacturer of solar inverters, hybrid systems, and batteries. Widely used for residential, commercial, and off-grid solar projects. website www.mustpower.com",
+    "logoUrl": "/assets/brand/must-power.png"
   },
   {
     "name": "Trina Solar",
     "slug": "trina-solar",
-    "description": "One of the world’s top solar panel producers, delivering high-performance photovoltaic modules with proven efficiency and reliability."
+    "description": "One of the world’s top solar panel producers, delivering high-performance photovoltaic modules with proven efficiency and reliability.",
+    "logoUrl": "/assets/brand/trina-solar.png"
   },
   {
     "name": "Grundfos",
@@ -120,7 +124,8 @@ export const brands: Brand[] = [
   {
     "name": "Longi",
     "slug": "longi",
-    "description": ""
+    "description": "",
+    "logoUrl": "/assets/brand/longi.svg"
   },
   {
     "name": "JA Solar",
@@ -129,8 +134,8 @@ export const brands: Brand[] = [
     "logoUrl": "/assets/brand/4900-42.png"
   },
   {
-    "name": "SumKing",
-    "slug": "sumking",
+    "name": "SAMKING",
+    "slug": "samking",
     "description": "",
     "logoUrl": "/assets/brand/4894-36.png"
   },
@@ -161,12 +166,14 @@ export const brands: Brand[] = [
   {
     "name": "JBL",
     "slug": "jbl",
-    "description": ""
+    "description": "",
+    "logoUrl": "/assets/brand/jbl-professional.png"
   },
   {
     "name": "Rockville",
     "slug": "rockville",
-    "description": ""
+    "description": "",
+    "logoUrl": "/assets/brand/rockville.png"
   },
   {
     "name": "Trusound",

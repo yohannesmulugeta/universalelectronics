@@ -2,6 +2,7 @@
 import { withBase } from '../lib/paths';
 import Layout from '../layouts/Layout.astro';
 import FeaturedCarousel from '../components/FeaturedCarousel.astro';
+import BrandMarquee from '../components/BrandMarquee.astro';
 import { products } from '../data/products';
 import type { Product } from '../types';
 
@@ -42,6 +43,8 @@ const featuredProducts = featuredSlugs.map((slug) => products.find((product) => 
       <span class="absolute bottom-5 right-5 bg-white/95 px-4 py-3 text-[11px] font-semibold uppercase tracking-[.15em] text-brand-navy sm:bottom-8 sm:right-8">From our project archive</span>
     </div>
   </section>
+
+  <BrandMarquee />
 
   <section class="max-w-site mx-auto px-5 py-24 sm:px-8 lg:py-32" aria-labelledby="disciplines-heading">
     <div class="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end" data-reveal>

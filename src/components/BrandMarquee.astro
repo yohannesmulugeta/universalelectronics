@@ -1,0 +1,49 @@
+---
+import { brands } from '../data/taxonomy';
+import { products } from '../data/products';
+import { withBase } from '../lib/paths';
+
+const productBrands = new Set(products.map((product) => product.primaryBrand));
+const listedBrands = brands.filter(
+  (brand) => brand.name !== 'Universal Electronics' && productBrands.has(brand.name)
+);
+const catalogBrands = [
+  ...listedBrands.filter((brand) => brand.logoUrl),
+  ...listedBrands.filter((brand) => !brand.logoUrl),
+];
+---
+
+<section class="border-y border-brand-border bg-white py-16 sm:py-20" aria-labelledby="catalog-brands-heading">
+  <div class="max-w-site mx-auto px-5 text-center sm:px-8">
+    <p class="section-eyebrow mb-4">From our product range</p>
+    <h2 id="catalog-brands-heading" class="section-heading">Brands in our catalog</h2>
+    <p class="mx-auto mt-4 max-w-xl text-sm leading-7 text-brand-muted">
+      Explore the names behind the solar and sound equipment in our catalog.
+    </p>
+  </div>
+
+  <div class="brand-marquee-window mt-10 bg-brand-pale py-5 sm:mt-12 sm:py-7">
+    <div class="brand-marquee-track">
+      {[false, true].map((duplicate) => (
+        <ul class="brand-marquee-group" aria-hidden={duplicate ? 'true' : undefined}>
+          {catalogBrands.map((brand) => (
+            <li class="brand-marquee-item">
+              {brand.logoUrl ? (
+                <img
+                  class={`brand-marquee-logo brand-marquee-logo--${brand.slug}`}
+                  src={withBase(brand.logoUrl)}
+                  alt={duplicate ? '' : brand.name}
+                  width="160"
+                  height="64"
+                  loading="eager"
+                />
+              ) : (
+                <span class="brand-marquee-name">{brand.name}</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </div>
+</section>

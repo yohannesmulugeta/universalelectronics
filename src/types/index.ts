@@ -3,6 +3,8 @@ export interface Product {
   title: string;
   slug: string;
   sourceUrl?: string;
+  manufacturerUrl?: string;
+  manufacturerImageUrl?: string;
   categories: string[];
   categorySlug: string;
   categoryName: string;
@@ -12,7 +14,9 @@ export interface Product {
   shortDescriptionText: string;
   features: string[];
   specifications: { label: string; value: string }[];
+  specificationsVerified?: boolean;
   media: string[];
+  documents?: string[];
   section: 'solar' | 'sound';
 }
 
