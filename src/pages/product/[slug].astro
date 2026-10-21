@@ -151,6 +151,7 @@ const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${ema
               <span>Request via WhatsApp</span>
             </a>
 
+            <a href={withBase('/contact/?product=' + encodeURIComponent(product.title) + '&interest=' + encodeURIComponent(product.section === 'solar' ? 'Solar equipment' : 'Sound equipment'))} class="text-link justify-center">Use enquiry form ↗</a>
             <!-- Email Action Button -->
             <a
               href={emailLink}

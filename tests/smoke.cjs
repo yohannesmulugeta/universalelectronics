@@ -21,6 +21,9 @@ const page = read('dist/index.html');
 assert.match(page, /rel="canonical"/, 'Homepage needs a canonical link');
 assert.ok(page.includes('universalelectronicet.com'), 'Homepage should use the production domain');
 assert.match(page, /application\/ld\+json/, 'Site should include structured data');
+assert.ok(page.includes('Recognition &amp; certificates') || page.includes('Recognition & certificates'), 'Homepage should feature recognition documents');
+assert.ok(page.includes('Ready to power your project'), 'Homepage quotation CTA missing');
+assert.ok(page.includes('A few useful answers'), 'Homepage FAQ missing');
 assert.ok(fileExists('dist/robots.txt') && fileExists('dist/sitemap.xml'), 'Sitemap and robots must be published');
 const sitemap = read('dist/sitemap.xml');
 const locations = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
@@ -33,7 +36,11 @@ for (const variants of Object.values(manifest)) {
     assert.ok(fileExists(path.join('dist', asset.replace(/^\//, ''))), 'Missing optimized image: ' + asset);
   }
 }
+const service = read('dist/services/index.html');
+assert.ok(service.includes('Solutions for power, water and sound'), 'Services page missing');
+const contact = read('dist/contact/index.html');
+assert.ok(contact.includes('ተፈራ የገበያ ማዕከል'), 'Bilingual company address missing');
 const catalog = read('dist/shop/index.html');
-assert.match(catalog, /Explore the collection/, 'Catalog page must be rendered');
+assert.match(catalog, /Find the equipment you need/, 'Catalog page must be rendered');
 assert.ok(fileExists('dist/contact/index.html') && fileExists('dist/projects/index.html') && fileExists('dist/services/index.html') && fileExists('dist/recognition/index.html'), 'Important pages must be present');
 console.log('Smoke QA passed: ' + products.length + ' products, ' + categories.length + ' categories, ' + locations.length + ' sitemap URLs, ' + Object.keys(manifest).length + ' optimized image sources.');

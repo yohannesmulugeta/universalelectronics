@@ -161,3 +161,10 @@
 @media (min-width:640px) { .ue-solution-card { flex-direction:row; } .ue-solution-art { width:43%; height:auto; min-height:260px; flex-shrink:0; } .ue-solution-copy { display:flex; flex-direction:column; justify-content:center; padding:1.7rem; } }
 @media (min-width:1024px) { .ue-hero-media { border-radius:0 0 0 3rem; } .ue-project-feature img { object-position:center; } }
 @media (prefers-reduced-motion:reduce) { .ue-solution-card:hover { transform:none; } }
+
+.ue-faq-item summary { display:flex; align-items:center; justify-content:space-between; gap:1.25rem; color:#012483; cursor:pointer; list-style:none; font-size:1rem; font-weight:750; line-height:1.65; }
+.ue-faq-item summary::-webkit-details-marker { display:none; }
+.ue-faq-item summary::after { content:'+'; flex-shrink:0; font-size:1.6rem; font-weight:400; color:#005EE9; }
+.ue-faq-item[open] summary::after { content:'−'; }
+.ue-faq-item p { max-width:52rem; margin-top:1rem; color:#475569; font-size:.925rem; line-height:1.8; }
+.ue-faq-item:focus-within { outline-offset:4px; }
