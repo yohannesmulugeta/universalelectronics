@@ -24,7 +24,7 @@ assert.match(page, /application\/ld\+json/, 'Site should include structured data
 assert.ok(fileExists('dist/robots.txt') && fileExists('dist/sitemap.xml'), 'Sitemap and robots must be published');
 const sitemap = read('dist/sitemap.xml');
 const locations = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
-assert.equal(locations.length, 8 + categories.length + products.length, 'Sitemap count must match published routes');
+assert.equal(locations.length, 9 + categories.length + products.length, 'Sitemap count must match published routes');
 assert.equal(new Set(locations).size, locations.length, 'Sitemap URLs must be unique');
 const manifest = JSON.parse(read('src/generated/image-manifest.json'));
 assert.ok(Object.keys(manifest).length > 10, 'Image optimizer must generate responsive versions');
@@ -35,5 +35,5 @@ for (const variants of Object.values(manifest)) {
 }
 const catalog = read('dist/shop/index.html');
 assert.match(catalog, /Explore the collection/, 'Catalog page must be rendered');
-assert.ok(fileExists('dist/contact/index.html') && fileExists('dist/projects/index.html'), 'Important pages must be present');
+assert.ok(fileExists('dist/contact/index.html') && fileExists('dist/projects/index.html') && fileExists('dist/services/index.html') && fileExists('dist/recognition/index.html'), 'Important pages must be present');
 console.log('Smoke QA passed: ' + products.length + ' products, ' + categories.length + ' categories, ' + locations.length + ' sitemap URLs, ' + Object.keys(manifest).length + ' optimized image sources.');

@@ -4,6 +4,7 @@ export const siteConfig: SiteConfig = {
   companyName: 'Universal Electronics',
   tagline: 'Your Source for Solar and Sound Solutions',
   address: 'Tefera Business Center, Habte Giyorgis',
+  addressAmharic: 'ተፈራ የገበያ ማዕከል | ሀብተ ጊዮርጊስ',
   city: 'Addis Ababa',
   country: 'Ethiopia',
   phones: ['+251 911 102 251', '+0111 565800'],
@@ -16,7 +17,9 @@ export const siteConfig: SiteConfig = {
     { label: 'Solar', href: '/shop/solar/' },
     { label: 'Sound', href: '/shop/sound/' },
     { label: 'All products', href: '/shop/' },
+    { label: 'Services', href: '/services/' },
     { label: 'Projects', href: '/projects/' },
+    { label: 'Recognition', href: '/recognition/' },
     { label: 'About', href: '/about/' },
   ],
   solarCategories: [

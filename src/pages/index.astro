@@ -5,6 +5,7 @@ import Layout from '../layouts/Layout.astro';
 import FeaturedCarousel from '../components/FeaturedCarousel.astro';
 import BrandMarquee from '../components/BrandMarquee.astro';
 import { products } from '../data/products';
+import { recognitionDocs } from '../data/recognition';
 import type { Product } from '../types';
 
 const featuredSlugs = [
@@ -102,6 +103,29 @@ const featuredProducts = featuredSlugs.map((slug) => products.find((product) => 
         <img src={responsiveImage('/assets/projects/recreated-array-assembly.webp',1500).src} srcset={responsiveImage('/assets/projects/recreated-array-assembly.webp',1500).srcSet} sizes="(max-width:1024px) 100vw, 50vw" alt="Illustrative reconstruction of an archived solar-array assembly" width="1586" height="992" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" />
         <span class="absolute bottom-4 right-4 bg-white px-3 py-2 text-xs text-brand-navy">Illustrative project visual</span>
       </div>
+    </div>
+  </section>
+
+  <section class="border-y border-brand-border bg-brand-offwhite py-20 lg:py-28" aria-labelledby="recognition-heading">
+    <div class="max-w-site mx-auto px-5 sm:px-8">
+      <div class="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+        <div><p class="section-eyebrow mb-4">Our documents</p><h2 id="recognition-heading" class="section-heading">Recognition & certificates</h2>
+          <p class="mt-4 max-w-2xl leading-7 text-brand-muted">Explore original letters and certificate scans from the Universal Electronics archive. View the documents for their exact wording and dates.</p></div>
+        <a href={withBase('/recognition/')} class="text-link shrink-0">View all five documents ↗</a>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-3">
+        {recognitionDocs.slice(0, 3).map((doc) => (
+          <a href={withBase(doc.image)} target="_blank" rel="noopener noreferrer" class="group flex min-w-0 flex-col overflow-hidden border border-brand-border bg-white transition-shadow hover:shadow-lg">
+            <div class="flex aspect-[4/3] items-center justify-center overflow-hidden bg-white p-5">
+              <img src={responsiveImage(doc.image, 480).src} srcset={responsiveImage(doc.image,480).srcSet} sizes="(max-width:640px) 92vw, 30vw" alt={doc.title} width="540" height="405" loading="lazy" decoding="async" class="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.025]" />
+            </div>
+            <div class="flex flex-1 items-center justify-between gap-2 border-t border-brand-border p-5">
+              <h3 class="text-sm font-semibold text-brand-navy">{doc.title}</h3><span aria-hidden="true" class="text-brand-blue">↗</span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="mt-5 text-xs leading-6 text-brand-muted">Archived records; no claim of current certification, manufacturer authorization or endorsement is implied.</p>
     </div>
   </section>
 

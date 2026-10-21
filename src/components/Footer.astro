@@ -25,6 +25,7 @@ const year = new Date().getFullYear();
         <ul class="space-y-3 text-sm text-white/85">
           <li><a class="hover:text-white hover:underline" href={withBase('/about/')}>About</a></li>
           <li><a class="hover:text-white hover:underline" href={withBase('/projects/')}>Projects</a></li>
+          <li><a class="hover:text-white hover:underline" href={withBase('/services/')}>Services</a></li>
           <li><a class="hover:text-white hover:underline" href={withBase('/recognition/')}>Recognition</a></li>
           <li><a class="hover:text-white hover:underline" href={withBase('/contact/')}>Contact</a></li>
         </ul>
@@ -32,7 +33,7 @@ const year = new Date().getFullYear();
       <div>
         <h2 class="mb-5 text-xs font-bold uppercase tracking-[.16em] text-[#BED4FF]">Get in touch</h2>
         <address class="space-y-3 text-sm leading-6 text-white/85 not-italic">
-          <p>{siteConfig.address}<br />{siteConfig.city}, {siteConfig.country}</p>
+          <p>Tefera Business Center | Habte Giyorgis<br /><span lang="am">{siteConfig.addressAmharic}</span><br />{siteConfig.city}, {siteConfig.country}</p>
           <p><a class="hover:text-white hover:underline" href={`tel:${siteConfig.phones[0].replace(/\s+/g, '')}`}>{siteConfig.phones[0]}</a></p>
           <p><a class="break-all hover:text-white hover:underline" href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></p>
           <p><a class="hover:text-white hover:underline" href={siteConfig.telegramUrl} target="_blank" rel="noopener noreferrer">Telegram ↗</a></p>

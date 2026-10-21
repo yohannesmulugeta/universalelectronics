@@ -8,22 +8,22 @@ const isActive = (href: string) => href === '/shop/' ? currentPath === href : cu
 ---
 
 <header class="sticky top-0 z-40 border-b border-brand-border bg-white/95 backdrop-blur-md">
-  <div class="max-w-site mx-auto flex min-h-[76px] items-center justify-between gap-5 px-5 sm:px-8 lg:min-h-[88px]">
+  <div class="max-w-site mx-auto flex min-h-[76px] items-center justify-between gap-5 px-5 sm:px-8 xl:min-h-[88px]">
     <a href={withBase('/')} class="inline-flex shrink-0 items-center" aria-label="Universal Electronics home">
       <img src={responsiveImage('/assets/brand/ref-52939cff-cropped-logo-uni.png',200).src} srcset={responsiveImage('/assets/brand/ref-52939cff-cropped-logo-uni.png',200).srcSet} sizes="150px" alt="Universal Electronics"
         class="h-12 w-auto sm:h-14" width="150" height="58" loading="eager" />
     </a>
 
-    <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary navigation">
+    <nav class="hidden items-center gap-5 2xl:gap-7 xl:flex" aria-label="Primary navigation">
       {siteConfig.navLinks.map((link) => (
-        <a href={withBase(link.href)} class={`nav-link text-[13px] font-semibold tracking-[.01em] text-brand-navy ${isActive(link.href) ? 'is-active' : ''}`}
+        <a href={withBase(link.href)} class={`nav-link text-[12px] 2xl:text-[13px] font-semibold tracking-[.01em] text-brand-navy ${isActive(link.href) ? 'is-active' : ''}`}
           aria-current={isActive(link.href) ? 'page' : undefined}>{link.label}</a>
       ))}
     </nav>
 
-    <a href={withBase('/contact/')} class="button-primary hidden min-h-11 px-5 lg:inline-flex">Get in touch <span aria-hidden="true">↗</span></a>
+    <a href={withBase('/contact/')} class="button-primary hidden min-h-11 px-5 xl:inline-flex">Get a quote <span aria-hidden="true">↗</span></a>
 
-    <button id="mobile-menu-toggle" type="button" class="inline-flex h-11 w-11 items-center justify-center text-brand-navy lg:hidden"
+    <button id="mobile-menu-toggle" type="button" class="inline-flex h-11 w-11 items-center justify-center text-brand-navy xl:hidden"
       aria-controls="mobile-menu" aria-expanded="false" aria-label="Open navigation menu">
       <svg id="menu-icon-open" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
         <path stroke-linecap="round" stroke-width="1.7" d="M3 7h18M3 12h18M3 17h18" />
@@ -34,7 +34,7 @@ const isActive = (href: string) => href === '/shop/' ? currentPath === href : cu
     </button>
   </div>
 
-  <div id="mobile-menu" class="hidden border-t border-brand-border bg-white lg:hidden">
+  <div id="mobile-menu" class="hidden border-t border-brand-border bg-white xl:hidden">
     <nav class="flex flex-col px-5 py-4 sm:px-8" aria-label="Mobile navigation">
       {siteConfig.navLinks.map((link) => (
         <a href={withBase(link.href)} class="border-b border-brand-border py-4 font-serif text-lg font-semibold text-brand-navy"

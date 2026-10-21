@@ -81,7 +81,7 @@ import { siteConfig } from '../data/siteConfig';
     <section class="mb-24 grid gap-8 bg-brand-offwhite px-8 py-12 sm:px-12 lg:grid-cols-2 lg:px-16 lg:py-16">
       <div><p class="section-eyebrow mb-5">Visit us</p><h2 class="font-serif text-3xl font-semibold">Find us in Addis Ababa.</h2></div>
       <div class="text-sm leading-7 text-brand-muted">
-        <p>{siteConfig.address}<br />{siteConfig.city}, {siteConfig.country}</p>
+        <p>Tefera Business Center | Habte Giyorgis<br /><span lang="am">{siteConfig.addressAmharic}</span><br />{siteConfig.city}, {siteConfig.country}</p>
         <p class="mt-4">Office line: <a class="font-semibold text-brand-navy hover:underline" href={`tel:${siteConfig.phones[1].replace(/\s+/g, '')}`}>{siteConfig.phones[1]}</a></p>
         <p class="mt-4">Prefer WhatsApp? <a class="font-semibold text-brand-navy hover:underline" href={`https://wa.me/${siteConfig.whatsappNumber}`} target="_blank" rel="noopener noreferrer">Start a message ↗</a></p>
       </div>
