@@ -1,0 +1,36 @@
+name: Redesign staging QA
+on:
+  push:
+    branches: [redesign/three-phase-2026-10-21]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Validate Astro and TypeScript
+        run: npm run check
+      - name: Build static website
+        run: npm run build
+      - name: Verify SEO and route coverage
+        run: npm run test:smoke
+      - name: Install Chromium for desktop/mobile screenshots
+        run: npx playwright install --with-deps chromium
+      - name: Test desktop and mobile experience
+        run: node tests/redesign-ux.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: universal-electronics-redesign-screenshots
+          path: artifacts/redesign/
+          retention-days: 14
