@@ -20,9 +20,9 @@ import { siteConfig } from '../data/siteConfig';
       <div>
         <p class="section-eyebrow mb-5">Email enquiry</p>
         <h2 id="email-form-heading" class="font-serif text-3xl font-semibold leading-tight text-brand-navy sm:text-4xl">Tell us about your requirement.</h2>
-        <p class="mt-5 max-w-md text-sm leading-7 text-brand-muted">Complete the form to prepare an email to our team. Your email app will open so you can review and send it.</p>
+        <p class="mt-5 max-w-md text-sm leading-7 text-brand-muted">Enter your requirements and choose email or WhatsApp. The selected app opens a draft for you to review and send; this website does not submit your message automatically.</p>
       </div>
-      <form id="contact-email-form" data-email={siteConfig.email} class="space-y-5">
+      <form id="contact-email-form" data-email={siteConfig.email} data-whatsapp={siteConfig.whatsappNumber} class="space-y-5">
         <div class="grid gap-5 sm:grid-cols-2">
           <div>
             <label for="contact-name" class="mb-2 block text-sm font-semibold text-brand-navy">Your name <span aria-hidden="true">*</span></label>
@@ -52,7 +52,7 @@ import { siteConfig } from '../data/siteConfig';
           <label for="contact-message" class="mb-2 block text-sm font-semibold text-brand-navy">What do you need? <span aria-hidden="true">*</span></label>
           <textarea id="contact-message" name="message" rows="6" required maxlength="3000" class="catalog-field resize-y" placeholder="Tell us about the product or project, location, and any details that will help us respond."></textarea>
         </div>
-        <button type="submit" class="button-primary">Prepare email <span aria-hidden="true">↗</span></button>
+        <div class="flex flex-wrap gap-3"><button type="submit" class="button-primary">Prepare email <span aria-hidden="true">↗</span></button><button type="button" data-send-whatsapp class="button-secondary">Prepare WhatsApp enquiry ↗</button></div>
         <p id="contact-form-status" class="text-sm leading-6 text-brand-muted" role="status" aria-live="polite"></p>
       </form>
     </section>
@@ -93,21 +93,29 @@ import { siteConfig } from '../data/siteConfig';
   const form = document.querySelector<HTMLFormElement>('#contact-email-form');
   const status = document.querySelector<HTMLElement>('#contact-form-status');
 
-  form?.addEventListener('submit', (event) => {
-    event.preventDefault();
+  const getDraft = () => {
+    if (!form || !form.reportValidity()) return null;
     const fields = new FormData(form);
     const value = (name: string) => String(fields.get(name) ?? '').trim();
-    const subject = `Universal Electronics enquiry: ${value('interest')}`;
-    const body = [
-      `Name: ${value('name')}`,
-      `Email: ${value('email')}`,
-      `Phone: ${value('phone') || 'Not provided'}`,
-      `Interest: ${value('interest')}`,
-      '',
-      value('message'),
-    ].join('\n');
+    return { subject: `Universal Electronics enquiry: ${value('interest')}`, body: [
+      `Name: ${value('name')}`, `Email: ${value('email')}`, `Phone: ${value('phone') || 'Not provided'}`, `Interest: ${value('interest')}`, '', value('message')
+    ].join('\n') };
+  };
 
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const draft = getDraft();
+    if (!draft) return;
     if (status) status.textContent = 'Your email app should open with the message ready. Please send it there.';
-    window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(draft.subject)}&body=${encodeURIComponent(draft.body)}`;
+  });
+
+  form?.querySelector<HTMLButtonElement>('[data-send-whatsapp]')?.addEventListener('click', () => {
+    const draft = getDraft();
+    if (!draft || !form) return;
+    const number = form.dataset.whatsapp;
+    if (!number) return;
+    if (status) status.textContent = 'WhatsApp opens with a prepared message. Review it and press Send in WhatsApp.';
+    window.open(`https://wa.me/${number}?text=${encodeURIComponent(`${draft.subject}\n\n${draft.body}`)}`, '_blank', 'noopener,noreferrer');
   });
 </script>

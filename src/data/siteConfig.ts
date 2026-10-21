@@ -30,7 +30,7 @@ export const siteConfig: SiteConfig = {
     { name: 'Speakers', slug: 'speakers' },
     { name: 'Amplifiers', slug: 'amplifiers' },
     { name: 'Microphones', slug: 'microphones' },
-    { name: 'Keyboards', slug: 'keyboards' },
+    { name: 'Instruments', slug: 'instruments' },
     { name: 'Mixers', slug: 'mixer' },
   ],
 };

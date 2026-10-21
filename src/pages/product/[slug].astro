@@ -3,6 +3,7 @@ import { withBase } from '../../lib/paths';
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import ProductCard from '../../components/ProductCard.astro';
+import ProductGallery from '../../components/ProductGallery.astro';
 import { products } from '../../data/products';
 import { siteConfig } from '../../data/siteConfig';
 import type { Product } from '../../types';
@@ -35,16 +36,7 @@ const displayFeatures = product.features.filter((feature) => feature.length < 18
 let related = products.filter(
   (p) => p.categorySlug === product.categorySlug && p.slug !== product.slug
 );
-// If not enough in category, supplement with same section
-if (related.length < 4) {
-  const supplement = products.filter(
-    (p) =>
-      p.section === product.section &&
-      p.slug !== product.slug &&
-      !related.some((r) => r.slug === p.slug)
-  );
-  related = [...related, ...supplement];
-}
+// Only recommend equipment from the same category; do not mix batteries into panel suggestions.
 const relatedProducts = related.slice(0, 4);
 
 // Prefill Telegram enquiry message
@@ -64,7 +56,9 @@ const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${ema
 <Layout
   title={`${product.title} | Universal Electronics`}
   description={`Catalog details and product enquiry for ${product.title} at Universal Electronics, Addis Ababa.`}
-  ogImage={primaryImage || undefined}
+  ogImage={primaryImage || (product.section === "sound" ? "/assets/products/speakers/4980-01._JBL_EON715_3-4_Extreme_vert_medium.png" : "/assets/projects/recreated-water-station.webp")}
+  ogType="product"
+  schema={{ "@context": "https://schema.org", "@type": "Product", name: product.title, description, category: product.categoryName, brand: { "@type": "Brand", name: product.primaryBrand }, ...(primaryImage ? { image: [new URL(withBase(primaryImage), "https://universalelectronicet.com").href] } : {}) }}
 >
   <div class="max-w-site mx-auto px-5 sm:px-8 py-6 sm:py-8">
     <Breadcrumb
@@ -80,61 +74,9 @@ const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${ema
 
     <!-- Main Product Detail Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mt-8 mb-20">
-      <!-- Media Gallery Column (5 cols on LG) -->
-      <div class="lg:col-span-6 space-y-4">
-        <div class="bg-brand-offwhite p-8 sm:p-12 aspect-square flex items-center justify-center overflow-hidden">
-          {
-            hasImages && primaryImage ? (
-              <img
-                src={withBase(primaryImage)}
-                alt={product.title}
-                class="w-full h-full object-contain max-h-[520px]"
-                loading="eager"
-              />
-            ) : (
-              <div class="text-center p-8">
-                <svg
-                  class="w-16 h-16 text-slate-300 mx-auto mb-3"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                <h4 class="text-sm font-semibold text-slate-600">
-                  Image unavailable
-                </h4>
-                <p class="text-xs text-slate-400 mt-1 max-w-xs mx-auto">
-                  Please ask us for a current product photo.
-                </p>
-              </div>
-            )
-          }
-        </div>
-
-        <!-- Additional gallery images if any -->
-        {
-          product.media && product.media.length > 1 && (
-            <div class="flex gap-2 overflow-x-auto pb-2">
-              {product.media.map((img, i) => (
-                <a href={withBase(img)} target="_blank" rel="noopener noreferrer" aria-label={`Open ${product.title} image ${i + 1}`} class="w-20 h-20 shrink-0 bg-brand-offwhite border border-brand-border p-2 flex items-center justify-center focus-visible:outline-2 focus-visible:outline-brand-blue">
-                  <img
-                    src={withBase(img)}
-                    alt={`${product.title} view ${i + 1}`}
-                    class="w-full h-full object-contain"
-                    loading="lazy"
-                  />
-                </a>
-              ))}
-            </div>
-          )
-        }
-
+      <!-- Product photos: original files preserved and only verified source media used -->
+      <div class="lg:col-span-6">
+        <ProductGallery title={product.title} media={product.media} />
       </div>
 
       <!-- Product Information Column (7 cols on LG) -->
@@ -180,10 +122,10 @@ const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${ema
         <!-- Direct Contact / Enquiry Card -->
         <div class="border-t border-b border-brand-border py-7 mb-9">
           <h2 class="text-sm font-semibold uppercase tracking-[.16em] text-brand-navy mb-2">
-            <span>Ask about this product</span>
+            <span>Request a quotation</span>
           </h2>
           <p class="text-sm text-brand-muted mb-5">
-            Contact us for current availability and details.
+            Request a quotation and confirm the exact model, specifications and availability before ordering.
           </p>
 
           <div class="flex flex-col sm:flex-row sm:items-center gap-3">
@@ -197,7 +139,7 @@ const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${ema
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.37.74-.56 2.92-1.27 4.86-2.11 5.83-2.52 2.77-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24-.01.44z"/>
               </svg>
-              <span>Ask on Telegram</span>
+              <span>Request via Telegram</span>
             </a>
 
             <a
@@ -206,7 +148,7 @@ const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${ema
               rel="noopener noreferrer"
               class="button-secondary"
             >
-              <span>Ask on WhatsApp</span>
+              <span>Request via WhatsApp</span>
             </a>
 
             <!-- Email Action Button -->
@@ -235,6 +177,9 @@ const emailLink = `mailto:${siteConfig.email}?subject=${emailSubject}&body=${ema
           </div>
         </div>
 
+        {product.id === "4981" && (
+          <p class="mb-6 border-l-4 border-amber-500 bg-amber-50 p-4 text-sm leading-6 text-slate-800">This archived listing combines the JBL SRX725 and PRX725 model names. Request confirmation of the exact model and manufacturer specifications before ordering.</p>
+        )}
         <!-- Key Features List -->
         {
           displayFeatures.length > 0 && (

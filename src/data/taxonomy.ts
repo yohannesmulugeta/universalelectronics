@@ -58,9 +58,9 @@ export const categories: Category[] = [
     "count": 2
   },
   {
-    "name": "Keyboards",
-    "slug": "keyboards",
-    "description": "Musical keyboards and synthesizers for practice, church services, studio production, and live stage performance.",
+    "name": "Instruments",
+    "slug": "instruments",
+    "description": "Acoustic musical instruments for practice, ensembles, studios and live performance.",
     "section": "sound",
     "count": 1
   },

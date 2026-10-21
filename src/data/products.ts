@@ -1527,10 +1527,10 @@ export const products: Product[] = [
     "slug": "yamaha-v10sg-natural-acoustic-violin",
     "sourceUrl": "https://universalelectronicset.com/?post_type=product&#038;p=4947",
     "categories": [
-      "Keyboards"
+      "Instruments"
     ],
-    "categorySlug": "keyboards",
-    "categoryName": "Keyboards",
+    "categorySlug": "instruments",
+    "categoryName": "Instruments",
     "brands": [
       "Yamaha"
     ],

@@ -9,18 +9,25 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  ogType?: 'website' | 'product';
+  noindex?: boolean;
+  schema?: Record<string, unknown>;
 }
 
 const {
   title = `${siteConfig.companyName} | ${siteConfig.tagline}`,
   description = 'Ethiopian importer and distributor of solar energy solutions and professional sound systems. Explore inverters, batteries, solar panels, water pumps, speakers, and PA equipment.',
   ogImage = '/assets/projects/recreated-water-station.webp',
+  ogType = 'website',
+  noindex = false,
+  schema,
 } = Astro.props;
 
 const pageTitle = title.includes(siteConfig.companyName) ? title : `${title} | ${siteConfig.companyName}`;
 // All public pages, including the old GitHub Pages mirror, identify the purchased domain as canonical.
 const canonicalPath = Astro.url.pathname.replace(/^\/universalelectronics(?=\/|$)/, '') || '/';
 const canonicalUrl = new URL(canonicalPath, 'https://universalelectronicet.com').href;
+const organizationSchema = { "@context": "https://schema.org", "@type": "Organization", name: siteConfig.companyName, url: "https://universalelectronicet.com/", logo: "https://universalelectronicet.com/assets/brand/4404-logo-uni.png", sameAs: [siteConfig.telegramUrl] };
 ---
 
 <!doctype html>
@@ -30,6 +37,7 @@ const canonicalUrl = new URL(canonicalPath, 'https://universalelectronicet.com')
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex,follow" />}
     <link rel="canonical" href={canonicalUrl} />
     <title>{pageTitle}</title>
 
@@ -40,11 +48,13 @@ const canonicalUrl = new URL(canonicalPath, 'https://universalelectronicet.com')
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(withBase(ogImage), Astro.site).href} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content={siteConfig.companyName} />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
     <!-- Preconnect for Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

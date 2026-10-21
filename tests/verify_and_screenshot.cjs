@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const BASE_URL = process.env.SITE_BASE_URL || 'http://localhost:4321';
-const ROOT_DIR = path.resolve(__dirname, '../../');
+const ROOT_DIR = path.resolve(__dirname, '..');
 const SCREENSHOT_DIR = path.join(ROOT_DIR, 'output/playwright');
 
 if (!fs.existsSync(SCREENSHOT_DIR)) {
@@ -11,9 +11,9 @@ if (!fs.existsSync(SCREENSHOT_DIR)) {
 }
 
 // Read products list to verify all 59 routes
-const rawProducts = JSON.parse(
-  fs.readFileSync(path.join(ROOT_DIR, 'rebuild-ready/content/products.json'), 'utf8')
-);
+const productSource = fs.readFileSync(path.join(ROOT_DIR, 'src/data/products.ts'), 'utf8');
+const rawProducts = [...productSource.matchAll(/"slug":\s*"([^"]+)"/g)].map((match) => ({ slug: match[1] }));
+if (rawProducts.length !== 59) throw new Error(`Expected 59 published products; found ${rawProducts.length}`);
 
 (async () => {
   console.log('🚀 Starting browser verification on ' + BASE_URL);
