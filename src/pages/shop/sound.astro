@@ -3,6 +3,7 @@ import { withBase } from '../../lib/paths';
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import ProductCard from '../../components/ProductCard.astro';
+import BrandMarquee from '../../components/BrandMarquee.astro';
 import { products } from '../../data/products';
 import { categories } from '../../data/taxonomy';
 
@@ -54,6 +55,8 @@ const soundProducts = products.filter((p) => p.section === 'sound');
         }
       </div>
     </div>
+
+    <BrandMarquee section="sound" />
 
     <!-- Grouped Sections for Each Sound Category -->
     <div class="space-y-14">
