@@ -94,3 +94,9 @@ A separate GitHub Actions workflow continues publishing a historical mirror at `
 - Google Search Console property requires sign-in by the owner; Cloudflare Web Analytics is enabled through Cloudflare.
 
 If a Cloudflare build fails, inspect Workers & Pages → universalelectronics → Builds before making DNS changes.
+
+## SEO and asset maintenance
+
+The XML sitemap is generated from the current catalog and category data and is exposed at `https://universalelectronicet.com/sitemap.xml`. The `public/robots.txt` file points crawlers to that URL. Canonical and social-sharing metadata use the purchased domain. Product photographs with no verified match display an explicitly labeled placeholder instead of an unrelated product image.
+
+Current image optimization backlog: several source images exceed 1 MB; compress and resize these binary assets using verified originals before replacing them in `public/assets/`. Do not present a representative manufacturer image as an exact product model without labeling it.
