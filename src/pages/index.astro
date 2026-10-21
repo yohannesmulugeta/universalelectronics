@@ -2,6 +2,7 @@
 import { withBase } from '../lib/paths';
 import { responsiveImage } from '../lib/responsiveImage';
 import Layout from '../layouts/Layout.astro';
+import CinematicHero from '../components/CinematicHero.astro';
 import FeaturedCarousel from '../components/FeaturedCarousel.astro';
 import BrandMarquee from '../components/BrandMarquee.astro';
 import SolutionsAccordion from '../components/SolutionsAccordion.astro';
@@ -25,38 +26,7 @@ const featuredProducts = featuredSlugs.map((slug) => products.find((product) => 
 
 <Layout title="Universal Electronics | Solar and Sound Equipment in Ethiopia"
   description="Discover solar power, backup batteries, water pumps and professional sound equipment in Addis Ababa. Explore the catalog and request a quotation.">
-  <!-- Phase 1: modern, readable desktop-first hero with responsive image placement -->
-  <section class="ue-hero relative overflow-hidden bg-brand-offwhite" aria-labelledby="home-heading">
-    <div class="max-w-site mx-auto grid min-w-0 lg:grid-cols-[.98fr_1.02fr] lg:items-stretch">
-      <div class="relative z-10 flex min-w-0 flex-col justify-center px-5 py-16 sm:px-8 sm:py-20 lg:min-h-[660px] lg:py-24 lg:pr-12" data-reveal>
-        <p class="section-eyebrow mb-7">Universal Electronics · Addis Ababa</p>
-        <h1 id="home-heading" class="max-w-2xl font-serif text-[clamp(2.75rem,5.4vw,5.7rem)] font-extrabold leading-[1.07] tracking-[-.045em] text-brand-navy">
-          Powering everyday life.<span class="block text-brand-blue">Making sound matter.</span>
-        </h1>
-        <p class="mt-7 max-w-lg text-base leading-8 text-brand-muted sm:text-lg">
-          Explore solar panels, power backup, water pumping equipment and professional sound systems. Find the right product and request current details from our Addis Ababa team.
-        </p>
-        <div class="mt-9 flex flex-wrap gap-3 sm:gap-4">
-          <a href={withBase('/shop/')} class="button-primary">Explore products <span aria-hidden="true">↗</span></a>
-          <a href={withBase('/contact/')} class="button-secondary">Request a quotation <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="mt-12 grid max-w-lg grid-cols-2 gap-4 border-t border-brand-border pt-6 text-sm text-brand-muted">
-          <p><span class="block font-bold text-brand-navy">Solar & backup</span>Energy equipment</p>
-          <p><span class="block font-bold text-brand-navy">Sound & audio</span>Professional systems</p>
-        </div>
-      </div>
-      <div class="ue-hero-media relative min-h-[340px] min-w-0 overflow-hidden bg-brand-pale sm:min-h-[470px] lg:min-h-[660px]">
-        <img src={responsiveImage('/assets/projects/recreated-solar-array.webp', 1500).src}
-          srcset={responsiveImage('/assets/projects/recreated-solar-array.webp',1500).srcSet} sizes="(max-width: 1024px) 100vw, 51vw"
-          alt="Illustrative recreation of a solar array from an archived project photograph"
-          class="absolute inset-0 h-full w-full object-cover" width="1586" height="992" loading="lazy" decoding="async" />
-        <div class="absolute bottom-5 left-5 right-5 flex flex-wrap items-center justify-between gap-3 bg-white/95 px-5 py-4 text-brand-navy backdrop-blur-sm sm:bottom-8 sm:left-8 sm:right-8">
-          <span class="text-xs font-semibold uppercase tracking-[.12em]">Solar & sound solutions</span>
-          <span class="text-xs text-brand-muted">Illustrative project imagery</span>
-        </div>
-      </div>
-    </div>
-  </section>
+  <CinematicHero />
 
   <BrandMarquee />
 

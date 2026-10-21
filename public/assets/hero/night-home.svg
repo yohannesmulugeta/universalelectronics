@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+<title id="title">Nighttime home energy visualization</title><desc id="desc">Original illustration of a house at night with roof solar panels, warm interior lights, backup battery, and glowing power routes. Concept illustration, not a photographed installation.</desc>
+<defs>
+<linearGradient id="sky" x1=".2" y1="0" x2=".8" y2="1"><stop stop-color="#071326"/><stop offset=".6" stop-color="#1d3455"/><stop offset="1" stop-color="#354b67"/></linearGradient>
+<linearGradient id="ground" x1="0" y1="0" x2=".1" y2="1"><stop stop-color="#2c4256"/><stop offset="1" stop-color="#0e1c30"/></linearGradient>
+<linearGradient id="roof" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#33465d"/><stop offset=".5" stop-color="#101e32"/><stop offset="1" stop-color="#081220"/></linearGradient>
+<linearGradient id="front" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b4bfca"/><stop offset=".6" stop-color="#8293a8"/><stop offset="1" stop-color="#4a5b72"/></linearGradient>
+<linearGradient id="side" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#687f9a"/><stop offset="1" stop-color="#283a54"/></linearGradient>
+<linearGradient id="glass" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#ffe5a3"/><stop offset=".58" stop-color="#e5af73"/><stop offset="1" stop-color="#75737a"/></linearGradient>
+<linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3a5579"/><stop offset=".45" stop-color="#07162c"/><stop offset="1" stop-color="#284667"/></linearGradient>
+<radialGradient id="light"><stop stop-color="#f5d18d" stop-opacity=".4"/><stop offset="1" stop-color="#f5d18d" stop-opacity="0"/></radialGradient>
+<filter id="blur"><feGaussianBlur stdDeviation="15"/></filter>
+</defs>
+<rect width="1200" height="720" fill="url(#sky)"/>
+<circle cx="680" cy="140" r="250" fill="#3d6289" opacity=".07"/>
+<g fill="#d2e9ff" opacity=".55"><circle cx="75" cy="67" r="1"/><circle cx="200" cy="113" r="1"/><circle cx="360" cy="65" r="1"/><circle cx="540" cy="85" r="1"/><circle cx="777" cy="55" r="1"/><circle cx="1063" cy="86" r="1"/><circle cx="1125" cy="154" r="1"/></g>
+<path d="M0 514 Q190 485 380 505 Q680 474 1200 521 L1200 720 L0 720Z" fill="url(#ground)"/>
+<g fill="#0a2338" opacity=".82"><path d="M82 531V367" stroke="#132840" stroke-width="12"/><circle cx="80" cy="355" r="68"/><circle cx="124" cy="391" r="46"/><circle cx="49" cy="403" r="48"/><path d="M1134 534V360" stroke="#183048" stroke-width="12"/><circle cx="1139" cy="350" r="71"/><circle cx="1092" cy="384" r="45"/></g>
+<ellipse cx="619" cy="636" rx="560" ry="50" fill="#040b18" opacity=".7" filter="url(#blur)"/>
+<!-- roof, house and garage -->
+<path d="M190 346L510 207L827 319L503 460Z" fill="url(#roof)" stroke="#273b58" stroke-width="4"/>
+<path d="M185 345L505 459V615L185 515Z" fill="url(#front)" stroke="#36495f" stroke-width="3"/>
+<path d="M505 459L827 320V527L505 615Z" fill="url(#side)" stroke="#293b55" stroke-width="3"/>
+<path d="M173 345L510 195L841 313L825 335L508 220L191 368Z" fill="#0b182c" stroke="#263c57" stroke-width="3"/>
+<!-- solar panels on roof -->
+<path d="M305 315L522 224L705 287L488 384Z" fill="url(#panel)" stroke="#65809d" stroke-width="4"/>
+<g fill="none" stroke="#b5d8fc" stroke-opacity=".35" stroke-width="1.5"><path d="M348 298L533 361M395 278L582 341M443 259L631 320M492 242L680 305"/><path d="M350 329L568 242M397 345L615 261M446 363L665 277"/></g>
+<!-- warm windows -->
+<ellipse cx="333" cy="519" rx="170" ry="105" fill="url(#light)"/>
+<path d="M230 425L374 474V572L230 528Z" fill="#233247" stroke="#c6d1ce" stroke-width="5"/>
+<path d="M239 436L364 478V558L239 520Z" fill="url(#glass)"/>
+<path d="M300 456V540M240 480L364 522" stroke="#584e50" stroke-width="6"/>
+<path d="M410 491L481 513V595L410 572Z" fill="#2d4156" stroke="#b1c0ca" stroke-width="4"/>
+<path d="M418 501L472 518V583L418 566Z" fill="url(#glass)"/>
+<path d="M570 450L693 401V509L570 551Z" fill="#1b2e45" stroke="#9cadb8" stroke-width="5"/>
+<path d="M580 459L682 416V500L580 536Z" fill="url(#glass)"/>
+<path d="M630 437V516M580 495L682 456" stroke="#555a63" stroke-width="5"/>
+<circle cx="532" cy="484" r="7" fill="#ffe0a0"/><ellipse cx="530" cy="502" rx="50" ry="74" fill="url(#light)"/>
+<!-- garage -->
+<path d="M824 321L1041 395V580L827 523Z" fill="#667991" stroke="#31475e" stroke-width="4"/>
+<path d="M800 311L922 260L1080 374L1040 400L827 339Z" fill="url(#roof)" stroke="#334a64" stroke-width="4"/>
+<path d="M856 387L1009 438V560L855 516Z" fill="#172b43" stroke="#3a4d64" stroke-width="11"/>
+<path d="M874 465L988 502M874 479L988 516" stroke="#b1c9db" stroke-opacity=".32" stroke-width="3"/>
+<!-- energy battery -->
+<rect x="702" y="519" width="53" height="96" rx="5" fill="#96a7b4" stroke="#263b53" stroke-width="4"/>
+<rect x="711" y="529" width="35" height="75" rx="2" fill="#435b75"/><rect x="718" y="536" width="21" height="8" rx="2" fill="#99c7d9"/><circle cx="737" cy="578" r="3" fill="#65ead6"/>
+<!-- power tracing -->
+<path d="M729 518Q685 476 708 447T827 407" fill="none" stroke="#4bbdff" stroke-width="15" opacity=".28" filter="url(#blur)"/>
+<path d="M729 518Q685 476 708 447T827 407" fill="none" stroke="#51bfff" stroke-width="3" stroke-dasharray="11 14" class="energy"/>
+<path d="M191 370L505 479L826 343" fill="none" stroke="#50bfff" stroke-width="3" stroke-dasharray="13 17" class="energy"/>
+<path d="M828 347V521L1035 577" fill="none" stroke="#fa697e" stroke-width="3" stroke-dasharray="10 17" class="energy2"/>
+<path d="M830 522L1037 577" stroke="#ef6c82" stroke-width="18" opacity=".15" filter="url(#blur)"/>
+<g opacity=".65"><path d="M1110 465L1118 185" stroke="#637c9b" stroke-width="8"/><path d="M1090 206L1165 179L1170 194L1093 219Z" fill="#6c83a0"/></g>
+<style>.energy{animation:flow 5s linear infinite}.energy2{animation:flowback 4s linear infinite}@keyframes flow{to{stroke-dashoffset:-100}}@keyframes flowback{to{stroke-dashoffset:100}}@media(prefers-reduced-motion:reduce){.energy,.energy2{animation:none}}</style>
+</svg>
