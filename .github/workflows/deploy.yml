@@ -33,6 +33,8 @@ jobs:
         run: npm run build
         env:
           GITHUB_PAGES: 'true'
+      - name: Verify production routes, SEO, and responsive image files
+        run: npm run test:smoke
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:

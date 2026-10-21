@@ -1755,57 +1755,10 @@ export const products: Product[] = [
       "JBL"
     ],
     "primaryBrand": "JBL",
-    "descriptionText": "The JBL SRX725 / PRX725 is a high-output, dual 15-inch, two-way PA speaker delivering powerful audio performance. Designed for live sound reinforcement, it features dual woofers, neodymium tweeter, rugged birch cabinet, and selectable bi-amp or full-range operation. With a peak SPL up to ~139 dB, it's ideal for concerts, events, and installations.",
-    "shortDescriptionText": "The JBL SRX725 / PRX725 is a high-output, dual 15-inch, two-way PA speaker delivering powerful audio performance. Designed for live sound reinforcement, it features dual woofers, neodymium tweeter, rugged birch cabinet, and selectable bi-amp or full-range operation. With a peak SPL up to ~139 dB, it's ideal for concerts, events, and installations.",
-    "features": [
-      "Dual 15-inch (380 mm) Differential Drive woofers for deep, low distortion bass. - High-frequency neodymium compression driver (~4\" voice coil) for crisp mids and highs. - Bi-amplified or passive mode selectable, giving flexibility in system design. - Coverage pattern ~75° x 50°, which balances wide audience coverage with control. - Built in a durable 11-ply birch plywood cabinet with protective DuraFlex finish. - Rugged design including steel grille, side handles for transport. ### Technical Specifications",
-      "Perfect for large venues, concerts, outdoor events, or any setting needing strong sound projection.",
-      "Flexible operation (bi-amp or passive) makes it easier to optimize depending on amplifier strength and system setup.",
-      "Rugged and road-worthy build design, good for touring or frequent setup/tear-down.",
-      "High SPL and robust frequency range make it suitable for both music and speech."
-    ],
-    "specifications": [
-      {
-        "label": "Frequency Range (-10 dB)",
-        "value": "~37 Hz to 20 kHz"
-      },
-      {
-        "label": "Frequency Response (±3 dB)",
-        "value": "~53 Hz to 20 kHz"
-      },
-      {
-        "label": "Power Handling",
-        "value": "Passive Mode: ~1,200 W RMS, with higher program/peak power ratings (~2,400 W / ~4,800 W)"
-      },
-      {
-        "label": "Sensitivity",
-        "value": "Around 99 dB with 1W / 1m in passive mode B&amp;H Photo Video+1"
-      },
-      {
-        "label": "Maximum SPL",
-        "value": "~136 dB peak"
-      },
-      {
-        "label": "Impedance",
-        "value": "Passive mode: ~4 Ω; HF section: ~8 Ω in bi-amp mode"
-      },
-      {
-        "label": "Coverage Angle",
-        "value": "~75° horizontal × 50° vertical"
-      },
-      {
-        "label": "Cabinet Material",
-        "value": "11-ply birch plywood, DuraFlex finish B&amp;H Photo Video+1"
-      },
-      {
-        "label": "Weight",
-        "value": "~43 kg (≈ 96 lb)"
-      },
-      {
-        "label": "Dimensions",
-        "value": "Approx. 1219 × 541 × 508 mm (H × W × D)"
-      }
-    ],
+    "descriptionText": "The archived listing combines JBL SRX725 and PRX725 model names. These are different loudspeaker models; confirm which unit is offered and request its exact specification sheet and photographs before purchasing.",
+    "shortDescriptionText": "The archived listing combines JBL SRX725 and PRX725 model names. These are different loudspeaker models; confirm which unit is offered and request its exact specification sheet and photographs before purchasing.",
+    "features": [],
+    "specifications": [],
     "media": [
       "/assets/products/speakers/4982-photo_2025-09-07_08-14-27.jpg"
     ],

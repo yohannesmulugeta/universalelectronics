@@ -100,3 +100,12 @@ If a Cloudflare build fails, inspect Workers & Pages â†’ universalelectronics â†
 The XML sitemap is generated from the current catalog and category data and is exposed at `https://universalelectronicet.com/sitemap.xml`. The `public/robots.txt` file points crawlers to that URL. Canonical and social-sharing metadata use the purchased domain. Product photographs with no verified match display an explicitly labeled placeholder instead of an unrelated product image.
 
 Current image optimization backlog: several source images exceed 1 MB; compress and resize these binary assets using verified originals before replacing them in `public/assets/`. Do not present a representative manufacturer image as an exact product model without labeling it.
+
+## Production hardening (October 2026)
+
+- `npm run build` creates optimized WebP versions of actively referenced photographs using Sharp. Originals stay in `public/assets/` and remain available as full-resolution source images. Generated derivatives are ignored by Git and published in the deployment output.
+- React catalog receives only fields needed for browsing, initially shows 12 results, and provides a Load more control. Keyword search and filters still operate across all 59 records.
+- Product detail pages offer image thumbnails where multiple real catalog photographs exist; ambiguous JBL SRX725/PRX725 information is explicitly held for business verification.
+- Enquiries prepare an email or a WhatsApp message, but **neither is sent by the website automatically**. Confirm the published WhatsApp number and destination email with the owner.
+- Use `npm run check`, `npm run build`, and `npm run test:smoke` before publishing changes. Optional full Playwright interactions are in `tests/verify_and_screenshot.cjs`.
+- Authentic company projects, product model photos, partner permissions, and proof of customer outcomes must be provided/approved; do not generate simulated evidence and present it as a real installation.

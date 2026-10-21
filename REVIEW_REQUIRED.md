@@ -8,7 +8,7 @@ The site is a local rebuild from the recovered WordPress and SQL backup. The ori
 - **Telegram:** The owner confirmed `@universal_electronics_et`.
 - **Contact form:** The form opens an email draft in the visitor's email app. It does not submit or confirm delivery. Update `email` in `src/data/siteConfig.ts` when the business confirms the preferred inbox.
 - **Conflicting number:** The old Home page also mentions +251 911 917 583. Decide which number, if any, should appear on the new site.
-- **Domain:** GitHub Pages uses the repository URL for now. The expired domain is no longer embedded in enquiry messages. Update `astro.config.mjs` and DNS only when a final custom domain is ready.
+- **Domain:** Production runs at https://universalelectronicet.com through Cloudflare Workers. The old GitHub Pages mirror is a legacy copy with canonical URLs pointing to production.
 
 ## Product content
 
@@ -32,3 +32,12 @@ The site is a local rebuild from the recovered WordPress and SQL backup. The ori
 ## Release
 
 Run `npm.cmd run check` and `npm.cmd run build` in `site/`, review the pages at mobile and desktop widths, then test the final public routes and enquiry links after deployment. Local and live builds cannot verify external WhatsApp or Telegram account ownership.
+
+## Updated 2026-10-21: remaining business confirmations
+
+- Confirm the WhatsApp account behind +251 911 102 251 and the `universal.elec@ethionet.et` inbox. Contact page provides drafts for email and WhatsApp; neither is an automatic server-side lead form.
+- The archived JBL SRX725/PRX725 listing combines two models. Its inherited unverified technical specifications are intentionally withheld until exact model is confirmed.
+- Yamaha V10SG violin now belongs to Instruments, not Keyboards.
+- Three exact product photos and current business pricing/availability are still missing.
+- AI-assisted project visuals are identified as illustrative; do not claim particular commissioned systems, performance results or customers without genuine company records.
+- Do not publish social-media links unless the actual company accounts are verified.
