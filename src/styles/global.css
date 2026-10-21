@@ -290,3 +290,8 @@
  .ue-cinema-tag{font-size:9px;letter-spacing:.08em}
 }
 @media(prefers-reduced-motion:reduce){.ue-cinema-sound-lines i{animation:none}.ue-cinema-link,.ue-cinema-link img,.ue-cinema-arrow{transition:none}}
+
+/* User-supplied 3.6-second nighttime power video. Poster prevents layout jumps. */
+.ue-cinema-video { opacity:0; transition:opacity .3s ease; }
+.ue-cinema-video[data-ready="true"] { opacity:1; }
+@media(prefers-reduced-motion:reduce) { .ue-cinema-video { display:none!important; } }
