@@ -4,7 +4,7 @@ import { categories } from '../data/taxonomy';
 import { solutions } from '../data/solutions';
 
 const productionOrigin = 'https://universalelectronicet.com';
-const fixedPaths = ['/', '/shop/', '/shop/solar/', '/shop/sound/', '/projects/', '/services/', '/recognition/', '/about/', '/contact/'];
+const fixedPaths = ['/', '/shop/', '/shop/solar/', '/shop/sound/', '/projects/', '/services/', '/guides/', '/recognition/', '/about/', '/contact/'];
 
 export const GET: APIRoute = () => {
   const paths = [
