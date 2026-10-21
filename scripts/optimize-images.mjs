@@ -40,12 +40,12 @@ for (const source of [...references].sort()) {
   const filePath = path.join(publicAssets, relative);
   let originalStats;
   try { originalStats = await stat(filePath); } catch { continue; }
-  if (originalStats.size < 80 * 1024) continue;
+  if (originalStats.size < (source.startsWith('/assets/brand/') ? 4 : 80) * 1024) continue;
   let original;
   try { original = sharp(filePath, { failOn: 'none' }).rotate(); await original.metadata(); }
   catch (error) { console.warn('Image skipped:', source, String(error)); continue; }
   const fileVariants = {};
-  for (const width of widths) {
+  for (const width of source.startsWith('/assets/brand/') ? [200, 400] : widths) {
     try {
       const buffer = await sharp(filePath, { failOn: 'none' })
         .rotate()

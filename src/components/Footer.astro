@@ -1,5 +1,6 @@
 ---
 import { withBase } from '../lib/paths';
+import { responsiveImage } from '../lib/responsiveImage';
 import { siteConfig } from '../data/siteConfig';
 const year = new Date().getFullYear();
 ---
@@ -8,7 +9,7 @@ const year = new Date().getFullYear();
   <div class="max-w-site mx-auto px-5 py-16 sm:px-8 lg:py-24">
     <div class="grid gap-12 border-b border-white/20 pb-16 lg:grid-cols-[2fr_1fr_1fr_1.4fr]">
       <div>
-        <div class="inline-block bg-white p-2"><img src={withBase('/assets/brand/ref-52939cff-cropped-logo-uni.png')} alt="Universal Electronics" class="h-12 w-auto" width="150" height="58" loading="lazy" /></div>
+        <div class="inline-block bg-white p-2"><img src={responsiveImage('/assets/brand/ref-52939cff-cropped-logo-uni.png',200).src} srcset={responsiveImage('/assets/brand/ref-52939cff-cropped-logo-uni.png',200).srcSet} sizes="150px" alt="Universal Electronics" class="h-12 w-auto" width="150" height="58" loading="lazy" /></div>
         <p class="mt-7 max-w-sm text-sm leading-7 text-[#D5E4FF]">Solar energy equipment and professional sound products in Addis Ababa, Ethiopia.</p>
       </div>
       <div>

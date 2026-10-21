@@ -2,6 +2,7 @@
 import { brands } from '../data/taxonomy';
 import { products } from '../data/products';
 import { withBase } from '../lib/paths';
+import { responsiveImage } from '../lib/responsiveImage';
 
 const productBrands = new Set(products.map((product) => product.primaryBrand));
 const listedBrands = brands.filter(
@@ -31,11 +32,13 @@ const catalogBrands = [
               {brand.logoUrl ? (
                 <img
                   class={`brand-marquee-logo brand-marquee-logo--${brand.slug}`}
-                  src={withBase(brand.logoUrl)}
+                  src={responsiveImage(brand.logoUrl, 200).src}
+                  srcset={responsiveImage(brand.logoUrl, 200).srcSet}
+                  sizes="150px"
                   alt={duplicate ? '' : brand.name}
                   width="160"
                   height="64"
-                  loading={duplicate ? "lazy" : "eager"}
+                  loading="lazy" decoding="async"
                 />
               ) : (
                 <span class="brand-marquee-name">{brand.name}</span>

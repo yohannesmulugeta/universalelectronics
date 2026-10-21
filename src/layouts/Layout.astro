@@ -27,7 +27,7 @@ const pageTitle = title.includes(siteConfig.companyName) ? title : `${title} | $
 // All public pages, including the old GitHub Pages mirror, identify the purchased domain as canonical.
 const canonicalPath = Astro.url.pathname.replace(/^\/universalelectronics(?=\/|$)/, '') || '/';
 const canonicalUrl = new URL(canonicalPath, 'https://universalelectronicet.com').href;
-const organizationSchema = { "@context": "https://schema.org", "@type": "Organization", name: siteConfig.companyName, url: "https://universalelectronicet.com/", logo: "https://universalelectronicet.com/assets/brand/4404-logo-uni.png", sameAs: [siteConfig.telegramUrl] };
+const organizationSchema = { "@context": "https://schema.org", "@type": "ElectronicsStore", "@id": "https://universalelectronicet.com/#business", name: siteConfig.companyName, url: "https://universalelectronicet.com/", logo: "https://universalelectronicet.com/assets/brand/4404-logo-uni.png", address: { "@type": "PostalAddress", streetAddress: siteConfig.address, addressLocality: siteConfig.city, addressCountry: "ET" }, sameAs: [siteConfig.telegramUrl] };
 ---
 
 <!doctype html>
@@ -58,7 +58,9 @@ const organizationSchema = { "@context": "https://schema.org", "@type": "Organiz
     <!-- Preconnect for Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+    <!-- Non-blocking brand fonts: system fallback paints immediately on slower mobile networks. -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" /></noscript>
   </head>
   <body class="bg-white text-brand-dark flex flex-col min-h-screen">
     <a
