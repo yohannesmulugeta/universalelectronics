@@ -24,10 +24,12 @@ assert.match(page, /application\/ld\+json/, 'Site should include structured data
 assert.ok(page.includes('Recognition &amp; certificates') || page.includes('Recognition & certificates'), 'Homepage should feature recognition documents');
 assert.ok(page.includes('Ready to power your project'), 'Homepage quotation CTA missing');
 assert.ok(page.includes('A few useful answers'), 'Homepage FAQ missing');
+assert.ok(page.includes('ue-solution-accordion'), 'Interactive solution panels missing');
+assert.ok(page.includes('ue-category-quick-grid'), 'Quick category navigation missing');
 assert.ok(fileExists('dist/robots.txt') && fileExists('dist/sitemap.xml'), 'Sitemap and robots must be published');
 const sitemap = read('dist/sitemap.xml');
 const locations = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
-assert.equal(locations.length, 9 + categories.length + products.length, 'Sitemap count must match published routes');
+assert.equal(locations.length, 14 + categories.length + products.length, 'Sitemap count must match published routes');
 assert.equal(new Set(locations).size, locations.length, 'Sitemap URLs must be unique');
 const manifest = JSON.parse(read('src/generated/image-manifest.json'));
 assert.ok(Object.keys(manifest).length > 10, 'Image optimizer must generate responsive versions');
@@ -36,6 +38,10 @@ for (const variants of Object.values(manifest)) {
     assert.ok(fileExists(path.join('dist', asset.replace(/^\//, ''))), 'Missing optimized image: ' + asset);
   }
 }
+for (const slug of ['solar-power','backup-power','water-pumping','professional-sound']) {
+ assert.ok(fileExists('dist/solutions/' + slug + '/index.html'), 'Missing solution page '+slug);
+}
+assert.ok(fileExists('dist/guides/index.html'), 'Equipment guides page missing');
 const service = read('dist/services/index.html');
 assert.ok(service.includes('Solutions for power, water and sound'), 'Services page missing');
 const contact = read('dist/contact/index.html');

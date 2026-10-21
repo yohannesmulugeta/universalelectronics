@@ -1,0 +1,52 @@
+---
+import { solutions } from '../data/solutions';
+import { withBase } from '../lib/paths';
+import { responsiveImage } from '../lib/responsiveImage';
+interface Props { compact?:boolean; }
+const { compact=false } = Astro.props;
+---
+<section class:list={['ue-accordion-section',compact&&'ue-accordion-compact']} aria-labelledby="interactive-solutions-title">
+ <div class="max-w-site mx-auto px-5 py-20 sm:px-8 lg:py-28">
+  <div class="mx-auto mb-12 max-w-3xl text-center">
+   <p class="section-eyebrow mb-4">Discover what fits</p>
+   <h2 id="interactive-solutions-title" class="section-heading">Solutions for <span class="text-brand-blue">the way you work.</span></h2>
+   <p class="mx-auto mt-5 max-w-2xl leading-8 text-brand-muted">From everyday backup power to water pumping and professional sound, choose the application that matters to you.</p>
+  </div>
+  <div class="ue-solution-accordion" data-ue-accordion data-active="0" aria-label="Explore solar and sound solutions">
+   {solutions.map((solution,i)=>(
+    <a class:list={['ue-solution-panel',solution.imageType==='product'&&'ue-panel-product']} data-ue-panel={i}
+       href={withBase('/solutions/'+solution.slug+'/')} aria-label={'Explore '+solution.title+' solutions'}>
+      <img src={responsiveImage(solution.photo,960).src} srcset={responsiveImage(solution.photo,960).srcSet}
+        sizes="(max-width:768px) 82vw, (max-width:1200px) 45vw, 50vw"
+        loading="lazy" decoding="async" alt={solution.imageAlt} width="900" height="700" />
+      <div class="ue-solution-tint"></div>
+      <div class="ue-solution-panel-content">
+       <span class="ue-panel-eyebrow">{solution.eyebrow}</span>
+       <h3>{solution.title}</h3><p class="ue-panel-teaser">{solution.teaser}</p>
+      </div>
+      <span class="ue-panel-arrow" aria-hidden="true">↗</span>
+      {solution.imageType==='illustration'&&<span class="ue-panel-disclosure">Illustrative archive image</span>}
+    </a>
+   ))}
+  </div>
+  <div class="mt-7 flex flex-wrap justify-between gap-4">
+   <p class="max-w-lg text-xs leading-6 text-brand-muted">Hover to explore on desktop. Swipe and tap a solution on mobile.</p>
+   <a class="text-link" href={withBase('/services/')}>Explore all solutions ↗</a>
+  </div>
+ </div>
+</section>
+<script>
+ document.querySelectorAll<HTMLElement>('[data-ue-accordion]').forEach((accordion)=>{
+  const panels=Array.from(accordion.querySelectorAll<HTMLAnchorElement>('[data-ue-panel]'));
+  panels.forEach((panel,i)=>{
+   panel.addEventListener('pointerenter',(event)=>{
+    if(event.pointerType==='mouse'||event.pointerType==='pen')accordion.dataset.active=String(i);
+   });
+   panel.addEventListener('focus',()=>{accordion.dataset.active=String(i);});
+  });
+  accordion.addEventListener('pointerleave',()=>{accordion.dataset.active='0';});
+  accordion.addEventListener('focusout',(event)=>{
+   if(!(event.relatedTarget instanceof Node)||!accordion.contains(event.relatedTarget))accordion.dataset.active='0';
+  });
+ });
+</script>

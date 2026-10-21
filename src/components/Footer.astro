@@ -4,45 +4,74 @@ import { responsiveImage } from '../lib/responsiveImage';
 import { siteConfig } from '../data/siteConfig';
 const year = new Date().getFullYear();
 ---
-
-<footer class="mt-auto bg-brand-navy text-white">
-  <div class="max-w-site mx-auto px-5 py-16 sm:px-8 lg:py-24">
-    <div class="grid gap-12 border-b border-white/20 pb-16 lg:grid-cols-[2fr_1fr_1fr_1.4fr]">
-      <div>
-        <div class="inline-block bg-white p-2"><img src={responsiveImage('/assets/brand/ref-52939cff-cropped-logo-uni.png',200).src} srcset={responsiveImage('/assets/brand/ref-52939cff-cropped-logo-uni.png',200).srcSet} sizes="150px" alt="Universal Electronics" class="h-12 w-auto" width="150" height="58" loading="lazy" /></div>
-        <p class="mt-7 max-w-sm text-sm leading-7 text-[#D5E4FF]">Solar energy equipment and professional sound products in Addis Ababa, Ethiopia.</p>
-      </div>
-      <div>
-        <h2 class="mb-5 text-xs font-bold uppercase tracking-[.16em] text-[#BED4FF]">Explore</h2>
-        <ul class="space-y-3 text-sm text-white/85">
-          <li><a class="hover:text-white hover:underline" href={withBase('/shop/solar/')}>Solar equipment</a></li>
-          <li><a class="hover:text-white hover:underline" href={withBase('/shop/sound/')}>Professional sound</a></li>
-          <li><a class="hover:text-white hover:underline" href={withBase('/shop/')}>All products</a></li>
-        </ul>
-      </div>
-      <div>
-        <h2 class="mb-5 text-xs font-bold uppercase tracking-[.16em] text-[#BED4FF]">Company</h2>
-        <ul class="space-y-3 text-sm text-white/85">
-          <li><a class="hover:text-white hover:underline" href={withBase('/about/')}>About</a></li>
-          <li><a class="hover:text-white hover:underline" href={withBase('/projects/')}>Projects</a></li>
-          <li><a class="hover:text-white hover:underline" href={withBase('/services/')}>Services</a></li>
-          <li><a class="hover:text-white hover:underline" href={withBase('/recognition/')}>Recognition</a></li>
-          <li><a class="hover:text-white hover:underline" href={withBase('/contact/')}>Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <h2 class="mb-5 text-xs font-bold uppercase tracking-[.16em] text-[#BED4FF]">Get in touch</h2>
-        <address class="space-y-3 text-sm leading-6 text-white/85 not-italic">
-          <p>Tefera Business Center | Habte Giyorgis<br /><span lang="am">{siteConfig.addressAmharic}</span><br />{siteConfig.city}, {siteConfig.country}</p>
-          <p><a class="hover:text-white hover:underline" href={`tel:${siteConfig.phones[0].replace(/\s+/g, '')}`}>{siteConfig.phones[0]}</a></p>
-          <p><a class="break-all hover:text-white hover:underline" href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></p>
-          <p><a class="hover:text-white hover:underline" href={siteConfig.telegramUrl} target="_blank" rel="noopener noreferrer">Telegram ↗</a></p>
-        </address>
-      </div>
-    </div>
-    <div class="flex flex-col justify-between gap-3 pt-7 text-xs text-[#BED4FF] sm:flex-row">
-      <p>© {year} Universal Electronics. All rights reserved.</p>
-      <p>Addis Ababa, Ethiopia</p>
-    </div>
+<footer class="mt-auto bg-brand-navy text-white" aria-label="Website footer">
+ <div class="border-b border-white/20 bg-[#002061]">
+  <div class="max-w-site mx-auto flex flex-col gap-6 px-5 py-11 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:py-14">
+   <div class="max-w-2xl">
+    <p class="text-xs font-bold uppercase tracking-[.18em] text-[#B9D3FF]">Universal Electronics · Ethiopia</p>
+    <h2 class="mt-3 font-serif text-2xl font-extrabold leading-tight text-white sm:text-3xl">Planning a solar or sound project?</h2>
+    <p class="mt-3 text-sm leading-7 text-[#D5E4FF]">Share your requirements. Ask about current equipment, exact models and quotations.</p>
+   </div>
+   <div class="flex flex-wrap gap-3">
+    <a href={withBase('/contact/')} class="button-light">Request a quotation ↗</a>
+    <a href={'https://wa.me/'+siteConfig.whatsappNumber} class="button-outline-light" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
+   </div>
   </div>
+ </div>
+ <div class="max-w-site mx-auto px-5 pt-14 pb-7 sm:px-8 lg:pt-20">
+  <div class="grid gap-x-10 gap-y-12 border-b border-white/20 pb-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.4fr]">
+   <div class="min-w-0">
+    <a href={withBase('/')} class="inline-block bg-white p-2" aria-label="Universal Electronics home">
+     <img src={responsiveImage('/assets/brand/ref-52939cff-cropped-logo-uni.png',200).src}
+       srcset={responsiveImage('/assets/brand/ref-52939cff-cropped-logo-uni.png',200).srcSet}
+       sizes="150px" alt="Universal Electronics" width="150" height="58" loading="lazy" class="h-12 w-auto" />
+    </a>
+    <p class="mt-6 max-w-xs text-sm leading-7 text-[#D5E4FF]">Browse solar energy and professional sound equipment for your next project.</p>
+   </div>
+   <div>
+    <h2 class="mb-5 text-xs font-bold uppercase tracking-[.16em] text-[#BED4FF]">Products</h2>
+    <ul class="ue-footer-links space-y-3 text-sm">
+     <li><a href={withBase('/category/solar-panels/')}>Solar panels</a></li>
+     <li><a href={withBase('/category/inverters/')}>Inverters</a></li>
+     <li><a href={withBase('/category/solar-batteries/')}>Batteries</a></li>
+     <li><a href={withBase('/category/solar-water-pumps/')}>Water pumps</a></li>
+     <li><a href={withBase('/shop/sound/')}>Sound equipment</a></li>
+    </ul>
+   </div>
+   <div>
+    <h2 class="mb-5 text-xs font-bold uppercase tracking-[.16em] text-[#BED4FF]">Solutions</h2>
+    <ul class="ue-footer-links space-y-3 text-sm">
+     <li><a href={withBase('/solutions/solar-power/')}>Solar power</a></li>
+     <li><a href={withBase('/solutions/backup-power/')}>Backup power</a></li>
+     <li><a href={withBase('/solutions/water-pumping/')}>Water pumping</a></li>
+     <li><a href={withBase('/solutions/professional-sound/')}>Professional sound</a></li>
+     <li><a href={withBase('/services/')}>All solutions</a></li>
+    </ul>
+   </div>
+   <div>
+    <h2 class="mb-5 text-xs font-bold uppercase tracking-[.16em] text-[#BED4FF]">Company & help</h2>
+    <ul class="ue-footer-links space-y-3 text-sm">
+     <li><a href={withBase('/about/')}>About</a></li>
+     <li><a href={withBase('/projects/')}>Project archive</a></li>
+     <li><a href={withBase('/recognition/')}>Recognition documents</a></li>
+     <li><a href={withBase('/shop/')}>Product catalog</a></li>
+     <li><a href={withBase('/guides/')}>Equipment guides</a></li>
+     <li><a href={withBase('/contact/')}>Contact & enquiries</a></li>
+    </ul>
+   </div>
+   <div class="min-w-0">
+    <h2 class="mb-5 text-xs font-bold uppercase tracking-[.16em] text-[#BED4FF]">Visit & contact</h2>
+    <address class="space-y-4 text-sm leading-7 text-[#D5E4FF] not-italic">
+     <p>Tefera Business Center · Habte Giyorgis<br/><span lang="am">{siteConfig.addressAmharic}</span><br/>{siteConfig.city}, {siteConfig.country}</p>
+     <p><a class="ue-footer-link" href={'tel:'+siteConfig.phones[0].replace(/\s+/g,'')}>{siteConfig.phones[0]}</a></p>
+     <p><a class="ue-footer-link break-all" href={'mailto:'+siteConfig.email}>{siteConfig.email}</a></p>
+     <p><a class="ue-footer-link" href={siteConfig.telegramUrl} target="_blank" rel="noopener noreferrer">Telegram ↗</a></p>
+    </address>
+   </div>
+  </div>
+  <div class="flex flex-wrap items-center justify-between gap-3 pt-7 text-xs text-[#BED4FF]">
+   <p>© {year} Universal Electronics. All rights reserved.</p>
+   <p>Addis Ababa, Ethiopia · <a class="underline-offset-4 hover:underline" href={withBase('/contact/')}>Request a quotation</a></p>
+  </div>
+ </div>
 </footer>

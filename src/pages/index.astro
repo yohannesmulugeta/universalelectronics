@@ -4,6 +4,8 @@ import { responsiveImage } from '../lib/responsiveImage';
 import Layout from '../layouts/Layout.astro';
 import FeaturedCarousel from '../components/FeaturedCarousel.astro';
 import BrandMarquee from '../components/BrandMarquee.astro';
+import SolutionsAccordion from '../components/SolutionsAccordion.astro';
+import CategoryShortcuts from '../components/CategoryShortcuts.astro';
 import { products } from '../data/products';
 import { recognitionDocs } from '../data/recognition';
 import type { Product } from '../types';
@@ -58,31 +60,9 @@ const featuredProducts = featuredSlugs.map((slug) => products.find((product) => 
 
   <BrandMarquee />
 
-  <section class="max-w-site mx-auto px-5 py-20 sm:px-8 lg:py-28" aria-labelledby="solutions-heading">
-    <div class="mb-10 grid gap-5 lg:grid-cols-[1fr_.65fr] lg:items-end" data-reveal>
-      <div><p class="section-eyebrow mb-4">Find your solution</p>
-        <h2 id="solutions-heading" class="section-heading max-w-3xl">The right equipment for the work you do.</h2></div>
-      <p class="max-w-md text-base leading-7 text-brand-muted">Start with an application, then compare relevant products. Our team can help with product selection and quotations.</p>
-    </div>
-    <div class="grid gap-4 sm:grid-cols-2">
-      <a href={withBase('/category/inverters/')} class="ue-solution-card group">
-        <div class="ue-solution-art bg-brand-pale"><img src={responsiveImage('/assets/products/inverters/4630-PV19-4-6K-01.jpg',960).src} alt="Solar power inverter" loading="lazy" decoding="async" width="720" height="600" /></div>
-        <div class="ue-solution-copy"><span class="section-eyebrow">01 · Home & business</span><h3>Backup power</h3><p>Browse inverters and compatible energy equipment.</p><span class="text-link">Explore inverters ↗</span></div>
-      </a>
-      <a href={withBase('/category/solar-panels/')} class="ue-solution-card group">
-        <div class="ue-solution-art bg-brand-pale"><img src={responsiveImage('/assets/products/solar-panels/4707-ja_solar_605w_jam72d40_lb.webp',960).src} alt="Solar photovoltaic module" loading="lazy" decoding="async" width="720" height="600" /></div>
-        <div class="ue-solution-copy"><span class="section-eyebrow">02 · Solar energy</span><h3>Solar panels & systems</h3><p>Explore photovoltaic modules and related equipment.</p><span class="text-link">Explore solar panels ↗</span></div>
-      </a>
-      <a href={withBase('/category/solar-water-pumps/')} class="ue-solution-card group">
-        <div class="ue-solution-art bg-brand-pale"><img src={responsiveImage('/assets/products/solar-water-pumps/4714-grundfos-sp-small.jpg',960).src} alt="Water pumping equipment" loading="lazy" decoding="async" width="720" height="600" /></div>
-        <div class="ue-solution-copy"><span class="section-eyebrow">03 · Agriculture & water</span><h3>Solar water pumping</h3><p>Explore equipment for irrigation and water access.</p><span class="text-link">Explore water pumps ↗</span></div>
-      </a>
-      <a href={withBase('/shop/sound/')} class="ue-solution-card group">
-        <div class="ue-solution-art bg-brand-pale"><img src={responsiveImage('/assets/products/speakers/4980-01._JBL_EON715_3-4_Extreme_vert_medium.png',960).src} alt="Professional PA speaker" loading="lazy" decoding="async" width="720" height="600" /></div>
-        <div class="ue-solution-copy"><span class="section-eyebrow">04 · Events & venues</span><h3>Professional sound</h3><p>Speakers, microphones, amplifiers and mixers.</p><span class="text-link">Explore sound products ↗</span></div>
-      </a>
-    </div>
-  </section>
+  <SolutionsAccordion />
+
+  <CategoryShortcuts />
 
   <FeaturedCarousel items={featuredProducts} />
 

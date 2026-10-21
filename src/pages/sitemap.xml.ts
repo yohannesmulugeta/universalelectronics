@@ -1,14 +1,16 @@
 import type { APIRoute } from 'astro';
 import { products } from '../data/products';
 import { categories } from '../data/taxonomy';
+import { solutions } from '../data/solutions';
 
 const productionOrigin = 'https://universalelectronicet.com';
-const fixedPaths = ['/', '/shop/', '/shop/solar/', '/shop/sound/', '/projects/', '/services/', '/recognition/', '/about/', '/contact/'];
+const fixedPaths = ['/', '/shop/', '/shop/solar/', '/shop/sound/', '/projects/', '/services/', '/guides/', '/recognition/', '/about/', '/contact/'];
 
 export const GET: APIRoute = () => {
   const paths = [
     ...fixedPaths,
     ...categories.map((category) => '/category/' + category.slug + '/'),
+    ...solutions.map((solution) => '/solutions/' + solution.slug + '/'),
     ...products.map((product) => '/product/' + product.slug + '/'),
   ];
   const urls = [...new Set(paths)];

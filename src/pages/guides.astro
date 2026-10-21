@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { withBase } from '../lib/paths';
+---
+<Layout title="Buying Guides for Solar & Sound | Universal Electronics"
+ description="Practical questions to consider when choosing solar inverters, water pumps and professional sound equipment in Ethiopia.">
+ <div class="max-w-site mx-auto px-5 py-6 sm:px-8">
+  <Breadcrumb items={[{label:'Equipment guides'}]} />
+  <header class="max-w-3xl py-12 lg:py-20">
+   <p class="section-eyebrow mb-4">Useful questions before buying</p>
+   <h1 class="font-serif text-4xl font-bold leading-tight text-brand-navy sm:text-5xl lg:text-6xl">Plan before you choose.</h1>
+   <p class="mt-6 text-lg leading-8 text-brand-muted">A few practical ways to describe what you need. These guides are general considerations, not an equipment sizing assessment or substitute for manufacturer specifications.</p>
+  </header>
+  <div class="grid gap-10 border-t border-brand-border py-12 lg:grid-cols-[.32fr_1fr] lg:py-20" id="solar">
+   <div><p class="section-eyebrow">Guide 01</p><h2 class="mt-3 font-serif text-2xl font-bold text-brand-navy">Choosing solar and backup power</h2></div>
+   <div><p class="text-base leading-8 text-brand-muted">Start with the devices you want to power, when you use them and how many hours you need. Note existing batteries or inverters and whether you expect a new solar array. Exact inverter capacity, storage sizing, battery chemistry and safety configuration need product-specific verification.</p><a href={withBase('/solutions/backup-power/')} class="text-link mt-5">Explore backup solutions ↗</a></div>
+  </div>
+  <div class="grid gap-10 border-t border-brand-border py-12 lg:grid-cols-[.32fr_1fr] lg:py-20" id="pumping">
+   <div><p class="section-eyebrow">Guide 02</p><h2 class="mt-3 font-serif text-2xl font-bold text-brand-navy">Choosing a water pump</h2></div>
+   <div><p class="text-base leading-8 text-brand-muted">Describe your water source, the distance and height of delivery, expected flow and daily needs. Pump head, system losses, water conditions and power source matter for a correct match. Request an equipment-specific recommendation after the site requirements are confirmed.</p><a href={withBase('/solutions/water-pumping/')} class="text-link mt-5">Explore pumping equipment ↗</a></div>
+  </div>
+  <div class="grid gap-10 border-y border-brand-border py-12 lg:grid-cols-[.32fr_1fr] lg:py-20" id="sound">
+   <div><p class="section-eyebrow">Guide 03</p><h2 class="mt-3 font-serif text-2xl font-bold text-brand-navy">Choosing professional sound</h2></div>
+   <div><p class="text-base leading-8 text-brand-muted">For a church, meeting room or event, start with room dimensions, audience size, typical sound sources and any existing audio equipment. Consider speech clarity, music reproduction, microphone needs and how components will connect. Check model compatibility before purchasing.</p><a href={withBase('/solutions/professional-sound/')} class="text-link mt-5">Explore sound systems ↗</a></div>
+  </div>
+  <section class="my-16 flex flex-col items-start justify-between gap-5 bg-brand-pale p-8 sm:flex-row sm:items-center sm:p-12">
+   <div><h2 class="font-serif text-2xl font-bold text-brand-navy">Have a particular product in mind?</h2><p class="mt-3 max-w-xl text-sm leading-7 text-brand-muted">Send the model name and your intended use so the team can confirm the current product details and quotation.</p></div>
+   <a href={withBase('/contact/')} class="button-primary">Request a quotation ↗</a>
+  </section>
+ </div>
+</Layout>

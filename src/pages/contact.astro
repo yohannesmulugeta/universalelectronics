@@ -11,15 +11,15 @@ import { siteConfig } from '../data/siteConfig';
     <section class="grid gap-10 border-b border-brand-border py-8 sm:py-14 lg:grid-cols-[1.4fr_1fr] lg:py-24" data-reveal>
       <div>
         <p class="section-eyebrow mb-6">Contact / Universal Electronics</p>
-        <h1 class="max-w-3xl font-serif text-4xl font-semibold leading-tight text-brand-navy sm:text-5xl lg:text-6xl">Let's find what you need.</h1>
+        <h1 class="max-w-3xl font-serif text-4xl font-semibold leading-tight text-brand-navy sm:text-5xl lg:text-6xl">Tell us about your project.</h1>
       </div>
       <p class="max-w-md self-end text-base leading-8 text-brand-muted">Tell us which product or project you have in mind. Ask about current specifications, availability and quotations through the contact channel that suits you.</p>
     </section>
 
     <section class="grid gap-6 py-8 sm:gap-10 sm:py-16 lg:grid-cols-[.85fr_1.15fr] lg:gap-20 lg:py-24" aria-labelledby="email-form-heading">
       <div>
-        <p class="section-eyebrow mb-5">Email enquiry</p>
-        <h2 id="email-form-heading" class="font-serif text-3xl font-semibold leading-tight text-brand-navy sm:text-4xl">Tell us about your requirement.</h2>
+        <p class="section-eyebrow mb-5">Product & project enquiry</p>
+        <h2 id="email-form-heading" class="font-serif text-3xl font-semibold leading-tight text-brand-navy sm:text-4xl">Get a quotation started.</h2>
         <p class="mt-5 max-w-md text-sm leading-7 text-brand-muted">Tell us your requirement, then prepare a WhatsApp or email message. You review and send it in your chosen app; the website does not automatically transmit enquiries.</p>
       </div>
       <form id="contact-email-form" data-email={siteConfig.email} data-whatsapp={siteConfig.whatsappNumber} class="space-y-5">
@@ -41,13 +41,16 @@ import { siteConfig } from '../data/siteConfig';
           <div>
             <label for="contact-interest" class="mb-2 block text-sm font-semibold text-brand-navy">Interested in</label>
             <select id="contact-interest" name="interest" class="catalog-field">
-              <option value="Solar equipment">Solar equipment</option>
+              <option value="Solar equipment">Solar power equipment</option>
+              <option value="Backup power">Backup power</option>
+              <option value="Water pumping">Solar water pumping</option>
               <option value="Sound equipment">Sound equipment</option>
               <option value="Project installation">Project installation</option>
               <option value="Other enquiry">Other enquiry</option>
             </select>
           </div>
         </div>
+        <p id="contact-interest-hint" class="border-l-2 border-brand-blue bg-brand-offwhite px-4 py-3 text-sm leading-6 text-brand-muted" aria-live="polite"></p>
         <div>
           <label for="contact-message" class="mb-2 block text-sm font-semibold text-brand-navy">What do you need? <span aria-hidden="true">*</span></label>
           <textarea id="contact-message" name="message" rows="6" required maxlength="3000" class="catalog-field resize-y" placeholder="Tell us about the product or project, location, and any details that will help us respond."></textarea>
@@ -98,12 +101,27 @@ import { siteConfig } from '../data/siteConfig';
   if (form) {
     const params = new URLSearchParams(window.location.search);
     const productName = (params.get('product') || '').trim().slice(0, 160);
+    const solutionName = (params.get('solution') || '').trim().slice(0, 160);
     const interest = (params.get('interest') || '').trim().slice(0, 80);
     const interestSelect = form.querySelector<HTMLSelectElement>('[name="interest"]');
     const message = form.querySelector<HTMLTextAreaElement>('[name="message"]');
     if (interestSelect && [...interestSelect.options].some((option) => option.value === interest)) interestSelect.value = interest;
     if (productName && message && !message.value) message.value = `I'd like to ask about ${productName}. Please confirm the exact model and quotation.`;
+    if (!productName && solutionName && message && !message.value) message.value = `I'm interested in ${solutionName}. Please advise on available products and a quotation.`;
   }
+  const interestSelect = form?.querySelector<HTMLSelectElement>('[name="interest"]');
+  const interestHint = document.querySelector<HTMLElement>('#contact-interest-hint');
+  const advice: Record<string,string> = {
+    'Solar equipment': 'For solar products, tell us what you want to power and where the equipment will be used.',
+    'Backup power': 'For backup power, share the devices and approximate hours of backup you need.',
+    'Water pumping': 'For pumping, share the water source, location and approximate daily water needs.',
+    'Sound equipment': 'For sound, mention the venue type, audience size and whether speech or music is the priority.',
+    'Project installation': 'Describe the planned project, location and any existing equipment. Installation scope must be confirmed separately.',
+    'Other enquiry': 'Tell us your requirements and how you prefer to be contacted.'
+  };
+  const setHint = () => { if (interestSelect && interestHint) interestHint.textContent = advice[interestSelect.value] || advice['Other enquiry']; };
+  interestSelect?.addEventListener('change',setHint);
+  setHint();
   const emailField = form?.querySelector<HTMLInputElement>('[name="email"]');
   emailField?.addEventListener('input', () => emailField.setCustomValidity(''));
 
