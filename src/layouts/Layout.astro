@@ -18,6 +18,9 @@ const {
 } = Astro.props;
 
 const pageTitle = title.includes(siteConfig.companyName) ? title : `${title} | ${siteConfig.companyName}`;
+// All public pages, including the old GitHub Pages mirror, identify the purchased domain as canonical.
+const canonicalPath = Astro.url.pathname.replace(/^\/universalelectronics(?=\/|$)/, '') || '/';
+const canonicalUrl = new URL(canonicalPath, 'https://universalelectronicet.com').href;
 ---
 
 <!doctype html>
@@ -27,6 +30,7 @@ const pageTitle = title.includes(siteConfig.companyName) ? title : `${title} | $
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
     <title>{pageTitle}</title>
 
     <!-- Favicon using company logo -->
@@ -37,6 +41,9 @@ const pageTitle = title.includes(siteConfig.companyName) ? title : `${title} | $
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(withBase(ogImage), Astro.site).href} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={siteConfig.companyName} />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <!-- Preconnect for Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

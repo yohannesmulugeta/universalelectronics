@@ -77,14 +77,20 @@ npm.cmd run preview
 
 ## Deployment
 
-The `.github/workflows/deploy.yml` workflow builds the site and deploys to GitHub Pages on pushes to `main`. The published project path is `https://yohannesmulugeta.github.io/universalelectronics/`. It sets `GITHUB_PAGES=true` so internal routes and assets use the repository path. Local builds continue to use `/`.
+Production is hosted by Cloudflare Workers, served exclusively at `https://universalelectronicet.com`. The Worker is named `universalelectronics`. The Cloudflare Workers Builds connection listens for commits to the GitHub `main` branch, runs `npm run build`, then runs `npx wrangler deploy`. The `wrangler.toml` file explicitly names the Worker, static `dist` assets, custom domain, and disabled `workers.dev` URLs. Never remove the custom-domain route when deploying.
 
-Before changing to a custom domain, update `astro.config.mjs`, remove the project base, configure DNS and GitHub Pages, and verify all public routes. See `REVIEW_REQUIRED.md` for business content that still needs review.
+A separate GitHub Actions workflow continues publishing a historical mirror at `https://yohannesmulugeta.github.io/universalelectronics/` using `GITHUB_PAGES=true`. Canonical URLs on both builds point to the paid domain. Update the main branch to publish changes, then verify the Cloudflare Workers build is successful. See `REVIEW_REQUIRED.md` for business content still needing review.
 
 
-## Cloudflare Pages production deployment
+## Cloudflare Workers production deployment
 
-The production website uses `https://universalelectronicet.com` and the `main` branch.
-The Cloudflare Pages project is `universal-electronics`, connected to this GitHub repository.
-Cloudflare builds with `npm run build` and publishes the `dist` directory from the repository root.
-The separate GitHub Pages workflow continues to use the `/universalelectronics/` base path.
+- Primary website: https://universalelectronicet.com/
+- Worker: `universalelectronics` (not the deleted Cloudflare Pages project).
+- Git source: `yohannesmulugeta/universalelectronics`, branch `main`.
+- Cloudflare Workers Builds: build `npm run build`, deploy `npx wrangler deploy`.
+- Static output: `dist`, configured in `wrangler.toml`.
+- `workers.dev` and preview URLs intentionally disabled.
+- Search crawler files: `/robots.txt` and generated `/sitemap.xml`.
+- Google Search Console property requires sign-in by the owner; Cloudflare Web Analytics is enabled through Cloudflare.
+
+If a Cloudflare build fails, inspect Workers & Pages → universalelectronics → Builds before making DNS changes.
