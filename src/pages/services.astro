@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import SolutionsAccordion from '../components/SolutionsAccordion.astro';
 import { withBase } from '../lib/paths';
 import { responsiveImage } from '../lib/responsiveImage';
 ---
@@ -15,6 +16,7 @@ import { responsiveImage } from '../lib/responsiveImage';
       <p class="max-w-md text-base leading-8 text-brand-muted">Start with the equipment you need, then enquire about current availability, exact specifications and a quotation. Installation or technical service scope should be agreed separately with our team.</p>
     </section>
 
+    <SolutionsAccordion compact />
     <section class="grid gap-7 py-12 lg:grid-cols-2 lg:py-20" aria-label="Our solution areas">
       <article class="overflow-hidden border border-brand-border bg-white">
         <div class="flex h-64 items-center justify-center bg-brand-pale p-8"><img src={responsiveImage('/assets/products/inverters/4630-PV19-4-6K-01.jpg',960).src} alt="Solar inverter" width="600" height="420" class="h-full w-full object-contain" loading="lazy" /></div>
