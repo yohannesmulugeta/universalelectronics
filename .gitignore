@@ -19,3 +19,6 @@ Thumbs.db
 test-results/
 playwright-report/
 .playwright-cli/
+
+# Images generated during npm run build (original photographs remain unchanged)
+public/assets/optimized/

@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "test": "node tests/verify_and_screenshot.cjs"
+    "test": "node tests/verify_and_screenshot.cjs",
+    "prebuild": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -23,6 +24,7 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "playwright": "^1.63.0",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "sharp": "0.34.5"
   }
 }

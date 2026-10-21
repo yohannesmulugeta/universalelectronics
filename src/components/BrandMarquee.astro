@@ -35,7 +35,7 @@ const catalogBrands = [
                   alt={duplicate ? '' : brand.name}
                   width="160"
                   height="64"
-                  loading="eager"
+                  loading={duplicate ? "lazy" : "eager"}
                 />
               ) : (
                 <span class="brand-marquee-name">{brand.name}</span>

@@ -4,6 +4,8 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import CatalogFilter from '../../components/CatalogFilter';
 import { products } from '../../data/products';
 import { categories } from '../../data/taxonomy';
+// Send only catalog-filter fields to the browser instead of full specification tables and archive metadata.
+const catalogProducts = products.map(({ id, title, slug, primaryBrand, categoryName, categorySlug, section, descriptionText, media }) => ({ id, title, slug, primaryBrand, categoryName, categorySlug, section, descriptionText: descriptionText.slice(0, 350), media: media.slice(0, 1) }));
 ---
 
 <Layout
@@ -24,7 +26,7 @@ import { categories } from '../../data/taxonomy';
     <!-- Interactive React Island for Catalog Filtering and Search -->
     <CatalogFilter
       client:load
-      products={products}
+      products={catalogProducts}
       categories={categories}
     />
   </div>

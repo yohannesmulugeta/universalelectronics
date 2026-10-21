@@ -1,5 +1,6 @@
 ---
 import { withBase } from '../lib/paths';
+import { responsiveImage } from '../lib/responsiveImage';
 import type { Product } from '../types';
 
 interface Props { items: Product[]; }
@@ -17,7 +18,7 @@ const { items } = Astro.props;
       <article class="featured-carousel-card">
         <a href={withBase(`/product/${product.slug}/`)} class="featured-carousel-image" aria-label={`View ${product.title}`}>
           {product.media?.[0] ? (
-            <img src={withBase(product.media[0])} alt="" width="360" height="360" loading="lazy" />
+            <img src={responsiveImage(product.media[0], 480).src} srcset={responsiveImage(product.media[0],480).srcSet} sizes="(max-width: 640px) 80vw, 360px" alt={product.title} width="360" height="360" loading="lazy" decoding="async" />
           ) : (
             <span class="text-sm text-brand-muted">Product image unavailable</span>
           )}

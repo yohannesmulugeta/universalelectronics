@@ -1,5 +1,6 @@
 ---
 import { withBase } from '../lib/paths';
+import { responsiveImage } from '../lib/responsiveImage';
 import Layout from '../layouts/Layout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { projects } from '../data/projects';
@@ -22,7 +23,7 @@ import { siteConfig } from '../data/siteConfig';
       {projects.map((project) => (
         <article class="group flex flex-col bg-white border border-brand-border rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-brand-blue/50 transition-all duration-300">
           <div class="relative aspect-[16/10] overflow-hidden bg-slate-100">
-            <img src={withBase(project.image)} alt={`AI-assisted image based on the original photo of ${project.title}`}
+            <img src={responsiveImage(project.image, 960).src} srcset={responsiveImage(project.image,960).srcSet} sizes="(max-width: 768px) 94vw, 48vw" alt={`AI-assisted image based on the original photo of ${project.title}`}
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               loading="lazy" width="800" height="500" />
             <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm text-brand-navy text-xs font-medium px-2.5 py-1 rounded shadow-sm">

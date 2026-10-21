@@ -1,13 +1,15 @@
 ---
 import { withBase } from '../lib/paths';
+import { responsiveImage } from '../lib/responsiveImage';
 interface Props { title: string; media: string[]; }
 const { title, media } = Astro.props;
 const primary = media?.[0];
+const primaryPicture = responsiveImage(primary, 960);
 ---
 <div class="space-y-4" data-product-gallery>
   <div class="relative flex aspect-square items-center justify-center overflow-hidden bg-brand-offwhite p-6 sm:p-10">
     {primary ? (
-      <img data-gallery-main src={withBase(primary)} alt={title} loading="eager" decoding="async" class="h-full w-full max-h-[520px] object-contain" />
+      <img data-gallery-main src={primaryPicture.src} srcset={primaryPicture.srcSet} sizes="(max-width: 1024px) 95vw, 45vw" alt={title} loading="eager" decoding="async" class="h-full w-full max-h-[520px] object-contain" />
     ) : (
       <div class="flex flex-col items-center gap-3 px-5 text-center text-brand-muted">
         <svg viewBox="0 0 48 48" class="h-14 w-14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="7" y="12" width="34" height="26" rx="3" /><circle cx="17" cy="21" r="3" /><path d="m10 34 10-9 7 6 6-5 6 7" /></svg>
@@ -22,8 +24,8 @@ const primary = media?.[0];
   {media.length > 1 && (
     <div class="flex gap-3 overflow-x-auto pb-2" role="group" aria-label={`Photos of ${title}`}>
       {media.map((file, i) => (
-        <button type="button" data-gallery-choice data-photo={withBase(file)} data-alt={`${title}, photo ${i+1}`} aria-label={`View photo ${i + 1} of ${media.length}`} aria-pressed={i === 0 ? 'true' : 'false'} class="h-20 w-20 shrink-0 border-2 border-brand-border bg-brand-offwhite p-2 aria-pressed:border-brand-blue focus-visible:outline-2 focus-visible:outline-brand-blue">
-          <img src={withBase(file)} alt="" loading="lazy" class="h-full w-full object-contain" />
+        <button type="button" data-gallery-choice data-photo={responsiveImage(file, 960).src} data-srcset={responsiveImage(file, 960).srcSet ?? ""} data-original={withBase(file)} data-alt={`${title}, photo ${i+1}`} aria-label={`View photo ${i + 1} of ${media.length}`} aria-pressed={i === 0 ? 'true' : 'false'} class="h-20 w-20 shrink-0 border-2 border-brand-border bg-brand-offwhite p-2 aria-pressed:border-brand-blue focus-visible:outline-2 focus-visible:outline-brand-blue">
+          <img src={responsiveImage(file, 480).src} srcset={responsiveImage(file,480).srcSet} sizes="80px" alt="" loading="lazy" class="h-full w-full object-contain" />
         </button>
       ))}
     </div>
@@ -38,9 +40,10 @@ const primary = media?.[0];
         if (!main) return;
         const url = button.dataset.photo;
         if (!url) return;
+        main.srcset = button.dataset.srcset || "";
         main.src = url;
         main.alt = button.dataset.alt || main.alt;
-        if (full) full.href = url;
+        if (full) full.href = button.dataset.original || url;
         gallery.querySelectorAll<HTMLButtonElement>('[data-gallery-choice]').forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
       });
     });

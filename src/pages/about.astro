@@ -1,5 +1,6 @@
 ---
 import { withBase } from '../lib/paths';
+import { responsiveImage } from '../lib/responsiveImage';
 import Layout from '../layouts/Layout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { siteConfig } from '../data/siteConfig';
@@ -22,7 +23,7 @@ import { siteConfig } from '../data/siteConfig';
         </div>
       </div>
       <div class="bg-brand-offwhite aspect-[4/3] overflow-hidden" data-reveal>
-        <img src={withBase('/assets/projects/recreated-array-assembly.webp')} alt="AI-assisted image based on an archived solar panel installation photo"
+        <img src={responsiveImage('/assets/projects/recreated-array-assembly.webp', 960).src} srcset={responsiveImage('/assets/projects/recreated-array-assembly.webp',960).srcSet} sizes="(max-width: 1024px) 100vw, 50vw" alt="AI-assisted image based on an archived solar panel installation photo"
           class="w-full h-full object-cover" width="1586" height="992" loading="lazy" />
       </div>
     </section>

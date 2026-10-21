@@ -1,5 +1,6 @@
 ---
 import { withBase } from '../lib/paths';
+import { responsiveImage } from '../lib/responsiveImage';
 import Layout from '../layouts/Layout.astro';
 import FeaturedCarousel from '../components/FeaturedCarousel.astro';
 import BrandMarquee from '../components/BrandMarquee.astro';
@@ -37,7 +38,7 @@ const featuredProducts = featuredSlugs.map((slug) => products.find((product) => 
       <p class="mt-16 border-t border-brand-border pt-5 text-xs font-medium uppercase tracking-[.16em] text-brand-muted">Solar energy <span class="mx-3 text-brand-blue">/</span> Professional sound</p>
     </div>
     <div class="home-hero-photo relative min-h-[420px] overflow-hidden lg:min-h-[620px]" data-reveal>
-      <img src={withBase('/assets/projects/recreated-water-station.webp')}
+      <img src={responsiveImage('/assets/projects/recreated-water-station.webp', 1500).src} srcset={responsiveImage('/assets/projects/recreated-water-station.webp',1500).srcSet} sizes="(max-width: 1024px) 100vw, 55vw"
         alt="AI-assisted image based on an archived solar-powered water project photo"
         width="1586" height="992" loading="eager" fetchpriority="high" decoding="async" />
       <span class="absolute bottom-5 right-5 bg-white/95 px-4 py-3 text-[11px] font-semibold uppercase tracking-[.15em] text-brand-navy sm:bottom-8 sm:right-8">Based on our project archive</span>
@@ -57,7 +58,7 @@ const featuredProducts = featuredSlugs.map((slug) => products.find((product) => 
     <div class="grid gap-6 lg:grid-cols-2">
       <a href={withBase('/shop/solar/')} class="group block" data-reveal>
         <div class="editorial-image aspect-[1.15] overflow-hidden bg-brand-pale">
-          <img src={withBase('/assets/projects/recreated-solar-array.webp')} alt="AI-assisted image based on an archived solar panel array photo" width="1586" height="992" loading="lazy" />
+          <img src={responsiveImage('/assets/projects/recreated-solar-array.webp', 1500).src} srcset={responsiveImage('/assets/projects/recreated-solar-array.webp',1500).srcSet} sizes="(max-width: 1024px) 100vw, 55vw" alt="AI-assisted image based on an archived solar panel array photo" width="1586" height="992" loading="lazy" />
         </div>
         <div class="flex items-start justify-between gap-4 border-b border-brand-border py-6">
           <div><p class="section-eyebrow mb-2">01 / Solar</p><h3 class="font-serif text-2xl font-semibold sm:text-3xl">Energy for what comes next.</h3>
@@ -67,7 +68,7 @@ const featuredProducts = featuredSlugs.map((slug) => products.find((product) => 
       </a>
       <a href={withBase('/shop/sound/')} class="group block" data-reveal>
         <div class="flex aspect-[1.15] items-center justify-center overflow-hidden bg-brand-pale">
-          <img src={withBase('/assets/products/speakers/4980-01._JBL_EON715_3-4_Extreme_vert_medium.png')}
+          <img src={responsiveImage('/assets/products/speakers/4980-01._JBL_EON715_3-4_Extreme_vert_medium.png', 1500).src} srcset={responsiveImage('/assets/products/speakers/4980-01._JBL_EON715_3-4_Extreme_vert_medium.png',1500).srcSet} sizes="(max-width: 1024px) 100vw, 55vw"
             alt="Professional speaker from the Universal Electronics sound catalog" class="h-[82%] w-[82%] object-contain transition-transform duration-500 group-hover:scale-105" width="600" height="800" loading="lazy" />
         </div>
         <div class="flex items-start justify-between gap-4 border-b border-brand-border py-6">
@@ -90,7 +91,7 @@ const featuredProducts = featuredSlugs.map((slug) => products.find((product) => 
         <a href={withBase('/recognition/')} class="text-link text-white hover:text-[#D5E4FF]">Recognition ↗</a></div>
     </div>
     <div class="editorial-image min-h-[360px] overflow-hidden lg:min-h-[560px]" data-reveal>
-      <img src={withBase('/assets/projects/recreated-array-assembly.webp')} alt="AI-assisted image based on an archived solar panel installation photo" width="1586" height="992" loading="lazy" />
+      <img src={responsiveImage('/assets/projects/recreated-array-assembly.webp', 1500).src} srcset={responsiveImage('/assets/projects/recreated-array-assembly.webp',1500).srcSet} sizes="(max-width: 1024px) 100vw, 55vw" alt="AI-assisted image based on an archived solar panel installation photo" width="1586" height="992" loading="lazy" />
     </div>
   </section>
 
