@@ -21,13 +21,13 @@ const hasLicensedVideo = existsSync(new URL('../../public/assets/hero/universal-
  </div>
  <div class="ue-cinema-stage mx-auto">
   <a href={withBase('/solutions/solar-power/')} class="ue-cinema-main ue-cinema-link group" aria-label="Explore solar power and backup energy solutions">
-   <img class="ue-cinema-home-image" src={withBase('/assets/hero/night-home.svg')}
-    alt="Original concept illustration of a house at night showing rooftop solar panels, illuminated rooms, backup battery, and energy flow"
+   <img class="ue-cinema-home-image" src={withBase(hasLicensedVideo ? '/assets/hero/universal-energy-poster.webp' : '/assets/hero/night-home.svg')}
+    alt="Night-time house energy visualization with illuminated rooms and flowing power lines"
     fetchpriority="high" loading="eager" decoding="async" width="1200" height="720" />
    {hasLicensedVideo && (
-    <video class="ue-cinema-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true"
-      poster={withBase('/assets/hero/night-home.svg')}>
-     <source src={withBase('/assets/hero/universal-energy-loop.mp4')} type="video/mp4" />
+    <video class="ue-cinema-video" muted loop playsinline preload="none" aria-hidden="true"
+      poster={withBase('/assets/hero/universal-energy-poster.webp')}
+      data-src={withBase('/assets/hero/universal-energy-loop.mp4')}>
     </video>
    )}
    <span class="ue-cinema-photo-shade" aria-hidden="true"></span>
@@ -37,7 +37,7 @@ const hasLicensedVideo = existsSync(new URL('../../public/assets/hero/universal-
     <p>Explore solar panels, inverters and batteries.</p>
    </div>
    <span class="ue-cinema-arrow" aria-hidden="true">↗</span>
-   <span class="ue-cinema-image-note">Concept energy visualization</span>
+   <span class="ue-cinema-image-note">Illustrative energy animation</span>
   </a>
   <a href={withBase('/solutions/professional-sound/')} class="ue-cinema-sound ue-cinema-link group" aria-label="Explore professional sound equipment">
    <span class="ue-cinema-sound-glow" aria-hidden="true"></span>
@@ -60,18 +60,33 @@ const hasLicensedVideo = existsSync(new URL('../../public/assets/hero/universal-
  </div>
 </section>
 {hasLicensedVideo && <script>
- const video = document.querySelector<HTMLVideoElement>('.ue-cinema-video');
- if (video) {
-  const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (media.matches) { video.pause(); }
-  else if ('IntersectionObserver' in window) {
-   const observer = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-     if (entry.isIntersecting && !media.matches) video.play().catch(()=>{});
-     else video.pause();
+  const video = document.querySelector<HTMLVideoElement>('.ue-cinema-video');
+  if (video) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    let wantedToPlay = false;
+    const shouldPlay = () => wantedToPlay && !reducedMotion.matches && !connection?.saveData && !document.hidden;
+    const sync = () => {
+      if (!shouldPlay()) { video.pause(); return; }
+      if (!video.src && video.dataset.src) {
+        video.src = video.dataset.src;
+        video.load();
+      }
+      video.play().catch(() => { /* Static poster remains visible if autoplay is blocked. */ });
+    };
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        wantedToPlay = entries.some((entry) => entry.isIntersecting);
+        sync();
+      }, { threshold: 0.08 });
+      observer.observe(video);
+    } else {
+      wantedToPlay = true;
+      sync();
     }
-   }, { threshold: 0.1 });
-   observer.observe(video);
+    document.addEventListener('visibilitychange', sync);
+    reducedMotion.addEventListener?.('change', sync);
+    video.addEventListener('loadeddata', () => { video.dataset.ready = 'true'; });
+    video.addEventListener('error', () => video.pause());
   }
- }
 </script>}
