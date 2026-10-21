@@ -6,6 +6,7 @@ The site is a local rebuild from the recovered WordPress and SQL backup. The ori
 
 - **WhatsApp:** The owner chose the recovered Contact page mobile number, +251 911 102 251, for now. The site uses `wa.me/251911102251`. Confirm this number actually has the intended WhatsApp account before publishing.
 - **Telegram:** The owner confirmed `@universal_electronics_et`.
+- **Contact form:** The form opens an email draft in the visitor's email app. It does not submit or confirm delivery. Update `email` in `src/data/siteConfig.ts` when the business confirms the preferred inbox.
 - **Conflicting number:** The old Home page also mentions +251 911 917 583. Decide which number, if any, should appear on the new site.
 - **Domain:** GitHub Pages uses the repository URL for now. The expired domain is no longer embedded in enquiry messages. Update `astro.config.mjs` and DNS only when a final custom domain is ready.
 
@@ -17,7 +18,7 @@ The site is a local rebuild from the recovered WordPress and SQL backup. The ori
 
 ## Projects and recognition
 
-- **Project archive:** The public page shows recovered photographs without detailed project performance claims. Review project records before publishing individual case studies, figures, locations, or captions.
+- **Project archive:** The Projects page uses AI-assisted recreations of seven archived photographs. The first 27 kW project card was removed; its source photo remains archived. Review generated visual details and project records before using these images as evidence or publishing individual case studies, figures, locations, or captions.
 - **Recognition:** The public page links to original document images. Review translations, dates, issuer names, and document claims before using them in public captions or marketing copy.
 - **Brand relationships:** Do not use “authorized distributor” or exclusivity language until current agreements are confirmed.
 - **Founding year, warranty, delivery:** Confirm these with the business before adding them to the site.

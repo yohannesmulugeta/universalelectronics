@@ -52,10 +52,10 @@ npm.cmd run preview
 | `/shop/sound/` | **Professional Sound:** 20 sound products grouped across Speakers, Amplifiers, Microphones, Keyboards, and Mixers. |
 | `/category/[slug]/` | **10 Static Category Pages:** Generated routes for `inverters`, `solar-batteries`, `solar-panels`, `solar-water-pumps`, `lanterns`, `speakers`, `amplifiers`, `microphones`, `keyboards`, `mixer`. |
 | `/product/[slug]/` | **59 Static Product Detail Pages:** Archived product details, WhatsApp and Telegram enquiry links, and related items. |
-| `/projects/` | **Project Archive:** Photographs preserved from the previous site; project claims await review. |
+| `/projects/` | **Project Archive:** AI-assisted recreations of archived project photographs; project claims await review. |
 | `/recognition/` | **Recognition:** Original document images linked for direct inspection. |
 | `/about/` | **About Us:** Business introduction and catalog areas. |
-| `/contact/` | **Contact:** Address, phone numbers, email, Telegram, and WhatsApp. |
+| `/contact/` | **Contact:** Address, phone numbers, email, Telegram, WhatsApp, and an email-drafting form. The visitor sends the prepared message from their email app. |
 | `/404/` | **Error 404:** Friendly not-found page with catalog links. |
 
 ---
@@ -70,6 +70,8 @@ npm.cmd run preview
    * Edit `src/data/projects.ts`.
 4. **Updating Recognition / Certificates:**
    * Edit `src/data/recognition.ts`.
+5. **Updating Contact Email:**
+   * Edit `email` in `src/data/siteConfig.ts`. The contact form uses this address for its email draft; it does not send messages from the website.
 
 ---
 
