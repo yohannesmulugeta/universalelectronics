@@ -13,6 +13,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
+      - name: Install media tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
       - name: Fetch user-provided video from secure temporary asset bridge
         run: |
           curl --fail --location --silent --show-error --max-time 50 'https://at.adobe.com/daC8auSdwW0ZRNgm' -o /tmp/hero-original.mp4
