@@ -1,4 +1,5 @@
 ---
+// @ts-expect-error Astro runs this server-side at build time; Node's fs builtin is available in deployment.
 import { existsSync } from 'node:fs';
 import { withBase } from '../lib/paths';
 import { responsiveImage } from '../lib/responsiveImage';
