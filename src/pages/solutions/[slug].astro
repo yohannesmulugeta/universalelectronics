@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { solutions } from '../../data/solutions';
+import type { Solution } from '../../data/solutions';
+import { withBase } from '../../lib/paths';
+import { responsiveImage } from '../../lib/responsiveImage';
+export function getStaticPaths() {
+ return solutions.map((solution)=>({params:{slug:solution.slug},props:{solution}}));
+}
+interface Props {solution:Solution;}
+const {solution}=Astro.props;
+const requestHref=withBase('/contact/?interest='+encodeURIComponent(solution.interest)+'&solution='+encodeURIComponent(solution.title));
+---
+<Layout title={solution.title+' Solutions | Universal Electronics'}
+ description={solution.teaser+' Browse equipment and request a quotation in Addis Ababa.'} ogImage={solution.photo}>
+ <div class="max-w-site mx-auto px-5 py-6 sm:px-8">
+  <Breadcrumb items={[{label:'Services & Solutions',href:'/services/'},{label:solution.title}]} />
+  <section class="grid gap-8 py-10 lg:grid-cols-2 lg:items-center lg:gap-14 lg:py-20">
+   <div>
+    <p class="section-eyebrow mb-5">{solution.eyebrow}</p>
+    <h1 class="font-serif text-4xl font-bold leading-tight text-brand-navy sm:text-5xl lg:text-6xl">{solution.title}</h1>
+    <p class="mt-7 max-w-xl text-lg leading-8 text-brand-muted">{solution.description}</p>
+    <div class="mt-7 flex flex-wrap gap-2">{solution.tags.map((tag)=><span class="border border-brand-border bg-brand-offwhite px-3 py-2 text-xs font-semibold text-brand-navy">{tag}</span>)}</div>
+    <div class="mt-9 flex flex-wrap gap-3"><a class="button-primary" href={withBase(solution.categoryHref)}>{solution.categoryLabel} ↗</a><a class="button-secondary" href={requestHref}>Request a quote ↗</a></div>
+   </div>
+   <div class="relative flex min-h-[300px] items-center justify-center overflow-hidden bg-brand-pale p-5 sm:min-h-[430px]">
+    <img src={responsiveImage(solution.photo,960).src} srcset={responsiveImage(solution.photo,960).srcSet} sizes="(max-width:1024px) 100vw, 45vw" alt={solution.imageAlt} loading="eager" decoding="async" width="1000" height="750"
+      class:list={['h-full max-h-[560px] w-full',solution.imageType==='product'?'object-contain':'object-cover']} />
+    {solution.imageType==='illustration'&&<span class="absolute bottom-3 right-3 bg-white/95 px-3 py-2 text-xs text-brand-muted">Illustrative archive image</span>}
+   </div>
+  </section>
+  <section class="border-t border-brand-border py-14 lg:py-20">
+   <div class="grid gap-8 lg:grid-cols-[.7fr_1fr]">
+    <div><p class="section-eyebrow mb-4">Prepare your enquiry</p><h2 class="section-heading max-w-sm">What helps us understand your needs?</h2></div>
+    <div class="space-y-4">
+     {solution.questions.map((question,i)=><div class="flex gap-4 border-b border-brand-border py-5"><span class="text-sm font-bold text-brand-blue">0{i+1}</span><p class="font-semibold text-brand-navy">{question}</p></div>)}
+     <a href={requestHref} class="button-primary mt-6">Enquire about {solution.title} ↗</a>
+    </div>
+   </div>
+  </section>
+  <section class="mb-20 border-t border-brand-border py-10">
+   <p class="max-w-3xl text-sm leading-7 text-brand-muted">This is a product catalog and enquiry platform. Product compatibility, system design, stock, warranties and any installation scope must be confirmed before proceeding.</p>
+   <a href={withBase('/services/')} class="text-link mt-4">View all solutions ↗</a>
+  </section>
+ </div>
+</Layout>
