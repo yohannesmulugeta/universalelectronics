@@ -1,0 +1,44 @@
+name: Mobile Lighthouse report
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/lighthouse.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out project
+        uses: actions/checkout@v4
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Measure public site on simulated mobile
+        shell: bash
+        run: |
+          set -e
+          mkdir -p lighthouse-results
+          for page in homepage shop; do
+            if [ "$page" = "homepage" ]; then target="https://universalelectronicet.com/"; else target="https://universalelectronicet.com/shop/"; fi
+            npx --yes lighthouse@12.8.2 "$target" --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path="lighthouse-results/$page.json" --quiet
+            REPORT="lighthouse-results/$page.json" node -e "const a=require('./'+process.env.REPORT); const score=(k)=>Math.round((a.categories[k]?.score||0)*100); console.log(process.env.REPORT+': performance '+score('performance')+', accessibility '+score('accessibility')+', best practices '+score('best-practices')+', SEO '+score('seo')+', LCP '+Math.round(a.audits['largest-contentful-paint']?.numericValue||0)+'ms, CLS '+(a.audits['cumulative-layout-shift']?.numericValue||0).toFixed(3));"
+          done
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: universal-electronics-mobile-lighthouse
+          path: lighthouse-results/
+          retention-days: 14
