@@ -1,0 +1,35 @@
+name: Interactive refresh staging QA
+on:
+  push:
+    branches: [feature/interactive-solutions-2026-10-21]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Validate Astro and TypeScript
+        run: npm run check
+      - name: Build static website
+        run: npm run build
+      - name: Verify routes, SEO, and assets
+        run: npm run test:smoke
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Desktop, tablet and mobile regression
+        run: node tests/interactive-refresh-ux.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: universal-interactive-refresh-screenshots
+          path: artifacts/interactive/
+          retention-days: 14
