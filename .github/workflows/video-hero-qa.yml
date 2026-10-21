@@ -1,0 +1,39 @@
+name: Uploaded hero video QA
+on:
+  push:
+    branches: [feature/upload-user-video-2026-10-22]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Astro and TypeScript validation
+        run: npm run check
+      - name: Production build
+        run: npm run build
+      - name: Site smoke tests
+        run: npm run test:smoke
+      - name: Verify deployed video asset and homepage markup
+        run: |
+          test -s dist/assets/hero/universal-energy-loop.mp4
+          grep -q 'universal-energy-loop.mp4' dist/index.html
+          grep -q '<video ' dist/index.html
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Video, mobile and reduced-motion smoke tests
+        run: node tests/uploaded-video-ux.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: uploaded-hero-video-screenshots
+          path: artifacts/video-upload/
+          retention-days: 7
