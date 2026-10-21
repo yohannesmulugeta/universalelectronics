@@ -80,3 +80,11 @@ npm.cmd run preview
 The `.github/workflows/deploy.yml` workflow builds the site and deploys to GitHub Pages on pushes to `main`. The published project path is `https://yohannesmulugeta.github.io/universalelectronics/`. It sets `GITHUB_PAGES=true` so internal routes and assets use the repository path. Local builds continue to use `/`.
 
 Before changing to a custom domain, update `astro.config.mjs`, remove the project base, configure DNS and GitHub Pages, and verify all public routes. See `REVIEW_REQUIRED.md` for business content that still needs review.
+
+
+## Cloudflare Pages production deployment
+
+The production website uses `https://universalelectronicet.com` and the `main` branch.
+The Cloudflare Pages project is `universal-electronics`, connected to this GitHub repository.
+Cloudflare builds with `npm run build` and publishes the `dist` directory from the repository root.
+The separate GitHub Pages workflow continues to use the `/universalelectronics/` base path.
