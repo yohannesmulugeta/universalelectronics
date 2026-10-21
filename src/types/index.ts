@@ -39,6 +39,7 @@ export interface SiteConfig {
   companyName: string;
   tagline: string;
   address: string;
+  addressAmharic: string;
   city: string;
   country: string;
   phones: string[];

@@ -3,7 +3,7 @@ import { products } from '../data/products';
 import { categories } from '../data/taxonomy';
 
 const productionOrigin = 'https://universalelectronicet.com';
-const fixedPaths = ['/', '/shop/', '/shop/solar/', '/shop/sound/', '/projects/', '/recognition/', '/about/', '/contact/'];
+const fixedPaths = ['/', '/shop/', '/shop/solar/', '/shop/sound/', '/projects/', '/services/', '/recognition/', '/about/', '/contact/'];
 
 export const GET: APIRoute = () => {
   const paths = [

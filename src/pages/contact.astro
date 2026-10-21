@@ -20,7 +20,7 @@ import { siteConfig } from '../data/siteConfig';
       <div>
         <p class="section-eyebrow mb-5">Email enquiry</p>
         <h2 id="email-form-heading" class="font-serif text-3xl font-semibold leading-tight text-brand-navy sm:text-4xl">Tell us about your requirement.</h2>
-        <p class="mt-5 max-w-md text-sm leading-7 text-brand-muted">Enter your requirements and choose email or WhatsApp. The selected app opens a draft for you to review and send; this website does not submit your message automatically.</p>
+        <p class="mt-5 max-w-md text-sm leading-7 text-brand-muted">Tell us your requirement, then prepare a WhatsApp or email message. You review and send it in your chosen app; the website does not automatically transmit enquiries.</p>
       </div>
       <form id="contact-email-form" data-email={siteConfig.email} data-whatsapp={siteConfig.whatsappNumber} class="space-y-5">
         <div class="grid gap-5 sm:grid-cols-2">
@@ -29,8 +29,8 @@ import { siteConfig } from '../data/siteConfig';
             <input id="contact-name" name="name" type="text" autocomplete="name" required maxlength="100" class="catalog-field" />
           </div>
           <div>
-            <label for="contact-email" class="mb-2 block text-sm font-semibold text-brand-navy">Your email <span aria-hidden="true">*</span></label>
-            <input id="contact-email" name="email" type="email" autocomplete="email" required maxlength="254" class="catalog-field" />
+            <label for="contact-email" class="mb-2 block text-sm font-semibold text-brand-navy">Your email <span class="font-normal text-brand-muted">(for email enquiries)</span></label>
+            <input id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" class="catalog-field" />
           </div>
         </div>
         <div class="grid gap-5 sm:grid-cols-2">
@@ -53,6 +53,7 @@ import { siteConfig } from '../data/siteConfig';
           <textarea id="contact-message" name="message" rows="6" required maxlength="3000" class="catalog-field resize-y" placeholder="Tell us about the product or project, location, and any details that will help us respond."></textarea>
         </div>
         <div class="flex flex-wrap gap-3"><button type="submit" class="button-primary">Prepare email <span aria-hidden="true">↗</span></button><button type="button" data-send-whatsapp class="button-secondary">Prepare WhatsApp enquiry ↗</button></div>
+        <p class="text-xs leading-6 text-brand-muted">Only your name and message are required for WhatsApp. Add an email address when preparing an email enquiry.</p>
         <p id="contact-form-status" class="text-sm leading-6 text-brand-muted" role="status" aria-live="polite"></p>
       </form>
     </section>
@@ -81,7 +82,7 @@ import { siteConfig } from '../data/siteConfig';
     <section class="mb-24 grid gap-8 bg-brand-offwhite px-8 py-12 sm:px-12 lg:grid-cols-2 lg:px-16 lg:py-16">
       <div><p class="section-eyebrow mb-5">Visit us</p><h2 class="font-serif text-3xl font-semibold">Find us in Addis Ababa.</h2></div>
       <div class="text-sm leading-7 text-brand-muted">
-        <p>{siteConfig.address}<br />{siteConfig.city}, {siteConfig.country}</p>
+        <p>Tefera Business Center | Habte Giyorgis<br /><span lang="am">{siteConfig.addressAmharic}</span><br />{siteConfig.city}, {siteConfig.country}</p>
         <p class="mt-4">Office line: <a class="font-semibold text-brand-navy hover:underline" href={`tel:${siteConfig.phones[1].replace(/\s+/g, '')}`}>{siteConfig.phones[1]}</a></p>
         <p class="mt-4">Prefer WhatsApp? <a class="font-semibold text-brand-navy hover:underline" href={`https://wa.me/${siteConfig.whatsappNumber}`} target="_blank" rel="noopener noreferrer">Start a message ↗</a></p>
       </div>
@@ -92,6 +93,19 @@ import { siteConfig } from '../data/siteConfig';
 <script>
   const form = document.querySelector<HTMLFormElement>('#contact-email-form');
   const status = document.querySelector<HTMLElement>('#contact-form-status');
+
+  // Safe prefill from product and service links, without overwriting visitor input.
+  if (form) {
+    const params = new URLSearchParams(window.location.search);
+    const productName = (params.get('product') || '').trim().slice(0, 160);
+    const interest = (params.get('interest') || '').trim().slice(0, 80);
+    const interestSelect = form.querySelector<HTMLSelectElement>('[name="interest"]');
+    const message = form.querySelector<HTMLTextAreaElement>('[name="message"]');
+    if (interestSelect && [...interestSelect.options].some((option) => option.value === interest)) interestSelect.value = interest;
+    if (productName && message && !message.value) message.value = `I'd like to ask about ${productName}. Please confirm the exact model and quotation.`;
+  }
+  const emailField = form?.querySelector<HTMLInputElement>('[name="email"]');
+  emailField?.addEventListener('input', () => emailField.setCustomValidity(''));
 
   const getDraft = () => {
     if (!form || !form.reportValidity()) return null;
@@ -104,6 +118,10 @@ import { siteConfig } from '../data/siteConfig';
 
   form?.addEventListener('submit', (event) => {
     event.preventDefault();
+    if (emailField && !emailField.value.trim()) {
+      emailField.setCustomValidity("Please enter your email address to prepare an email enquiry.");
+      emailField.reportValidity(); return;
+    }
     const draft = getDraft();
     if (!draft) return;
     if (status) status.textContent = 'Your email app should open with the message ready. Please send it there.';

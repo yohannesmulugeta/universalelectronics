@@ -5,6 +5,7 @@ import Layout from '../layouts/Layout.astro';
 import FeaturedCarousel from '../components/FeaturedCarousel.astro';
 import BrandMarquee from '../components/BrandMarquee.astro';
 import { products } from '../data/products';
+import { recognitionDocs } from '../data/recognition';
 import type { Product } from '../types';
 
 const featuredSlugs = [
@@ -21,86 +22,132 @@ const featuredProducts = featuredSlugs.map((slug) => products.find((product) => 
 ---
 
 <Layout title="Universal Electronics | Solar and Sound Equipment in Ethiopia"
-  description="Explore solar energy equipment and professional sound products from Universal Electronics in Addis Ababa.">
-  <section class="grid min-h-[620px] lg:grid-cols-[47%_53%]" aria-labelledby="home-heading">
-    <div class="flex flex-col justify-center px-6 py-20 sm:px-10 lg:px-[max(3rem,calc((100vw-1320px)/2))] lg:py-28" data-reveal>
-      <p class="section-eyebrow mb-8">Universal Electronics / Addis Ababa</p>
-      <h1 id="home-heading" class="max-w-[650px] font-serif text-[clamp(3rem,5.2vw,5.6rem)] font-semibold leading-[1.06] text-brand-navy">
-        Power and sound, <span class="text-brand-blue">considered together.</span>
-      </h1>
-      <p class="mt-7 max-w-[520px] text-base leading-8 text-brand-muted sm:text-lg">
-        Browse solar equipment, power backup, water pumps and professional audio systems. Ask our Addis Ababa team for current specifications, availability and a quotation.
-      </p>
-      <div class="mt-9 flex flex-wrap items-center gap-5">
-        <a href={withBase('/shop/')} class="button-primary">Explore the collection <span aria-hidden="true">↗</span></a>
-        <a href={withBase('/contact/')} class="text-link">Talk to us <span aria-hidden="true">↗</span></a>
+  description="Discover solar power, backup batteries, water pumps and professional sound equipment in Addis Ababa. Explore the catalog and request a quotation.">
+  <!-- Phase 1: modern, readable desktop-first hero with responsive image placement -->
+  <section class="ue-hero relative overflow-hidden bg-brand-offwhite" aria-labelledby="home-heading">
+    <div class="max-w-site mx-auto grid min-w-0 lg:grid-cols-[.98fr_1.02fr] lg:items-stretch">
+      <div class="relative z-10 flex min-w-0 flex-col justify-center px-5 py-16 sm:px-8 sm:py-20 lg:min-h-[660px] lg:py-24 lg:pr-12" data-reveal>
+        <p class="section-eyebrow mb-7">Universal Electronics · Addis Ababa</p>
+        <h1 id="home-heading" class="max-w-2xl font-serif text-[clamp(2.75rem,5.4vw,5.7rem)] font-extrabold leading-[1.07] tracking-[-.045em] text-brand-navy">
+          Powering everyday life.<span class="block text-brand-blue">Making sound matter.</span>
+        </h1>
+        <p class="mt-7 max-w-lg text-base leading-8 text-brand-muted sm:text-lg">
+          Explore solar panels, power backup, water pumping equipment and professional sound systems. Find the right product and request current details from our Addis Ababa team.
+        </p>
+        <div class="mt-9 flex flex-wrap gap-3 sm:gap-4">
+          <a href={withBase('/shop/')} class="button-primary">Explore products <span aria-hidden="true">↗</span></a>
+          <a href={withBase('/contact/')} class="button-secondary">Request a quotation <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="mt-12 grid max-w-lg grid-cols-2 gap-4 border-t border-brand-border pt-6 text-sm text-brand-muted">
+          <p><span class="block font-bold text-brand-navy">Solar & backup</span>Energy equipment</p>
+          <p><span class="block font-bold text-brand-navy">Sound & audio</span>Professional systems</p>
+        </div>
       </div>
-      <p class="mt-16 border-t border-brand-border pt-5 text-xs font-medium uppercase tracking-[.16em] text-brand-muted">Solar energy <span class="mx-3 text-brand-blue">/</span> Professional sound</p>
-    </div>
-    <div class="home-hero-photo relative min-h-[420px] overflow-hidden lg:min-h-[620px]" data-reveal>
-      <img src={responsiveImage('/assets/projects/recreated-water-station.webp', 1500).src} srcset={responsiveImage('/assets/projects/recreated-water-station.webp',1500).srcSet} sizes="(max-width: 1024px) 100vw, 55vw"
-        alt="AI-assisted image based on an archived solar-powered water project photo"
-        width="1586" height="992" loading="lazy" decoding="async" />
-      <span class="absolute bottom-5 right-5 bg-white/95 px-4 py-3 text-[11px] font-semibold uppercase tracking-[.15em] text-brand-navy sm:bottom-8 sm:right-8">Based on our project archive</span>
+      <div class="ue-hero-media relative min-h-[340px] min-w-0 overflow-hidden bg-brand-pale sm:min-h-[470px] lg:min-h-[660px]">
+        <img src={responsiveImage('/assets/projects/recreated-solar-array.webp', 1500).src}
+          srcset={responsiveImage('/assets/projects/recreated-solar-array.webp',1500).srcSet} sizes="(max-width: 1024px) 100vw, 51vw"
+          alt="Illustrative recreation of a solar array from an archived project photograph"
+          class="absolute inset-0 h-full w-full object-cover" width="1586" height="992" loading="lazy" decoding="async" />
+        <div class="absolute bottom-5 left-5 right-5 flex flex-wrap items-center justify-between gap-3 bg-white/95 px-5 py-4 text-brand-navy backdrop-blur-sm sm:bottom-8 sm:left-8 sm:right-8">
+          <span class="text-xs font-semibold uppercase tracking-[.12em]">Solar & sound solutions</span>
+          <span class="text-xs text-brand-muted">Illustrative project imagery</span>
+        </div>
+      </div>
     </div>
   </section>
 
   <BrandMarquee />
 
-  <section class="max-w-site mx-auto px-5 py-24 sm:px-8 lg:py-32" aria-labelledby="disciplines-heading">
-    <div class="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end" data-reveal>
-      <div>
-        <p class="section-eyebrow mb-5">Explore our range</p>
-        <h2 id="disciplines-heading" class="section-heading max-w-2xl">Two worlds of possibility.</h2>
-      </div>
-      <p class="max-w-sm text-sm leading-7 text-brand-muted">Start with a category, explore the catalog, and contact us for current availability.</p>
+  <section class="max-w-site mx-auto px-5 py-20 sm:px-8 lg:py-28" aria-labelledby="solutions-heading">
+    <div class="mb-10 grid gap-5 lg:grid-cols-[1fr_.65fr] lg:items-end" data-reveal>
+      <div><p class="section-eyebrow mb-4">Find your solution</p>
+        <h2 id="solutions-heading" class="section-heading max-w-3xl">The right equipment for the work you do.</h2></div>
+      <p class="max-w-md text-base leading-7 text-brand-muted">Start with an application, then compare relevant products. Our team can help with product selection and quotations.</p>
     </div>
-    <div class="grid gap-6 lg:grid-cols-2">
-      <a href={withBase('/shop/solar/')} class="group block" data-reveal>
-        <div class="editorial-image aspect-[1.15] overflow-hidden bg-brand-pale">
-          <img src={responsiveImage('/assets/projects/recreated-solar-array.webp', 1500).src} srcset={responsiveImage('/assets/projects/recreated-solar-array.webp',1500).srcSet} sizes="(max-width: 1024px) 100vw, 55vw" alt="AI-assisted image based on an archived solar panel array photo" width="1586" height="992" loading="lazy" />
-        </div>
-        <div class="flex items-start justify-between gap-4 border-b border-brand-border py-6">
-          <div><p class="section-eyebrow mb-2">01 / Solar</p><h3 class="font-serif text-2xl font-semibold sm:text-3xl">Energy for what comes next.</h3>
-            <p class="mt-3 text-sm text-brand-muted">Panels, inverters, batteries, water pumps and portable lighting.</p></div>
-          <span class="text-2xl transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden="true">↗</span>
-        </div>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <a href={withBase('/category/inverters/')} class="ue-solution-card group">
+        <div class="ue-solution-art bg-brand-pale"><img src={responsiveImage('/assets/products/inverters/4630-PV19-4-6K-01.jpg',960).src} alt="Solar power inverter" loading="lazy" decoding="async" width="720" height="600" /></div>
+        <div class="ue-solution-copy"><span class="section-eyebrow">01 · Home & business</span><h3>Backup power</h3><p>Browse inverters and compatible energy equipment.</p><span class="text-link">Explore inverters ↗</span></div>
       </a>
-      <a href={withBase('/shop/sound/')} class="group block" data-reveal>
-        <div class="flex aspect-[1.15] items-center justify-center overflow-hidden bg-brand-pale">
-          <img src={responsiveImage('/assets/products/speakers/4980-01._JBL_EON715_3-4_Extreme_vert_medium.png', 1500).src} srcset={responsiveImage('/assets/products/speakers/4980-01._JBL_EON715_3-4_Extreme_vert_medium.png',1500).srcSet} sizes="(max-width: 1024px) 100vw, 55vw"
-            alt="Professional speaker from the Universal Electronics sound catalog" class="h-[82%] w-[82%] object-contain transition-transform duration-500 group-hover:scale-105" width="600" height="800" loading="lazy" />
-        </div>
-        <div class="flex items-start justify-between gap-4 border-b border-brand-border py-6">
-          <div><p class="section-eyebrow mb-2">02 / Sound</p><h3 class="font-serif text-2xl font-semibold sm:text-3xl">Sound with presence.</h3>
-            <p class="mt-3 text-sm text-brand-muted">Speakers, amplifiers, microphones, mixers and instruments.</p></div>
-          <span class="text-2xl transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden="true">↗</span>
-        </div>
+      <a href={withBase('/category/solar-panels/')} class="ue-solution-card group">
+        <div class="ue-solution-art bg-brand-pale"><img src={responsiveImage('/assets/products/solar-panels/4707-ja_solar_605w_jam72d40_lb.webp',960).src} alt="Solar photovoltaic module" loading="lazy" decoding="async" width="720" height="600" /></div>
+        <div class="ue-solution-copy"><span class="section-eyebrow">02 · Solar energy</span><h3>Solar panels & systems</h3><p>Explore photovoltaic modules and related equipment.</p><span class="text-link">Explore solar panels ↗</span></div>
+      </a>
+      <a href={withBase('/category/solar-water-pumps/')} class="ue-solution-card group">
+        <div class="ue-solution-art bg-brand-pale"><img src={responsiveImage('/assets/products/solar-water-pumps/4714-grundfos-sp-small.jpg',960).src} alt="Water pumping equipment" loading="lazy" decoding="async" width="720" height="600" /></div>
+        <div class="ue-solution-copy"><span class="section-eyebrow">03 · Agriculture & water</span><h3>Solar water pumping</h3><p>Explore equipment for irrigation and water access.</p><span class="text-link">Explore water pumps ↗</span></div>
+      </a>
+      <a href={withBase('/shop/sound/')} class="ue-solution-card group">
+        <div class="ue-solution-art bg-brand-pale"><img src={responsiveImage('/assets/products/speakers/4980-01._JBL_EON715_3-4_Extreme_vert_medium.png',960).src} alt="Professional PA speaker" loading="lazy" decoding="async" width="720" height="600" /></div>
+        <div class="ue-solution-copy"><span class="section-eyebrow">04 · Events & venues</span><h3>Professional sound</h3><p>Speakers, microphones, amplifiers and mixers.</p><span class="text-link">Explore sound products ↗</span></div>
       </a>
     </div>
   </section>
 
   <FeaturedCarousel items={featuredProducts} />
 
-  <section class="max-w-site mx-auto grid gap-0 px-5 py-24 sm:px-8 lg:grid-cols-2 lg:py-32" aria-labelledby="projects-heading">
-    <div class="flex flex-col justify-center bg-brand-navy px-8 py-16 text-white sm:px-12 lg:px-16" data-reveal>
-      <p class="text-[11px] font-bold uppercase tracking-[.22em] text-[#BED4FF]">Beyond the catalog</p>
-      <h2 id="projects-heading" class="mt-6 max-w-lg font-serif text-3xl font-semibold leading-tight text-white sm:text-4xl lg:text-5xl">Explore the work behind the equipment.</h2>
-      <p class="mt-6 max-w-md text-sm leading-7 text-[#D5E4FF]">Explore project scenes recreated from archived photographs of solar and water-supply installations.</p>
-      <div class="mt-9 flex flex-wrap gap-7"><a href={withBase('/projects/')} class="text-link text-white hover:text-[#D5E4FF]">View projects ↗</a>
-        <a href={withBase('/recognition/')} class="text-link text-white hover:text-[#D5E4FF]">Recognition ↗</a></div>
+  <section class="max-w-site mx-auto px-5 py-20 sm:px-8 lg:py-28" aria-labelledby="projects-heading">
+    <div class="mb-9 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+      <div><p class="section-eyebrow mb-4">Beyond the catalog</p>
+        <h2 id="projects-heading" class="section-heading max-w-3xl">See the equipment in context.</h2></div>
+      <a href={withBase('/projects/')} class="text-link">Explore the project archive ↗</a>
     </div>
-    <div class="editorial-image min-h-[360px] overflow-hidden lg:min-h-[560px]" data-reveal>
-      <img src={responsiveImage('/assets/projects/recreated-array-assembly.webp', 1500).src} srcset={responsiveImage('/assets/projects/recreated-array-assembly.webp',1500).srcSet} sizes="(max-width: 1024px) 100vw, 55vw" alt="AI-assisted image based on an archived solar panel installation photo" width="1586" height="992" loading="lazy" />
+    <div class="ue-project-feature grid min-w-0 overflow-hidden bg-brand-navy lg:grid-cols-[.95fr_1.05fr]">
+      <div class="flex min-w-0 flex-col justify-center px-7 py-12 text-white sm:px-12 sm:py-16 lg:px-14 lg:py-20">
+        <p class="text-xs font-bold uppercase tracking-[.18em] text-[#BED4FF]">Project archive</p>
+        <h3 class="mt-6 max-w-xl font-serif text-3xl font-semibold leading-tight text-white sm:text-4xl">Real requirements deserve careful planning.</h3>
+        <p class="mt-6 max-w-lg text-sm leading-7 text-[#D5E4FF]">See archived solar and water-supply project examples. Illustrative recreations are clearly identified; specific project claims await business confirmation.</p>
+        <div class="mt-8 flex flex-wrap gap-4"><a href={withBase('/projects/')} class="button-light">View project archive ↗</a><a href={withBase('/services/')} class="button-outline-light">Explore solutions ↗</a></div>
+      </div>
+      <div class="relative min-h-[320px] min-w-0 lg:min-h-[510px]">
+        <img src={responsiveImage('/assets/projects/recreated-array-assembly.webp',1500).src} srcset={responsiveImage('/assets/projects/recreated-array-assembly.webp',1500).srcSet} sizes="(max-width:1024px) 100vw, 50vw" alt="Illustrative reconstruction of an archived solar-array assembly" width="1586" height="992" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" />
+        <span class="absolute bottom-4 right-4 bg-white px-3 py-2 text-xs text-brand-navy">Illustrative project visual</span>
+      </div>
     </div>
   </section>
 
-  <section class="border-t border-brand-border py-24 text-center lg:py-32" aria-labelledby="contact-heading">
-    <div class="max-w-site mx-auto px-5 sm:px-8" data-reveal>
-      <p class="section-eyebrow mb-6">Start a conversation</p>
-      <h2 id="contact-heading" class="mx-auto max-w-3xl font-serif text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">Tell us what you are looking for.</h2>
-      <p class="mx-auto mt-6 max-w-xl leading-7 text-brand-muted">Ask about a product, availability or a project requirement. We will help you find the right contact route.</p>
-      <a href={withBase('/contact/')} class="button-primary mt-9">Contact Universal Electronics <span aria-hidden="true">↗</span></a>
+  <section class="border-y border-brand-border bg-brand-offwhite py-20 lg:py-28" aria-labelledby="recognition-heading">
+    <div class="max-w-site mx-auto px-5 sm:px-8">
+      <div class="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+        <div><p class="section-eyebrow mb-4">Our documents</p><h2 id="recognition-heading" class="section-heading">Recognition & certificates</h2>
+          <p class="mt-4 max-w-2xl leading-7 text-brand-muted">Explore original letters and certificate scans from the Universal Electronics archive. View the documents for their exact wording and dates.</p></div>
+        <a href={withBase('/recognition/')} class="text-link shrink-0">View all five documents ↗</a>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-3">
+        {recognitionDocs.slice(0, 3).map((doc) => (
+          <a href={withBase(doc.image)} target="_blank" rel="noopener noreferrer" class="group flex min-w-0 flex-col overflow-hidden border border-brand-border bg-white transition-shadow hover:shadow-lg">
+            <div class="flex aspect-[4/3] items-center justify-center overflow-hidden bg-white p-5">
+              <img src={responsiveImage(doc.image, 480).src} srcset={responsiveImage(doc.image,480).srcSet} sizes="(max-width:640px) 92vw, 30vw" alt={doc.title} width="540" height="405" loading="lazy" decoding="async" class="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.025]" />
+            </div>
+            <div class="flex flex-1 items-center justify-between gap-2 border-t border-brand-border p-5">
+              <h3 class="text-sm font-semibold text-brand-navy">{doc.title}</h3><span aria-hidden="true" class="text-brand-blue">↗</span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="mt-5 text-xs leading-6 text-brand-muted">Archived records; no claim of current certification, manufacturer authorization or endorsement is implied.</p>
+    </div>
+  </section>
+
+  <section class="max-w-site mx-auto px-5 py-20 sm:px-8 lg:py-24" aria-labelledby="faq-heading">
+    <div class="grid gap-10 lg:grid-cols-[.7fr_1fr] lg:gap-20">
+      <div><p class="section-eyebrow mb-4">Before you enquire</p><h2 id="faq-heading" class="section-heading">A few useful answers.</h2><p class="mt-5 max-w-md text-sm leading-7 text-brand-muted">Practical information about browsing and enquiring through Universal Electronics.</p></div>
+      <div class="divide-y divide-brand-border border-y border-brand-border">
+        <details class="ue-faq-item group py-5"><summary>Can I buy directly from this website?</summary><p>Our website is currently a catalog and enquiry platform, not an online checkout. Contact our team to confirm the available model and purchasing arrangements.</p></details>
+        <details class="ue-faq-item group py-5"><summary>Are the prices and stock shown online?</summary><p>Prices and availability are not published as live inventory. Request a quotation for current information before making a decision.</p></details>
+        <details class="ue-faq-item group py-5"><summary>Can you help identify suitable solar or sound equipment?</summary><p>You can describe your application, location and equipment requirements through the enquiry channels. Exact specifications and compatibility must be confirmed for the intended use.</p></details>
+        <details class="ue-faq-item group py-5"><summary>Where can I find Universal Electronics?</summary><p>Tefera Business Center | Habte Giyorgis<br /><span lang="am">ተፈራ የገበያ ማዕከል | ሀብተ ጊዮርጊስ</span><br />Addis Ababa, Ethiopia. Contact our team for visit details.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-brand-pale py-20 lg:py-28" aria-labelledby="contact-heading">
+    <div class="max-w-site mx-auto grid items-center gap-8 px-5 sm:px-8 lg:grid-cols-[1fr_auto]">
+      <div><p class="section-eyebrow mb-5">Your next step</p>
+        <h2 id="contact-heading" class="section-heading max-w-3xl">Ready to power your project?</h2>
+        <p class="mt-5 max-w-2xl leading-8 text-brand-muted">Tell us which solar or professional sound equipment you need. Request a quotation and confirm specifications, availability and the exact model with our team.</p>
+      </div>
+      <a href={withBase('/contact/')} class="button-primary">Request a quotation ↗</a>
     </div>
   </section>
 </Layout>

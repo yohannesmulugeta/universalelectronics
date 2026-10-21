@@ -13,10 +13,10 @@ import { recognitionDocs } from '../data/recognition';
       <p class="section-eyebrow mb-5">Our archive</p>
       <h1 class="font-serif text-4xl sm:text-5xl text-brand-navy leading-tight">Recognition & documents</h1>
       <p class="mt-6 text-lg leading-relaxed text-slate-600">
-        A collection of letters and certificates preserved from our previous website. Open an image to read the original document.
+        Five original letters and certificate scans preserved from our previous website. Open any document to inspect its wording and issuer. Listing a document here does not imply current accreditation or an authorized manufacturer partnership.
       </p>
     </section>
-    <section class="grid md:grid-cols-2 gap-6 mb-20" aria-label="Recognition documents">
+    <section class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20" aria-label="Recognition documents">
       {recognitionDocs.map((doc) => (
         <a href={withBase(doc.image)} target="_blank" rel="noopener noreferrer"
           class="group block bg-white border border-brand-border hover:border-brand-blue transition-colors">
