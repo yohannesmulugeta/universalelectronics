@@ -1,0 +1,30 @@
+---
+import { withBase } from '../lib/paths';
+const categories=[
+ {name:'Solar Panels',slug:'solar-panels',glyph:'☀'},
+ {name:'Inverters',slug:'inverters',glyph:'↗'},
+ {name:'Batteries',slug:'solar-batteries',glyph:'▣'},
+ {name:'Water Pumps',slug:'solar-water-pumps',glyph:'≈'},
+ {name:'Speakers',slug:'speakers',glyph:'◉'},
+ {name:'Amplifiers',slug:'amplifiers',glyph:'≋'},
+ {name:'Microphones',slug:'microphones',glyph:'◍'},
+ {name:'Mixers',slug:'mixer',glyph:'☷'}
+];
+---
+<section class="border-b border-brand-border bg-white" aria-labelledby="quick-categories-title">
+ <div class="max-w-site mx-auto px-5 py-12 sm:px-8 lg:py-16">
+  <div class="mb-7 flex flex-wrap items-end justify-between gap-4">
+   <div><p class="section-eyebrow mb-3">Quick access</p><h2 id="quick-categories-title" class="font-serif text-2xl font-bold text-brand-navy sm:text-3xl">Explore by product type.</h2></div>
+   <a class="text-link" href={withBase('/shop/')}>All products ↗</a>
+  </div>
+  <div class="ue-category-quick-grid">
+   {categories.map((category)=>(
+    <a class="ue-category-quick" href={withBase('/category/'+category.slug+'/')}>
+     <span class="ue-category-symbol" aria-hidden="true">{category.glyph}</span>
+     <span class="ue-category-name">{category.name}</span>
+     <span class="ue-category-go" aria-hidden="true">↗</span>
+    </a>
+   ))}
+  </div>
+ </div>
+</section>
