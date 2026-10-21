@@ -40,7 +40,7 @@ const isActive = (href: string) => href === '/shop/' ? currentPath === href : cu
         <a href={withBase(link.href)} class="border-b border-brand-border py-4 font-serif text-lg font-semibold text-brand-navy"
           aria-current={isActive(link.href) ? 'page' : undefined}>{link.label}<span class="float-right text-brand-muted" aria-hidden="true">↗</span></a>
       ))}
-      <a href={withBase('/contact/')} class="button-primary mt-5">Get in touch <span aria-hidden="true">↗</span></a>
+      <a href={withBase('/contact/')} class="button-primary mt-5">Get a quote <span aria-hidden="true">↗</span></a>
     </nav>
   </div>
 </header>
