@@ -39,7 +39,7 @@ const featuredProducts = featuredSlugs.map((slug) => products.find((product) => 
     <div class="home-hero-photo relative min-h-[420px] overflow-hidden lg:min-h-[620px]" data-reveal>
       <img src={withBase('/assets/projects/recreated-water-station.webp')}
         alt="AI-assisted image based on an archived solar-powered water project photo"
-        width="1586" height="992" loading="eager" />
+        width="1586" height="992" loading="eager" fetchpriority="high" decoding="async" />
       <span class="absolute bottom-5 right-5 bg-white/95 px-4 py-3 text-[11px] font-semibold uppercase tracking-[.15em] text-brand-navy sm:bottom-8 sm:right-8">Based on our project archive</span>
     </div>
   </section>

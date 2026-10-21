@@ -98,8 +98,8 @@ export default function CatalogFilter({ products, categories }: Props) {
     {filtered.length ? <div className="grid gap-x-6 gap-y-12 py-8 sm:grid-cols-2 sm:py-10 lg:grid-cols-3">
       {filtered.map((item) => <article key={item.id} className="product-card group">
         <a href={withBase(`/product/${item.slug}/`)} className="product-card-image" aria-label={`View ${item.title}`}>
-          {item.media?.[0] ? <img src={withBase(item.media[0])} alt="" loading="lazy" width="520" height="560" />
-            : <span className="px-6 text-center text-sm text-brand-muted">Product image unavailable</span>}
+          {item.media?.[0] ? <img src={withBase(item.media[0])} alt={item.title} loading="lazy" decoding="async" width="520" height="560" />
+            : <span className="flex flex-col items-center justify-center gap-3 px-6 text-center text-brand-muted" role="img" aria-label={`Image for ${item.title} is pending verification`}><svg viewBox="0 0 48 48" width="52" height="52" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="7" y="12" width="34" height="26" rx="3" /><circle cx="17" cy="21" r="3" /><path d="m10 34 10-9 7 6 6-5 6 7" /><path d="M15 7h18" /></svg><span className="text-xs font-medium">Product photo pending verification</span></span>}
         </a>
         <p className="product-card-meta">{item.primaryBrand} <span className="mx-2 text-brand-border">/</span> {item.categoryName}</p>
         <h2 className="product-card-title"><a href={withBase(`/product/${item.slug}/`)}>{item.title}</a></h2>
