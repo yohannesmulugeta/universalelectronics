@@ -1,0 +1,39 @@
+---
+import { socialProfiles } from '../data/socialProfiles';
+import SocialIcon from './SocialIcon.astro';
+interface Props { variant?: 'footer' | 'contact' }
+const { variant = 'footer' } = Astro.props;
+---
+{variant === 'footer' ? (
+  <nav class="ue-social-footer" aria-label="Universal Electronics social media profiles">
+    <p class="text-xs font-bold uppercase tracking-[.16em] text-[#BED4FF]">Follow Universal Electronics</p>
+    <ul class="ue-social-footer-list">
+      {socialProfiles.map((profile) => (
+        <li>
+          <a class="ue-social-footer-link" href={profile.url} target="_blank" rel="noopener noreferrer" aria-label={'Universal Electronics on '+profile.label+' (opens in new tab)'}>
+            <span class="ue-social-footer-icon"><SocialIcon platform={profile.platform} /></span>
+            <span>{profile.label}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+) : (
+  <nav aria-label="Universal Electronics official social media profiles">
+    <ul class="ue-social-contact-grid">
+      {socialProfiles.map((profile) => (
+        <li class="min-w-0">
+          <a class="ue-social-contact-card" href={profile.url} target="_blank" rel="noopener noreferrer" aria-label={'Visit Universal Electronics '+profile.label+' profile (opens in new tab)'}>
+            <span class="ue-social-contact-icon"><SocialIcon platform={profile.platform} /></span>
+            <span class="ue-social-contact-content">
+              <span class="ue-social-contact-name">{profile.label}</span>
+              <span class="ue-social-contact-handle">{profile.handle}</span>
+              <span class="ue-social-contact-description">{profile.descriptor}</span>
+            </span>
+            <span class="ue-social-contact-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}

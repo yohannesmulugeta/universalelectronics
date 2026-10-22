@@ -4,6 +4,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { siteConfig } from '../data/siteConfig';
+import { socialProfiles } from '../data/socialProfiles';
 
 interface Props {
   title?: string;
@@ -27,7 +28,7 @@ const pageTitle = title.includes(siteConfig.companyName) ? title : `${title} | $
 // All public pages, including the old GitHub Pages mirror, identify the purchased domain as canonical.
 const canonicalPath = Astro.url.pathname.replace(/^\/universalelectronics(?=\/|$)/, '') || '/';
 const canonicalUrl = new URL(canonicalPath, 'https://universalelectronicet.com').href;
-const organizationSchema = { "@context": "https://schema.org", "@type": "ElectronicsStore", "@id": "https://universalelectronicet.com/#business", name: siteConfig.companyName, url: "https://universalelectronicet.com/", logo: "https://universalelectronicet.com/assets/brand/4404-logo-uni.png", address: { "@type": "PostalAddress", streetAddress: siteConfig.address, addressLocality: siteConfig.city, addressCountry: "ET" }, sameAs: [siteConfig.telegramUrl] };
+const organizationSchema = { "@context": "https://schema.org", "@type": "ElectronicsStore", "@id": "https://universalelectronicet.com/#business", name: siteConfig.companyName, url: "https://universalelectronicet.com/", logo: "https://universalelectronicet.com/assets/brand/4404-logo-uni.png", address: { "@type": "PostalAddress", streetAddress: siteConfig.address, addressLocality: siteConfig.city, addressCountry: "ET" }, sameAs: [siteConfig.telegramUrl, ...socialProfiles.map((profile) => profile.url)] };
 ---
 
 <!doctype html>
