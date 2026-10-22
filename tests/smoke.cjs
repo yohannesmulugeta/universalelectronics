@@ -45,7 +45,10 @@ assert.ok(fileExists('dist/guides/index.html'), 'Equipment guides page missing')
 const service = read('dist/services/index.html');
 assert.ok(service.includes('Solutions for power, water and sound'), 'Services page missing');
 const contact = read('dist/contact/index.html');
+assert.ok(contact.includes('ተፋራ የገበያ ማዕከል') === false, 'Unexpected changed Amharic spelling');
 assert.ok(contact.includes('ተፈራ የገበያ ማዕከል'), 'Bilingual company address missing');
+assert.ok(contact.includes('maps.google.com/maps?q=9.03467%2C38.744252'), 'Map iframe missing');
+assert.ok(contact.includes('www.google.com/maps/dir/?api=1'), 'Get directions link missing');
 const catalog = read('dist/shop/index.html');
 assert.match(catalog, /Find the equipment you need/, 'Catalog page must be rendered');
 assert.ok(fileExists('dist/contact/index.html') && fileExists('dist/projects/index.html') && fileExists('dist/services/index.html') && fileExists('dist/recognition/index.html'), 'Important pages must be present');
