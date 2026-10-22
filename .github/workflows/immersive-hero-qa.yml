@@ -15,7 +15,9 @@ jobs:
         with:
           node-version: '22'
           cache: npm
-      - run: npm ci
+      - name: Install dependencies with cached packages
+        run: npm ci --prefer-offline --no-audit --no-fund --fetch-retries=1 --fetch-timeout=30000
+        timeout-minutes: 5
       - name: Astro & TypeScript
         run: npm run check
       - name: Static production build
