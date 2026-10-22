@@ -111,7 +111,7 @@ import SocialLinks from '../components/SocialLinks.astro';
             <a class="button-primary" href={businessLocation.directionsUrl} target="_blank" rel="noopener noreferrer" aria-label="Get directions to Tefera Building in Google Maps (opens in new tab)">Get directions <span aria-hidden="true">↗</span></a>
             <a class="button-secondary" href={businessLocation.googleMapsUrl} target="_blank" rel="noopener noreferrer" aria-label="Open the exact Tefera Business Center place supplied by Universal Electronics in Google Maps (opens in new tab)">Open exact Google Maps location <span aria-hidden="true">↗</span></a>
           </div>
-          <p class="text-xs leading-6 text-brand-muted">Building location: {businessLocation.plusCode}. The map opens the specific Tefera Business Center listing you provided, not nearby Sami Electronics. Contact us to confirm the exact shop or floor.</p>
+          <p class="text-xs leading-6 text-brand-muted">Building location: {businessLocation.plusCode}. The map opens the exact Tefera Business Center location. Contact us to confirm our shop or floor.</p>
           <p class="text-sm leading-7 text-brand-muted">Call: <a class="font-semibold text-brand-navy hover:underline" href={'tel:' + siteConfig.phones[1].replace(/\s+/g,'')}>{siteConfig.phones[1]}</a> · <a href={businessLocation.openStreetMapUrl} class="font-semibold text-brand-blue hover:underline" target="_blank" rel="noopener noreferrer">OpenStreetMap ↗</a></p>
         </div>
         <div class="ue-location-map-frame relative min-w-0 border-t border-brand-border bg-[#E8EEF4] lg:border-l lg:border-t-0">
