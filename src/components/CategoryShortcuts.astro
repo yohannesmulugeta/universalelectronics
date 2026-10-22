@@ -1,15 +1,16 @@
 ---
 import { withBase } from '../lib/paths';
+import CategoryIcon from './CategoryIcon.astro';
 const categories=[
- {name:'Solar Panels',slug:'solar-panels',glyph:'☀'},
- {name:'Inverters',slug:'inverters',glyph:'↗'},
- {name:'Batteries',slug:'solar-batteries',glyph:'▣'},
- {name:'Water Pumps',slug:'solar-water-pumps',glyph:'≈'},
- {name:'Speakers',slug:'speakers',glyph:'◉'},
- {name:'Amplifiers',slug:'amplifiers',glyph:'≋'},
- {name:'Microphones',slug:'microphones',glyph:'◍'},
- {name:'Mixers',slug:'mixer',glyph:'☷'}
-];
+ {name:'Solar Panels',slug:'solar-panels',icon:'solar-panel'},
+ {name:'Inverters',slug:'inverters',icon:'inverter'},
+ {name:'Batteries',slug:'solar-batteries',icon:'battery'},
+ {name:'Water Pumps',slug:'solar-water-pumps',icon:'water-pump'},
+ {name:'Speakers',slug:'speakers',icon:'speaker'},
+ {name:'Amplifiers',slug:'amplifiers',icon:'amplifier'},
+ {name:'Microphones',slug:'microphones',icon:'microphone'},
+ {name:'Mixers',slug:'mixer',icon:'mixer'}
+] as const
 ---
 <section class="border-b border-brand-border bg-white" aria-labelledby="quick-categories-title">
  <div class="max-w-site mx-auto px-5 py-12 sm:px-8 lg:py-16">
@@ -20,7 +21,7 @@ const categories=[
   <div class="ue-category-quick-grid">
    {categories.map((category)=>(
     <a class="ue-category-quick" href={withBase('/category/'+category.slug+'/')}>
-     <span class="ue-category-symbol" aria-hidden="true">{category.glyph}</span>
+     <span class="ue-category-symbol" aria-hidden="true" data-category-icon={category.icon}><CategoryIcon name={category.icon} /></span>
      <span class="ue-category-name">{category.name}</span>
      <span class="ue-category-go" aria-hidden="true">↗</span>
     </a>

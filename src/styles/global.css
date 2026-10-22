@@ -321,3 +321,25 @@
 .ue-social-contact-card:hover,.ue-social-contact-card:focus-visible{background:#fff;border-color:#005EE9;box-shadow:0 15px 35px rgba(1,36,131,.09);transform:translateY(-2px)}
 @media(max-width:640px){.ue-social-contact-grid{grid-template-columns:minmax(0,1fr)}.ue-social-contact-card{min-height:128px;padding:18px}.ue-social-footer-link{min-height:42px}}
 @media(prefers-reduced-motion:reduce){.ue-social-footer-link,.ue-social-contact-card{transition:none}.ue-social-footer-link:hover,.ue-social-contact-card:hover{transform:none}}
+
+
+/* Footer logo: precise single-color white silhouette without a white bitmap box. */
+.ue-footer-white-wordmark { display:block; width:170px; max-width:100%; height:auto; overflow:visible; }
+
+/* Product-specific line SVGs replace ambiguous typography symbols in quick categories. */
+.ue-category-quick { gap:11px; min-height:108px; padding:16px 14px; font-size:13px; }
+.ue-category-symbol { width:44px; height:44px; flex:0 0 44px; }
+.ue-category-symbol svg { display:block; width:24px; height:24px; }
+.ue-category-name { flex:1; min-width:0; line-height:1.42; }
+.ue-category-go { flex:0 0 auto; font-size:15px; }
+@media(max-width:1100px){
+ .ue-category-quick-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:560px){
+ .ue-category-quick-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .ue-category-quick { position:relative; flex-direction:column; align-items:flex-start; justify-content:flex-end; gap:12px; min-height:137px; padding:15px; font-size:13px; }
+ .ue-category-symbol { width:40px; height:40px; flex:0 0 40px; }
+ .ue-category-symbol svg { width:23px; height:23px; }
+ .ue-category-name { flex:none; padding-right:14px; overflow-wrap:anywhere; }
+ .ue-category-go { position:absolute; top:15px; right:15px; }
+}
