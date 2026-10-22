@@ -47,8 +47,9 @@ assert.ok(service.includes('Solutions for power, water and sound'), 'Services pa
 const contact = read('dist/contact/index.html');
 assert.ok(contact.includes('ተፋራ የገበያ ማዕከል') === false, 'Unexpected changed Amharic spelling');
 assert.ok(contact.includes('ተፈራ ህንጻ'), 'Bilingual Tefera Building name missing');
-assert.ok(contact.includes('www.openstreetmap.org/export/embed.html?bbox='), 'Building marker map iframe missing');
-assert.ok(contact.includes('marker=9.034712%2C38.744330'), 'Building marker coordinates missing');
+assert.ok(contact.includes('www.google.com/maps/embed?origin=mfe'), 'Specific Google place embed missing');
+assert.ok(contact.includes('2913981607394043387'), 'Google Maps place ID missing from embed');
+assert.ok(contact.includes('maps.app.goo.gl/xUmBZS7HQ9JwpVcL9'), 'User-provided exact Google Maps location missing');
 assert.ok(contact.includes('2PMV+VPP'), 'Official building Plus Code missing');
 assert.ok(contact.includes('www.google.com/maps/dir/?api=1'), 'Get directions link missing');
 const socialUrls = [
