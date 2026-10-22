@@ -295,3 +295,8 @@
 .ue-cinema-video { opacity:0; transition:opacity .3s ease; }
 .ue-cinema-video[data-ready="true"] { opacity:1; }
 @media(prefers-reduced-motion:reduce) { .ue-cinema-video { display:none!important; } }
+
+/* Location map: lazy external embed, readable address on all viewports. */
+.ue-location-map-frame { min-height:360px; }
+.ue-location-map-frame iframe { display:block; border:0; }
+@media(min-width:1024px){.ue-location-map-frame{min-height:520px}}

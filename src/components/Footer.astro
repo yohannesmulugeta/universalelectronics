@@ -2,6 +2,7 @@
 import { withBase } from '../lib/paths';
 import { responsiveImage } from '../lib/responsiveImage';
 import { siteConfig } from '../data/siteConfig';
+import { businessLocation } from '../data/businessLocation';
 const year = new Date().getFullYear();
 ---
 <footer class="mt-auto bg-brand-navy text-white" aria-label="Website footer">
@@ -66,6 +67,7 @@ const year = new Date().getFullYear();
      <p><a class="ue-footer-link" href={'tel:'+siteConfig.phones[0].replace(/\s+/g,'')}>{siteConfig.phones[0]}</a></p>
      <p><a class="ue-footer-link break-all" href={'mailto:'+siteConfig.email}>{siteConfig.email}</a></p>
      <p><a class="ue-footer-link" href={siteConfig.telegramUrl} target="_blank" rel="noopener noreferrer">Telegram ↗</a></p>
+     <p><a class="ue-footer-link font-semibold" href={businessLocation.directionsUrl} target="_blank" rel="noopener noreferrer">Get directions on Google Maps ↗</a></p>
     </address>
    </div>
   </div>

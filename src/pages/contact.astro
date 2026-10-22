@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { siteConfig } from '../data/siteConfig';
+import { businessLocation } from '../data/businessLocation';
 ---
 
 <Layout title="Contact Us | Universal Electronics"
@@ -82,12 +83,37 @@ import { siteConfig } from '../data/siteConfig';
       </div>
     </section>
 
-    <section class="mb-24 grid gap-8 bg-brand-offwhite px-8 py-12 sm:px-12 lg:grid-cols-2 lg:px-16 lg:py-16">
-      <div><p class="section-eyebrow mb-5">Visit us</p><h2 class="font-serif text-3xl font-semibold">Find us in Addis Ababa.</h2></div>
-      <div class="text-sm leading-7 text-brand-muted">
-        <p>Tefera Business Center | Habte Giyorgis<br /><span lang="am">{siteConfig.addressAmharic}</span><br />{siteConfig.city}, {siteConfig.country}</p>
-        <p class="mt-4">Office line: <a class="font-semibold text-brand-navy hover:underline" href={`tel:${siteConfig.phones[1].replace(/\s+/g, '')}`}>{siteConfig.phones[1]}</a></p>
-        <p class="mt-4">Prefer WhatsApp? <a class="font-semibold text-brand-navy hover:underline" href={`https://wa.me/${siteConfig.whatsappNumber}`} target="_blank" rel="noopener noreferrer">Start a message ↗</a></p>
+    <section class="mb-24 overflow-hidden border border-brand-border bg-brand-offwhite" aria-labelledby="visit-location-heading">
+      <div class="grid min-w-0 lg:grid-cols-[.85fr_1.15fr]">
+        <div class="flex min-w-0 flex-col justify-center gap-6 px-6 py-10 sm:px-12 sm:py-14 lg:px-14 lg:py-16">
+          <div>
+            <p class="section-eyebrow mb-5">Visit us / አድራሻችን</p>
+            <h2 id="visit-location-heading" class="font-serif text-3xl font-semibold leading-tight text-brand-navy sm:text-4xl">Find us in Addis Ababa.</h2>
+          </div>
+          <address class="not-italic text-sm leading-8 text-brand-muted">
+            <p class="font-semibold text-brand-navy">Tefera Business Center | Habte Giyorgis</p>
+            <p lang="am">ተፈራ የገበያ ማዕከል | ሀብተ ጊዮርጊስ</p>
+            <p>Fitawrari Gebeyebu Street, Arada, Addis Ababa, Ethiopia</p>
+          </address>
+          <div class="flex flex-wrap gap-3">
+            <a class="button-primary" href={businessLocation.directionsUrl} target="_blank" rel="noopener noreferrer" aria-label="Get directions to Tefera Business Center in Google Maps (opens in new tab)">Get directions <span aria-hidden="true">↗</span></a>
+            <a class="button-secondary" href={businessLocation.googleMapsUrl} target="_blank" rel="noopener noreferrer" aria-label="Open Tefera Business Center location in Google Maps (opens in new tab)">Open Google Maps <span aria-hidden="true">↗</span></a>
+          </div>
+          <p class="text-xs leading-6 text-brand-muted">This map shows the business center building, not a specific shop or floor. Contact us before visiting to confirm the exact unit.</p>
+          <p class="text-sm leading-7 text-brand-muted">Call: <a class="font-semibold text-brand-navy hover:underline" href={'tel:' + siteConfig.phones[1].replace(/\s+/g,'')}>{siteConfig.phones[1]}</a> · <a href={businessLocation.openStreetMapUrl} class="font-semibold text-brand-blue hover:underline" target="_blank" rel="noopener noreferrer">OpenStreetMap ↗</a></p>
+        </div>
+        <div class="ue-location-map-frame min-w-0 border-t border-brand-border bg-[#E8EEF4] lg:border-l lg:border-t-0">
+          <iframe
+            title="Map showing Tefera Business Center near Habte Giyorgis, Addis Ababa"
+            src={businessLocation.embedUrl}
+            width="700"
+            height="520"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+            class="h-full min-h-[340px] w-full border-0 sm:min-h-[460px]"
+          ></iframe>
+        </div>
       </div>
     </section>
   </div>
