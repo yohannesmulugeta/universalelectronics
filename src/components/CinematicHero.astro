@@ -1,4 +1,5 @@
 ---
+// @ts-expect-error Astro uses Node.js fs at build time; this project intentionally has no Node types.
 import { existsSync } from 'node:fs';
 import { withBase } from '../lib/paths';
 import { responsiveImage } from '../lib/responsiveImage';
