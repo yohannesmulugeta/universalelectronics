@@ -1,0 +1,34 @@
+name: Official social links staging QA
+on:
+  push:
+    branches: [feature/social-links-2026-10-22]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Astro and TypeScript check
+        run: npm run check
+      - name: Build static website
+        run: npm run build
+      - name: Smoke verification
+        run: npm run test:smoke
+      - name: Install browser for responsive QA
+        run: npx playwright install --with-deps chromium
+      - name: Verify social profiles on desktop, tablet, and mobile
+        run: node tests/social-links-ux.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: universal-social-links-preview
+          path: artifacts/social-links/
+          retention-days: 14
