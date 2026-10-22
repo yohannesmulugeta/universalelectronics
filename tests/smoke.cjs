@@ -49,6 +49,17 @@ assert.ok(contact.includes('ተፋራ የገበያ ማዕከል') === false, 'Un
 assert.ok(contact.includes('ተፈራ የገበያ ማዕከል'), 'Bilingual company address missing');
 assert.ok(contact.includes('maps.google.com/maps?q=9.03467%2C38.744252'), 'Map iframe missing');
 assert.ok(contact.includes('www.google.com/maps/dir/?api=1'), 'Get directions link missing');
+const socialUrls = [
+  'https://www.instagram.com/universal_electronics_et/',
+  'https://web.facebook.com/profile.php?id=61577887168378',
+  'https://www.tiktok.com/@universal_electronics',
+  'https://www.linkedin.com/company/universal-electronics-et',
+];
+for(const url of socialUrls) {
+  assert.ok(contact.includes(url.replace(/&/g,'&amp;')) || contact.includes(url), 'Contact page missing social account: '+url);
+  assert.ok(page.includes(url.replace(/&/g,'&amp;')) || page.includes(url), 'Homepage footer missing social account: '+url);
+}
+assert.ok(contact.includes('Connect with us online'), 'Social contact section missing');
 const catalog = read('dist/shop/index.html');
 assert.match(catalog, /Find the equipment you need/, 'Catalog page must be rendered');
 assert.ok(fileExists('dist/contact/index.html') && fileExists('dist/projects/index.html') && fileExists('dist/services/index.html') && fileExists('dist/recognition/index.html'), 'Important pages must be present');

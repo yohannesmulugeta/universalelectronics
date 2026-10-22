@@ -300,3 +300,24 @@
 .ue-location-map-frame { min-height:360px; }
 .ue-location-map-frame iframe { display:block; border:0; }
 @media(min-width:1024px){.ue-location-map-frame{min-height:520px}}
+
+
+/* Official business social accounts: native inline SVG, no external icon library. */
+.ue-social-footer-list{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-top:16px}
+.ue-social-footer-link{display:inline-flex;align-items:center;gap:9px;min-height:43px;padding:6px 10px 6px 6px;border:1px solid rgba(207,226,255,.24);border-radius:6px;background:rgba(255,255,255,.035);font-size:11px;font-weight:700;color:#E5EFFF;transition:background .2s ease,border-color .2s ease,transform .2s ease}
+.ue-social-footer-icon{display:grid;place-items:center;width:30px;height:30px;flex-shrink:0;border-radius:5px;background:rgba(255,255,255,.1);color:#fff}
+.ue-social-footer-icon svg{width:17px;height:17px}
+.ue-social-footer-link:hover,.ue-social-footer-link:focus-visible{background:#fff;border-color:#fff;color:#012483;transform:translateY(-2px)}
+.ue-social-footer-link:hover .ue-social-footer-icon,.ue-social-footer-link:focus-visible .ue-social-footer-icon{background:#EAF2FF;color:#005EE9}
+.ue-social-contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.ue-social-contact-card{display:flex;min-width:0;gap:16px;align-items:flex-start;height:100%;min-height:150px;padding:24px;border:1px solid #DCE4EE;background:#F7F9FC;color:#012483;transition:border-color .22s ease,background .22s ease,box-shadow .22s ease,transform .22s ease}
+.ue-social-contact-icon{display:grid;place-items:center;flex:none;width:45px;height:45px;border-radius:12px;background:#EAF2FF;color:#005EE9}
+.ue-social-contact-icon svg{width:22px;height:22px}
+.ue-social-contact-content{display:flex;flex-direction:column;gap:4px;min-width:0}
+.ue-social-contact-name{font-size:17px;font-weight:800;line-height:1.45}
+.ue-social-contact-handle{font-size:12px;font-weight:600;line-height:1.6;color:#475569;overflow-wrap:anywhere}
+.ue-social-contact-description{font-size:12px;line-height:1.7;color:#475569}
+.ue-social-contact-arrow{margin-left:auto;flex:none;color:#005EE9;font-size:20px}
+.ue-social-contact-card:hover,.ue-social-contact-card:focus-visible{background:#fff;border-color:#005EE9;box-shadow:0 15px 35px rgba(1,36,131,.09);transform:translateY(-2px)}
+@media(max-width:640px){.ue-social-contact-grid{grid-template-columns:minmax(0,1fr)}.ue-social-contact-card{min-height:128px;padding:18px}.ue-social-footer-link{min-height:42px}}
+@media(prefers-reduced-motion:reduce){.ue-social-footer-link,.ue-social-contact-card{transition:none}.ue-social-footer-link:hover,.ue-social-contact-card:hover{transform:none}}

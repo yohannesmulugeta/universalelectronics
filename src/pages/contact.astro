@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { siteConfig } from '../data/siteConfig';
 import { businessLocation } from '../data/businessLocation';
+import SocialLinks from '../components/SocialLinks.astro';
 ---
 
 <Layout title="Contact Us | Universal Electronics"
@@ -81,6 +82,17 @@ import { businessLocation } from '../data/businessLocation';
         <p class="mt-4 min-h-14 text-sm leading-7 text-brand-muted">Share details or request information in writing.</p>
         <a class="text-link mt-6 break-all" href={`mailto:${siteConfig.email}`}>{siteConfig.email} <span aria-hidden="true">↗</span></a>
       </div>
+    </section>
+
+    <section class="border-t border-brand-border py-14 lg:py-20" aria-labelledby="social-profiles-title">
+      <div class="mb-8 grid gap-5 lg:grid-cols-[1fr_.7fr] lg:items-end">
+        <div>
+          <p class="section-eyebrow mb-4">Follow Universal Electronics</p>
+          <h2 id="social-profiles-title" class="section-heading">Connect with us online.</h2>
+        </div>
+        <p class="max-w-md text-sm leading-7 text-brand-muted">Stay connected for product demonstrations, new arrivals and company updates. Select a platform to visit our profile.</p>
+      </div>
+      <SocialLinks variant="contact" />
     </section>
 
     <section class="mb-24 overflow-hidden border border-brand-border bg-brand-offwhite" aria-labelledby="visit-location-heading">
