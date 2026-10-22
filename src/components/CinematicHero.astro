@@ -1,92 +1,126 @@
 ---
-// @ts-expect-error Astro runs this server-side at build time; Node's fs builtin is available in deployment.
 import { existsSync } from 'node:fs';
 import { withBase } from '../lib/paths';
 import { responsiveImage } from '../lib/responsiveImage';
-const hasLicensedVideo = existsSync(new URL('../../public/assets/hero/universal-energy-loop.mp4', import.meta.url));
+
+const hasHeroVideo = existsSync(new URL('../../public/assets/hero/universal-energy-loop.mp4', import.meta.url));
+const soundImage = responsiveImage('/assets/products/speakers/4980-01._JBL_EON715_3-4_Extreme_vert_medium.png', 480);
 ---
-<section class="ue-cinema-hero" aria-labelledby="home-heading">
- <div class="max-w-site mx-auto px-5 pb-10 pt-16 text-center sm:px-8 sm:pt-20 lg:pb-12 lg:pt-24">
-  <p class="section-eyebrow mb-5">Universal Electronics · Addis Ababa</p>
-  <h1 id="home-heading" class="ue-cinema-heading mx-auto max-w-5xl font-serif font-extrabold text-brand-navy">
-   Power your world.<span class="block text-brand-blue">Amplify every moment.</span>
-  </h1>
-  <p class="mx-auto mt-6 max-w-2xl text-base leading-8 text-brand-muted sm:text-lg">
-   Solar energy, reliable backup equipment and professional sound systems for homes, businesses and ambitious projects in Ethiopia.
-  </p>
-  <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-   <a href={withBase('/shop/solar/')} class="button-primary">Explore Solar <span aria-hidden="true">↗</span></a>
-   <a href={withBase('/shop/sound/')} class="button-secondary">Explore Sound <span aria-hidden="true">↗</span></a>
+<section class="ue-immersive-hero" aria-labelledby="home-heading">
+  <div class="ue-immersive-frame">
+    <div class="ue-immersive-media" aria-hidden="true">
+      <img class="ue-immersive-poster"
+        src={withBase(hasHeroVideo ? '/assets/hero/universal-energy-poster.webp' : '/assets/hero/night-home.svg')}
+        alt="" width="1600" height="680" fetchpriority="high" loading="eager" decoding="async" />
+      {hasHeroVideo && (
+        <video class="ue-immersive-video" muted loop playsinline preload="none"
+          poster={withBase('/assets/hero/universal-energy-poster.webp')}
+          data-src={withBase('/assets/hero/universal-energy-loop.mp4')} tabindex="-1"></video>
+      )}
+    </div>
+    <div class="ue-immersive-shade" aria-hidden="true"></div>
+    <div class="ue-immersive-grain" aria-hidden="true"></div>
+
+    <div class="ue-immersive-content">
+      <div class="ue-immersive-eyebrow"><span class="ue-immersive-dot" aria-hidden="true"></span> UNIVERSAL ELECTRONICS <span class="ue-immersive-eyebrow-divider" aria-hidden="true">/</span> ETHIOPIA</div>
+      <h1 id="home-heading" class="ue-immersive-heading">
+        Power when<br/>it matters.<br/><span>Sound when<br/>it counts.</span>
+      </h1>
+      <p class="ue-immersive-description">
+        Discover solar panels, inverters, batteries and professional sound equipment for homes, businesses and venues.
+      </p>
+      <div class="ue-immersive-actions">
+        <a class="ue-immersive-primary" href={withBase('/shop/solar/')}>Explore Solar <span aria-hidden="true">↗</span></a>
+        <a class="ue-immersive-secondary" href={withBase('/shop/sound/')}>Explore Sound <span aria-hidden="true">↗</span></a>
+      </div>
+      <a class="ue-immersive-enquiry" href={withBase('/contact/')}>Need help finding equipment? <span>Request a quotation ↗</span></a>
+    </div>
+
+    <a class="ue-immersive-sound-spotlight" href={withBase('/solutions/professional-sound/')}
+       aria-label="Explore professional sound equipment and solutions">
+      <div class="ue-immersive-sound-copy">
+        <span class="ue-immersive-spotlight-eyebrow">ALSO AT UNIVERSAL</span>
+        <strong>Professional<br/>Sound</strong>
+        <span class="ue-immersive-spotlight-cta">Explore systems ↗</span>
+      </div>
+      <img src={soundImage.src} srcset={soundImage.srcSet}
+        sizes="(max-width:640px) 115px, 140px"
+        width="140" height="190" loading="eager" decoding="async"
+        alt="JBL EON715 PA speaker" />
+    </a>
+
+    {hasHeroVideo && (
+      <button class="ue-immersive-video-toggle" type="button" aria-label="Pause background video"
+        data-video-toggle aria-pressed="false">
+        <svg class="ue-immersive-pause-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><rect x="5" y="4" width="4" height="16" rx="1" /><rect x="15" y="4" width="4" height="16" rx="1" /></svg>
+        <svg class="ue-immersive-play-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M6 3l15 9-15 9V3z" /></svg>
+        <span data-toggle-label>Pause motion</span>
+      </button>
+    )}
+    <div class="ue-immersive-corner-caption" aria-hidden="true">SOLAR  /  ENERGY STORAGE  /  SOUND</div>
   </div>
- </div>
- <div class="ue-cinema-stage mx-auto">
-  <a href={withBase('/solutions/solar-power/')} class="ue-cinema-main ue-cinema-link group" aria-label="Explore solar power and backup energy solutions">
-   <img class="ue-cinema-home-image" src={withBase(hasLicensedVideo ? '/assets/hero/universal-energy-poster.webp' : '/assets/hero/night-home.svg')}
-    alt="Night-time house energy visualization with illuminated rooms and flowing power lines"
-    fetchpriority="high" loading="eager" decoding="async" width="1200" height="720" />
-   {hasLicensedVideo && (
-    <video class="ue-cinema-video" muted loop playsinline preload="none" aria-hidden="true"
-      poster={withBase('/assets/hero/universal-energy-poster.webp')}
-      data-src={withBase('/assets/hero/universal-energy-loop.mp4')}>
-    </video>
-   )}
-   <span class="ue-cinema-photo-shade" aria-hidden="true"></span>
-   <div class="ue-cinema-bottom">
-    <span class="ue-cinema-tag">Energy that supports your day</span>
-    <h2>Solar &amp; Backup Power</h2>
-    <p>Explore solar panels, inverters and batteries.</p>
-   </div>
-   <span class="ue-cinema-arrow" aria-hidden="true">↗</span>
-   <span class="ue-cinema-image-note">Illustrative energy animation</span>
-  </a>
-  <a href={withBase('/solutions/professional-sound/')} class="ue-cinema-sound ue-cinema-link group" aria-label="Explore professional sound equipment">
-   <span class="ue-cinema-sound-glow" aria-hidden="true"></span>
-   <img src={responsiveImage('/assets/products/speakers/4980-01._JBL_EON715_3-4_Extreme_vert_medium.png',960).src}
-      srcset={responsiveImage('/assets/products/speakers/4980-01._JBL_EON715_3-4_Extreme_vert_medium.png',960).srcSet}
-      sizes="(max-width: 900px) 94vw, 34vw" alt="JBL EON715 professional PA loudspeaker from our product catalog" loading="eager" decoding="async" width="600" height="800" />
-   <span class="ue-cinema-photo-shade" aria-hidden="true"></span>
-   <span class="ue-cinema-sound-lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-   <div class="ue-cinema-bottom">
-    <span class="ue-cinema-tag">Sound that brings people together</span>
-    <h2>Professional Sound</h2>
-    <p>Speakers, microphones and audio systems.</p>
-   </div>
-   <span class="ue-cinema-arrow" aria-hidden="true">↗</span>
-  </a>
- </div>
- <div class="max-w-site mx-auto flex flex-wrap items-center justify-between gap-3 px-5 py-5 text-xs font-medium text-brand-muted sm:px-8">
-  <span>Solar energy <span class="mx-2 text-brand-blue">/</span> Professional sound</span>
-  <a href={withBase('/contact/')} class="font-semibold text-brand-blue hover:underline">Request a quotation ↗</a>
- </div>
+
+  <div class="ue-immersive-rail" aria-label="Browse equipment by application">
+    <a href={withBase('/solutions/solar-power/')} class="ue-immersive-rail-link">
+      <span class="ue-immersive-rail-index">01</span>
+      <span><strong>Solar & Backup Power</strong><small>Panels · Inverters · Batteries</small></span>
+      <span class="ue-immersive-rail-arrow" aria-hidden="true">↗</span>
+    </a>
+    <a href={withBase('/solutions/professional-sound/')} class="ue-immersive-rail-link">
+      <span class="ue-immersive-rail-index">02</span>
+      <span><strong>Professional Sound</strong><small>Speakers · Microphones · Mixers</small></span>
+      <span class="ue-immersive-rail-arrow" aria-hidden="true">↗</span>
+    </a>
+  </div>
 </section>
-{hasLicensedVideo && <script>
-  const video = document.querySelector<HTMLVideoElement>('.ue-cinema-video');
+
+{hasHeroVideo && (
+<script>
+  const video = document.querySelector<HTMLVideoElement>('.ue-immersive-video');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-video-toggle]');
+  const label = toggle?.querySelector<HTMLElement>('[data-toggle-label]');
   if (video) {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-    let wantedToPlay = false;
-    const shouldPlay = () => wantedToPlay && !reducedMotion.matches && !connection?.saveData && !document.hidden;
-    const sync = () => {
-      if (!shouldPlay()) { video.pause(); return; }
+    let visible = false;
+    let pausedByUser = false;
+    const canPlay = () => visible && !pausedByUser && !reducedMotion.matches && !connection?.saveData && !document.hidden;
+    const syncVideo = () => {
+      if (!canPlay()) { video.pause(); return; }
       if (!video.src && video.dataset.src) {
         video.src = video.dataset.src;
         video.load();
       }
-      video.play().catch(() => { /* Static poster remains visible if autoplay is blocked. */ });
+      video.play().catch(() => { /* Poster is available if autoplay fails. */ });
+    };
+    const syncToggle = () => {
+      if (!toggle) return;
+      toggle.dataset.paused = String(pausedByUser);
+      toggle.setAttribute('aria-pressed', String(pausedByUser));
+      toggle.setAttribute('aria-label', pausedByUser ? 'Play background video' : 'Pause background video');
+      if (label) label.textContent = pausedByUser ? 'Play motion' : 'Pause motion';
+      toggle.hidden = reducedMotion.matches || Boolean(connection?.saveData);
     };
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
-        wantedToPlay = entries.some((entry) => entry.isIntersecting);
-        sync();
+        visible = entries.some((entry) => entry.isIntersecting);
+        syncVideo();
       }, { threshold: 0.08 });
       observer.observe(video);
     } else {
-      wantedToPlay = true;
-      sync();
+      visible = true;
+      syncVideo();
     }
-    document.addEventListener('visibilitychange', sync);
-    reducedMotion.addEventListener?.('change', sync);
+    toggle?.addEventListener('click', () => {
+      pausedByUser = !pausedByUser;
+      syncToggle();
+      syncVideo();
+    });
+    document.addEventListener('visibilitychange', syncVideo);
+    reducedMotion.addEventListener?.('change', () => { syncToggle(); syncVideo(); });
     video.addEventListener('loadeddata', () => { video.dataset.ready = 'true'; });
-    video.addEventListener('error', () => video.pause());
+    video.addEventListener('error', () => { video.pause(); if (toggle) toggle.hidden = true; });
+    syncToggle();
   }
-</script>}
+</script>
+)}
