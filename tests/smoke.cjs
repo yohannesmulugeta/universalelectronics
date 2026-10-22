@@ -46,8 +46,10 @@ const service = read('dist/services/index.html');
 assert.ok(service.includes('Solutions for power, water and sound'), 'Services page missing');
 const contact = read('dist/contact/index.html');
 assert.ok(contact.includes('ተፋራ የገበያ ማዕከል') === false, 'Unexpected changed Amharic spelling');
-assert.ok(contact.includes('ተፈራ የገበያ ማዕከል'), 'Bilingual company address missing');
-assert.ok(contact.includes('maps.google.com/maps?q=9.03467%2C38.744252'), 'Map iframe missing');
+assert.ok(contact.includes('ተፈራ ህንጻ'), 'Bilingual Tefera Building name missing');
+assert.ok(contact.includes('www.openstreetmap.org/export/embed.html?bbox='), 'Building marker map iframe missing');
+assert.ok(contact.includes('marker=9.034712%2C38.744330'), 'Building marker coordinates missing');
+assert.ok(contact.includes('2PMV+VPP'), 'Official building Plus Code missing');
 assert.ok(contact.includes('www.google.com/maps/dir/?api=1'), 'Get directions link missing');
 const socialUrls = [
   'https://www.instagram.com/universal_electronics_et/',

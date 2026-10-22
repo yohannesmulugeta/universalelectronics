@@ -3,8 +3,8 @@ import type { SiteConfig } from '../types';
 export const siteConfig: SiteConfig = {
   companyName: 'Universal Electronics',
   tagline: 'Your Source for Solar and Sound Solutions',
-  address: 'Tefera Business Center, Habte Giyorgis',
-  addressAmharic: 'ተፈራ የገበያ ማዕከል | ሀብተ ጊዮርጊስ',
+  address: 'Tefera Building, Habte Giyorgis',
+  addressAmharic: 'ተፈራ ህንጻ | ሀብተ ጊዮርጊስ',
   city: 'Addis Ababa',
   country: 'Ethiopia',
   phones: ['+251 911 102 251', '+0111 565800'],
