@@ -17,7 +17,7 @@ async function ready(){for(let i=0;i<50;i++){try{if((await fetch(base)).ok)retur
    await page.goto(base+'/contact/',{waitUntil:'domcontentloaded'});
    const map=page.locator('iframe[title*="Tefera Building"]');
    assert.equal(await map.count(),1,'One map iframe expected');
-   assert.ok((await map.getAttribute('src')).includes('marker=9.034712%2C38.744330'),'Verified coordinates missing');
+   assert.ok((await map.getAttribute('src')).includes('2913981607394043387'),'Verified coordinates missing');
    assert.equal(await map.getAttribute('loading'),'lazy','Map must load lazily');
    const visit=page.locator('#visit-location-heading');
    await visit.scrollIntoViewIfNeeded();
@@ -25,9 +25,11 @@ async function ready(){for(let i=0;i<50;i++){try{if((await fetch(base)).ok)retur
    assert.ok(await page.getByText('ተፈራ ህንጻ', {exact:false}).count()>0,'Amharic address missing');
    assert.ok(await page.getByText('2PMV+VPP',{exact:false}).count()>0,'Correct building Plus Code missing');
    const directions=page.getByRole('link',{name:/Get directions to Tefera Building/});
-   assert.ok((await directions.getAttribute('href')).includes('2PMV%2BVPP'),'Directions must use verified coordinate');
-   const footerLink=page.getByRole('link',{name:/Get directions on Google Maps/});
-   assert.ok((await footerLink.getAttribute('href')).includes('google.com/maps/dir/'),'Footer directions missing');
+   assert.ok((await directions.getAttribute('href')).includes('Tefera%20Business%20Center'),'Directions must target the exact building name');
+   const exactLink=page.getByRole('link',{name:/Open the exact Tefera Business Center place/});
+   assert.equal(await exactLink.getAttribute('href'),'https://maps.app.goo.gl/xUmBZS7HQ9JwpVcL9','Exact owner-supplied Google Maps share link missing');
+   const footerLink=page.getByRole('link',{name:/View Tefera Building on Google Maps/});
+   assert.equal(await footerLink.getAttribute('href'),'https://maps.app.goo.gl/xUmBZS7HQ9JwpVcL9','Footer must open the exact owner-provided map link');
    const width=await page.evaluate(()=>document.documentElement.scrollWidth);
    assert.ok(width<=spec.width+2, 'Horizontal overflow '+spec.name+' ('+width+' > '+spec.width+')');
    await page.locator('.ue-location-map-frame').screenshot({path:'artifacts/location-map/map-'+spec.name+'.png'});
