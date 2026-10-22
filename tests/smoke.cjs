@@ -26,6 +26,11 @@ assert.ok(page.includes('Ready to power your project'), 'Homepage quotation CTA 
 assert.ok(page.includes('A few useful answers'), 'Homepage FAQ missing');
 assert.ok(page.includes('ue-solution-accordion'), 'Interactive solution panels missing');
 assert.ok(page.includes('ue-category-quick-grid'), 'Quick category navigation missing');
+assert.ok(page.includes('ue-footer-white-ink'), 'All-white footer logo filter missing');
+assert.ok(!page.includes('inline-block bg-white p-2'), 'Old white rectangle around footer logo still exists');
+for(const category of ['solar-panel','inverter','battery','water-pump','speaker','amplifier','microphone','mixer']) {
+  assert.ok(page.includes(`icon-${category}`) || page.includes(`data-category-icon="${category}"`), 'Category icon missing: '+category);
+}
 assert.ok(fileExists('dist/robots.txt') && fileExists('dist/sitemap.xml'), 'Sitemap and robots must be published');
 const sitemap = read('dist/sitemap.xml');
 const locations = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
