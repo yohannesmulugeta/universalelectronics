@@ -1,0 +1,35 @@
+name: White footer logo and category icons QA
+on:
+  push:
+    branches: [feature/footer-white-logo-category-icons-2026-10-22]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Astro and TypeScript validation
+        run: npm run check
+      - name: Production build
+        run: npm run build
+      - name: Smoke and icon assertions
+        run: npm run test:smoke
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Desktop and mobile visual checks
+        run: node tests/footer-and-icons-ux.cjs
+      - name: Preserve design preview screenshots
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: white-footer-and-category-icons
+          path: artifacts/white-logo-icons/
+          retention-days: 14
