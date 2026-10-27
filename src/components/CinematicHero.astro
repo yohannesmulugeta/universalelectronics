@@ -82,9 +82,12 @@ const soundImage = responsiveImage('/assets/products/speakers/4980-01._JBL_EON71
   const label = toggle?.querySelector<HTMLElement>('[data-toggle-label]');
   if (video) {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    // Keep mobile first paint responsive: load/decode the video only after the visitor opts in.
+    // Desktop retains the existing automatic playback behavior.
+    const mobileViewport = window.matchMedia('(max-width: 760px)');
     const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     let visible = false;
-    let pausedByUser = false;
+    let pausedByUser = mobileViewport.matches;
     const canPlay = () => visible && !pausedByUser && !reducedMotion.matches && !connection?.saveData && !document.hidden;
     const syncVideo = () => {
       if (!canPlay()) { video.pause(); return; }
@@ -119,6 +122,11 @@ const soundImage = responsiveImage('/assets/products/speakers/4980-01._JBL_EON71
     });
     document.addEventListener('visibilitychange', syncVideo);
     reducedMotion.addEventListener?.('change', () => { syncToggle(); syncVideo(); });
+    mobileViewport.addEventListener?.('change', () => {
+      pausedByUser = mobileViewport.matches;
+      syncToggle();
+      syncVideo();
+    });
     video.addEventListener('loadeddata', () => { video.dataset.ready = 'true'; });
     video.addEventListener('error', () => { video.pause(); if (toggle) toggle.hidden = true; });
     syncToggle();
