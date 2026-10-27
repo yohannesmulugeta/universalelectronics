@@ -10,6 +10,7 @@
     "check": "astro check",
     "test": "node tests/verify_and_screenshot.cjs",
     "prebuild": "node scripts/optimize-images.mjs",
+    "postbuild": "node scripts/security-headers.mjs",
     "test:smoke": "node tests/smoke.cjs"
   },
   "dependencies": {
