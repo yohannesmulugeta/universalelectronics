@@ -70,6 +70,7 @@ const { items } = Astro.props;
     let interacting = false;
     let manualBusy = false;
     let visible = false;
+    let initialized = false;
     let loopWidth = 0;
     let frame: number | undefined;
     let lastFrame = 0;
@@ -160,11 +161,19 @@ const { items } = Astro.props;
     window.addEventListener('pointerup', endInteraction);
     window.addEventListener('pointercancel', endInteraction);
     track.addEventListener('scroll', updateProgress, { passive: true });
-    window.addEventListener('resize', refreshLayout);
+    window.addEventListener('resize', () => { if (initialized) refreshLayout(); });
     document.addEventListener('visibilitychange', syncAnimation);
-    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; syncAnimation(); }, { threshold: 0.1 });
+    // Defer layout measurement and carousel cloning until this below-the-fold section is visible.
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible && !initialized) {
+        initialized = true;
+        refreshLayout();
+      } else {
+        syncAnimation();
+      }
+    }, { threshold: 0.1 });
     observer.observe(root);
     syncPlayButton();
-    refreshLayout();
   }
 </script>
