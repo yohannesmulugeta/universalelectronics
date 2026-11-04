@@ -6,7 +6,8 @@ const escape = (value: string) => value.replace(/\\/g, '\\\\').replace(/\r?\n/g,
 export const GET: APIRoute = () => {
   const lines = [
     'BEGIN:VCARD', 'VERSION:3.0',
-    `FN:${escape(siteConfig.companyName)}`,
+    `FN:Mesfin - ${escape(siteConfig.companyName)}`,
+    'N:;Mesfin;;;',
     `ORG:${escape(siteConfig.companyName)}`,
     `TEL;TYPE=WORK,VOICE:${siteConfig.phones[0].replace(/\s+/g, '')}`,
     `EMAIL;TYPE=WORK:${escape(siteConfig.email)}`,
@@ -26,6 +27,6 @@ export const GET: APIRoute = () => {
     return result;
   };
   return new Response(lines.map(fold).join('\r\n') + '\r\n', {
-    headers: { 'Content-Type': 'text/vcard; charset=utf-8', 'Content-Disposition': 'attachment; filename="Universal-Electronics.vcf"' },
+    headers: { 'Content-Type': 'text/vcard; charset=utf-8', 'Content-Disposition': 'attachment; filename="Mesfin-Universal-Electronics.vcf"' },
   });
 };
